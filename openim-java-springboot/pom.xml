@@ -8,7 +8,7 @@
         <version>2.7.4</version>
         <relativePath/>
     </parent>
-    <groupId>org.ccs.openim</groupId>
+    <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-springboot</artifactId>
     <version>0.1</version>
     <name>openim-java-springboot</name>
@@ -22,7 +22,7 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.ccs.openim</groupId>
+            <groupId>cn.org.opendfl</groupId>
             <artifactId>openim-java-sdk</artifactId>
             <version>0.1</version>
         </dependency>
