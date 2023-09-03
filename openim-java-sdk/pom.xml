@@ -18,7 +18,7 @@
 
     <!--scm信息-->
     <scm>
-        <url>https://github.com/asgardjh/openim-java-sdk/blob/main/readme.md</url>
+        <url>http://task-tool-demo.opendfl.org.cn/index.html</url>
         <connection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</connection>
         <developerConnection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</developerConnection>
     </scm>
@@ -28,8 +28,8 @@
         <developer>
             <name>chenjh</name>
             <email>asgard2023@outlook.com</email>
-            <organization>openim</organization>
-            <organizationUrl>https://github.com/asgardjh/openim-java-sdk/blob/main/readme.md</organizationUrl>
+            <organization>http://task-tool-demo.opendfl.org.cn/index.html</organization>
+            <organizationUrl>http://task-tool-demo.opendfl.org.cn/index.html</organizationUrl>
         </developer>
     </developers>
 
