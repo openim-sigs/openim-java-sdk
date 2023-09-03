@@ -1,0 +1,8 @@
+project:
+  build:
+    timestamp: ${project.build.timestamp}
+spring:
+  application:
+    name: openim
+  profiles:
+    active: dev

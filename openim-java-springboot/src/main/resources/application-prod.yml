@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+logging:
+  level:
+    root: INFO
+    org:
+      ccs:
+        openim: INFO
+  file:
+    path: openim.log

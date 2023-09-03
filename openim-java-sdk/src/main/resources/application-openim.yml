@@ -1,0 +1,12 @@
+#仅用于开发测试
+openim:
+  api: http://openim-web.host.fit
+  #  下面可以不配置，默认按以下规则生成
+  #  apiApi: http://openim-web.host.fit/api
+  #  apiChat: http://openim-web.host.fit/chat
+  #  apiAdmin: http://openim-web.host.fit/complete_admin
+  secret: openIM123
+  adminAccount: openIMAdmin
+  adminPwd: openIMAdmin
+  #预留功能，支持每个请求，自动带个header authKey参数
+  authKey: authKey
