@@ -20,11 +20,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <url>https://github.com/asgardjh/openim-java-sdk</url>
     <!--scm信息-->
     <scm>
-        <url>http://task-tool-demo.opendfl.org.cn/index.html</url>
-        <connection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</connection>
-        <developerConnection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</developerConnection>
+        <url>https://github.com/asgardjh/openim-java-sdk</url>
+        <connection>git@github.com:asgardjh/openim-java-sdk.git</connection>
     </scm>
 
     <!--发布者信息-->
@@ -32,10 +32,15 @@
         <developer>
             <name>chenjh</name>
             <email>asgard2023@outlook.com</email>
-            <organization>http://task-tool-demo.opendfl.org.cn/index.html</organization>
-            <organizationUrl>http://task-tool-demo.opendfl.org.cn/index.html</organizationUrl>
+            <url>https://github.com/asgardjh/</url>
         </developer>
     </developers>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://www.mit-license.org/</url>
+        </license>
+    </licenses>
 
     <properties>
         <java.version>1.8</java.version>
