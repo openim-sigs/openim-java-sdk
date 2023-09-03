@@ -1,0 +1,41 @@
+package org.ccs.openim.service;
+
+import org.ccs.openim.api.OpenImApiSuperGroupRest;
+import org.ccs.openim.api.group.req.GetGroupAbstractInfoReq;
+import org.ccs.openim.api.group.resp.GetGroupAbstractInfoResp;
+import org.ccs.openim.api.superGroup.req.GetJoinedSuperGroupListReq;
+import org.ccs.openim.api.superGroup.resp.GetJoinedSuperGroupListResp;
+import org.ccs.openim.base.OpenImResult;
+import org.ccs.openim.base.OpenImToken;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+@Service
+public class OpenImApiSuperGroupService {
+    @Resource
+    private OpenImApiSuperGroupRest openImApiSuperGroupRest;
+
+    /**
+     * 获取某个用户加入的超级群
+     * routePath=/super_group/get_joined_group_list
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetJoinedSuperGroupListResp> getJoinedSuperGroupList(OpenImToken openImToken, GetJoinedSuperGroupListReq req) {
+        return openImApiSuperGroupRest.getJoinedSuperGroupList(openImToken, req);
+    }
+
+    /**
+     * 获取群信息hash值
+     * routePath=/super_group/get_groups_info
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetGroupAbstractInfoResp> getGroupAbstractInfo(OpenImToken openImToken, GetGroupAbstractInfoReq req) {
+        return openImApiSuperGroupRest.getGroupAbstractInfo(openImToken, req);
+    }
+
+}
