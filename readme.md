@@ -19,7 +19,7 @@ openim api java调用sdk
 
 ```xml
 <dependency>
-    <groupId>org.ccs.openim</groupId>
+    <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-sdk</artifactId>
     <version>0.1</version>
 </dependency>
