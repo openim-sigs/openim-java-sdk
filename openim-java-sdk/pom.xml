@@ -15,6 +15,34 @@
         <project.build.timestamp>${timestamp}</project.build.timestamp>
         <skipTests>true</skipTests>
     </properties>
+
+    <!--scm信息-->
+    <scm>
+        <url>https://github.com/asgardjh/openim-java-sdk/blob/main/readme.md</url>
+        <connection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</connection>
+        <developerConnection>scm:git:https://github.com/asgardjh/openim-java-sdk.git</developerConnection>
+    </scm>
+
+    <!--发布者信息-->
+    <developers>
+        <developer>
+            <name>chenjh</name>
+            <email>asgard2023@outlook.com</email>
+            <organization>openim</organization>
+            <organizationUrl>https://github.com/asgardjh/openim-java-sdk/blob/main/readme.md</organizationUrl>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
     <dependencyManagement>
         <dependencies>
             <dependency>

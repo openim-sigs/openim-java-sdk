@@ -6,7 +6,7 @@
 
     <groupId>org.ccs.openim</groupId>
     <artifactId>openim-parent</artifactId>
-    <version>2</version>
+    <version>0.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>openim-java-sdk</module>
