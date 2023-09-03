@@ -1,4 +1,4 @@
-package org.ccs.openim.admin.resp;
+package org.ccs.openim.admin.applet.resp;
 
 import lombok.Data;
 import org.ccs.openim.chat.vo.AppletInfo;

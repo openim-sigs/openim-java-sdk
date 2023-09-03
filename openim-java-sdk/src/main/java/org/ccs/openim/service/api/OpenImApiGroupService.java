@@ -1,4 +1,4 @@
-package org.ccs.openim.service;
+package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiGroupRest;
 import org.ccs.openim.api.group.req.*;

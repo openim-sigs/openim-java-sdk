@@ -1,4 +1,4 @@
-package org.ccs.openim.service;
+package org.ccs.openim.service.admin;
 
 import org.ccs.openim.admin.OpenImAdminRest;
 import org.ccs.openim.admin.req.*;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class OpenImAdminService {
+public class OpenImAdminUserService {
     @Resource
     private OpenImAdminRest openImAdminRest;
 
@@ -87,49 +87,6 @@ public class OpenImAdminService {
         return openImAdminRest.delClientConfig(openImToken, req);
     }
 
-    /**
-     * 添加小程序
-     * routePath=/applet/add
-     *
-     * @param req AddAppletReq
-     * @return
-     */
-    public OpenImResult<String> appletAdd(OpenImToken openImToken, AddAppletReq req) {
-        return openImAdminRest.appletAdd(openImToken, req);
-    }
-
-    /**
-     * 添加小程序
-     * routePath=/applet/del
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> appletDel(OpenImToken openImToken, DelAppletReq req) {
-        return openImAdminRest.appletDel(openImToken, req);
-    }
-
-    /**
-     * 添加小程序
-     * routePath=/applet/update
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> appletUpdate(OpenImToken openImToken, UpdateAppletReq req) {
-        return openImAdminRest.appletUpdate(openImToken, req);
-    }
-
-    /**
-     * 搜索小程序
-     * routePath=/applet/search
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<SearchAppletResp> appletSearch(OpenImToken openImToken, SearchAppletReq req) {
-        return openImAdminRest.appletSearch(openImToken, req);
-    }
 
     /**
      * 添加注册时默认好友
@@ -137,7 +94,7 @@ public class OpenImAdminService {
      * @param req
      * @return
      */
-    public OpenImResult<String> defaultUserAdd(OpenImToken openImToken, AddDefaultFriendReq req){
+    public OpenImResult<String> defaultUserAdd(OpenImToken openImToken, AddDefaultFriendReq req) {
         return openImAdminRest.defaultUserAdd(openImToken, req);
     }
 
@@ -147,7 +104,7 @@ public class OpenImAdminService {
      * @param req
      * @return
      */
-    public OpenImResult<String> defaultUserDel(OpenImToken openImToken, DelDefaultFriendReq req){
+    public OpenImResult<String> defaultUserDel(OpenImToken openImToken, DelDefaultFriendReq req) {
         return openImAdminRest.defaultUserDel(openImToken, req);
     }
 
@@ -157,7 +114,7 @@ public class OpenImAdminService {
      * @param req
      * @return
      */
-    public OpenImResult<FindDefaultFriendResp> defaultUserFind(OpenImToken openImToken, FindDefaultFriendReq req){
+    public OpenImResult<FindDefaultFriendResp> defaultUserFind(OpenImToken openImToken, FindDefaultFriendReq req) {
         return openImAdminRest.defaultUserFind(openImToken, req);
     }
 
@@ -167,7 +124,7 @@ public class OpenImAdminService {
      * @param req
      * @return
      */
-    public OpenImResult<SearchDefaultFriendResp> defaultUserSearch(OpenImToken openImToken, SearchDefaultFriendReq req){
+    public OpenImResult<SearchDefaultFriendResp> defaultUserSearch(OpenImToken openImToken, SearchDefaultFriendReq req) {
         return openImAdminRest.defaultUserSearch(openImToken, req);
     }
 

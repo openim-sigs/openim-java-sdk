@@ -1,4 +1,4 @@
-package org.ccs.openim.service;
+package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiConversationRest;
 import org.ccs.openim.api.conversation.req.GetAllConversationsReq;

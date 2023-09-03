@@ -1,4 +1,4 @@
-package org.ccs.openim.service;
+package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiAuthRest;
 import org.ccs.openim.api.auth.req.ForceLogoutReq;

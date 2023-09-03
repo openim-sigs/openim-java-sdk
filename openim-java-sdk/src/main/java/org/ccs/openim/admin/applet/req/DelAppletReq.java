@@ -1,4 +1,4 @@
-package org.ccs.openim.admin.req;
+package org.ccs.openim.admin.applet.req;
 
 import lombok.Data;
 

@@ -4,7 +4,10 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
 import org.ccs.openim.admin.OpenImAdminRest;
-import org.ccs.openim.admin.req.*;
+import org.ccs.openim.admin.req.DelClientConfigReq;
+import org.ccs.openim.admin.req.GetAdminInfoReq;
+import org.ccs.openim.admin.req.LoginReq;
+import org.ccs.openim.admin.req.SetClientConfigReq;
 import org.ccs.openim.admin.req.defaultUser.AddDefaultFriendReq;
 import org.ccs.openim.admin.req.defaultUser.DelDefaultFriendReq;
 import org.ccs.openim.admin.req.defaultUser.FindDefaultFriendReq;
@@ -112,53 +115,6 @@ public class OpenImAdminRestTest {
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
-    @Test
-    public void appletAdd() {
-        AddAppletReq req = new AddAppletReq();
-        req.setAppID("1235");
-        req.setName("test2");
-        req.setSize(10L);
-        req.setCreateTime(System.currentTimeMillis());
-        req.setStatus(1);
-        req.setPriority(10);
-        OpenImResult result = openImAdminRest.appletAdd(openImToken, req);
-        System.out.println(JSONUtil.toJsonStr(result));
-        TestCase.assertTrue(result.getErrMsg(), result.isOk());
-    }
-
-    @Test
-    public void appletUpdate() {
-        UpdateAppletReq req = new UpdateAppletReq();
-        req.setId("6627f9ff-449a-4209-a5f2-765b08b4511f");
-        req.setAppID("1234");
-        req.setName("test2");
-        req.setSize(10L);
-        req.setCreateTime(System.currentTimeMillis());
-        req.setStatus(1);
-        req.setPriority(10);
-        OpenImResult result = openImAdminRest.appletUpdate(openImToken, req);
-        System.out.println(JSONUtil.toJsonStr(result));
-        TestCase.assertTrue(result.getErrMsg(), result.isOk());
-    }
-
-    @Test
-    public void appletSearch() {
-        SearchAppletReq req = new SearchAppletReq();
-        req.setKeyword("1234");
-        req.setPagination(new RequestPagination(1, 10));
-        OpenImResult result = openImAdminRest.appletSearch(openImToken, req);
-        System.out.println(JSONUtil.toJsonStr(result));
-        TestCase.assertTrue(result.getErrMsg(), result.isOk());
-    }
-
-    @Test
-    public void appletDel() {
-        DelAppletReq req = new DelAppletReq();
-        req.setAppletIds(Arrays.asList("6627f9ff-449a-4209-a5f2-765b08b4511f"));
-        OpenImResult result = openImAdminRest.appletDel(openImToken, req);
-        System.out.println(JSONUtil.toJsonStr(result));
-        TestCase.assertTrue(result.getErrMsg(), result.isOk());
-    }
 
     @Test
     public void defaultUserDel() {

@@ -13,10 +13,10 @@ import org.ccs.openim.admin.resp.defaultUser.FindDefaultFriendResp;
 import org.ccs.openim.admin.resp.defaultUser.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.chat.req.UpdateUserInfoReq;
 import org.ccs.openim.chat.resp.GetClientConfigResp;
-import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.OpenimUtils;
@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 
 /**
  * openIm-chat.admin服务接口
@@ -217,109 +216,6 @@ public class OpenImAdminRest {
         return openImResult;
     }
 
-    /**
-     * 添加小程序
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> appletAdd(OpenImToken openImToken, AddAppletReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/add");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----appletAdd--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
-
-    /**
-     * 添加小程序
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> appletDel(OpenImToken openImToken, DelAppletReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/del");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----appletDel--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
-
-    /**
-     * 添加小程序
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> appletUpdate(OpenImToken openImToken, UpdateAppletReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/update");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----appletUpdate--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
-
-    /**
-     * 搜索小程序
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<SearchAppletResp> appletSearch(OpenImToken openImToken, SearchAppletReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/search");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<SearchAppletResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchAppletResp>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----appletSearch--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
 
     /**
      * 添加注册时默认好友

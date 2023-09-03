@@ -66,7 +66,7 @@ public class OpenImServiceTest {
         LoginReq loginReq = new LoginReq();
         loginReq.setAccount("openIMAdmin");
         loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-        OpenImResult<AdminLoginResp> result = openImService.admin().login(loginReq, operationId);
+        OpenImResult<AdminLoginResp> result = openImService.admin().user().login(loginReq, operationId);
         if (result.isOk()) {
             AdminLoginResp loginResp = result.getData();
             openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
@@ -90,14 +90,14 @@ public class OpenImServiceTest {
         LoginReq loginReq = new LoginReq();
         loginReq.setAccount("openIMAdmin");
         loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-        OpenImResult<AdminLoginResp> result = openImService.admin().login(loginReq, operationId);
+        OpenImResult<AdminLoginResp> result = openImService.admin().user().login(loginReq, operationId);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
     public void getClientConfig() {
-        OpenImResult<GetClientConfigResp> result = openImService.admin().getClientConfig(openImToken);
+        OpenImResult<GetClientConfigResp> result = openImService.admin().user().getClientConfig(openImToken);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -108,7 +108,7 @@ public class OpenImServiceTest {
         Long curTime = System.currentTimeMillis();
         req.setStart(curTime - 864000 * 1000 * 3);
         req.setEnd(curTime);
-        OpenImResult<NewUserCountResp> result = openImService.admin().newUserCount(openImToken, req);
+        OpenImResult<NewUserCountResp> result = openImService.admin().user().newUserCount(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -119,7 +119,7 @@ public class OpenImServiceTest {
         Long curTime = System.currentTimeMillis();
         req.setStart(curTime - 864000 * 1000 * 3);
         req.setEnd(curTime);
-        OpenImResult<UserLoginCountResp> result = openImService.admin().loginUserCount(openImToken, req);
+        OpenImResult<UserLoginCountResp> result = openImService.admin().user().loginUserCount(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -131,7 +131,7 @@ public class OpenImServiceTest {
 
         req.setStart(curTime);
         req.setEnd(curTime - 864000 * 1000 * 3);
-        OpenImResult<UserRegisterCountResp> result = openImService.apiStatistics().userRegisterCount(openImToken, req);
+        OpenImResult<UserRegisterCountResp> result = openImService.api().statistics().userRegisterCount(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -141,14 +141,14 @@ public class OpenImServiceTest {
     public void getAllConversations() {
         GetAllConversationsReq req = new GetAllConversationsReq();
         req.setOwnerUserID(openImToken.getUserId());
-        OpenImResult<GetAllConversationsResp> result = openImService.apiConversation().getAllConversations(openImToken, req);
+        OpenImResult<GetAllConversationsResp> result = openImService.api().conversation().getAllConversations(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
     public void getServerTime() {
-        OpenImResult<GetServerTimeResp> result = openImService.apiMsg().getServerTime(openImToken, new GetServerTimeReq());
+        OpenImResult<GetServerTimeResp> result = openImService.api().msg().getServerTime(openImToken, new GetServerTimeReq());
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
