@@ -17,8 +17,6 @@
     <properties>
         <java.version>1.8</java.version>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <maven.javadoc.skip>true</maven.javadoc.skip>
-        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <url>https://github.com/asgardjh/openim-java-sdk</url>
     <!--scm信息-->
