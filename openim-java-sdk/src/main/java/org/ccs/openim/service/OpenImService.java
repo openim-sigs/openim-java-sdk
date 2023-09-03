@@ -21,9 +21,10 @@ public class OpenImService {
     private OpenImApiMsgService openImApiMsgService;
     @Resource
     private OpenImApiStatisticsService openImApiStatisticsService;
-
     @Resource
     private OpenImApiConversationService openImApiConversationService;
+    @Resource
+    private OpenImApiThirdService openImApiThirdService;
 
 
     @Resource
@@ -99,6 +100,10 @@ public class OpenImService {
      */
     public OpenImApiMsgService apiMsg() {
         return openImApiMsgService;
+    }
+
+    public OpenImApiThirdService apiThird() {
+        return openImApiThirdService;
     }
 
     public OpenImChatService chat() {
