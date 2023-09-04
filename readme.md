@@ -21,7 +21,7 @@ openim api java调用sdk 无spring版
 <dependency>
     <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-sdk</artifactId>
-    <version>0.2</version>
+    <version>0.3-nospring</version>
 </dependency>
 ```
 
