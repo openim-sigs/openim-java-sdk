@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-springboot</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <name>openim-java-springboot</name>
     <packaging>jar</packaging>
     <description>openim-java-springboot demo</description>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>cn.org.opendfl</groupId>
             <artifactId>openim-java-sdk</artifactId>
-            <version>0.2</version>
+            <version>0.3-nospring</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
