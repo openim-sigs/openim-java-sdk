@@ -21,7 +21,7 @@ openim api java调用sdk
 <dependency>
     <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-sdk</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 </dependency>
 ```
 
@@ -49,11 +49,11 @@ public void login(){
     LoginReq loginReq = new LoginReq();
     loginReq.setAccount("openIMAdmin");
     loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-    OpenImResult<AdminLoginResp> result = openImService.admin().login(loginReq, operationId);
+    OpenImResult<AdminLoginResp> result = openImService.admin().user().login(loginReq, operationId);
 }
 
 public void getClientConfig() {
-    OpenImResult<GetClientConfigResp> result = openImService.admin().getClientConfig(openImToken);
+    OpenImResult<GetClientConfigResp> result = openImService.admin().clientConfig().getClientConfig(openImToken);
     System.out.println(JSONUtil.toJsonStr(result));
     TestCase.assertTrue(result.getErrMsg(), result.isOk());
 }
