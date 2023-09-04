@@ -11,11 +11,16 @@ public class OpenImAdminService {
     private OpenImAdminUserService openImAdminUserService;
     @Resource
     private OpenImAdminAppletService openImAdminAppletService;
-
     @Resource
     private OpenImAdminForbiddenService openImAdminForbiddenService;
     @Resource
     private OpenImAdminInvitationService openImAdminInvitationService;
+    @Resource
+    private OpenImAdminDefaultUserService openImAdminDefaultUserService;
+    @Resource
+    private OpenImAdminDefaultGroupService openImAdminDefaultGroupService;
+    @Resource
+    private OpenImAdminClientConfigService openImAdminClientConfigService;
 
 
     public OpenImAdminUserService user() {
@@ -32,5 +37,17 @@ public class OpenImAdminService {
 
     public OpenImAdminInvitationService invitation() {
         return openImAdminInvitationService;
+    }
+
+    public OpenImAdminDefaultUserService defaultUser() {
+        return openImAdminDefaultUserService;
+    }
+
+    public OpenImAdminDefaultGroupService defaultGroup() {
+        return openImAdminDefaultGroupService;
+    }
+
+    public OpenImAdminClientConfigService clientConfig() {
+        return openImAdminClientConfigService;
     }
 }

@@ -30,7 +30,7 @@ public class OpenImAdminAppletService {
     }
 
     /**
-     * 添加小程序
+     * 删除小程序
      * routePath=/applet/del
      *
      * @param req
@@ -41,7 +41,7 @@ public class OpenImAdminAppletService {
     }
 
     /**
-     * 添加小程序
+     * 修改小程序
      * routePath=/applet/update
      *
      * @param req

@@ -94,6 +94,17 @@ public class OpenImApiUserService {
     }
 
     /**
+     * Get user online token details.
+     * routePath=/user/get_users_online_token_detail
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<List<SingleDetail>> getUsersOnlineTokenDetail(OpenImToken openImToken, GetUsersOnlineStatusReq req) {
+        return openImApiUserRest.getUsersOnlineTokenDetail(openImToken, req);
+    }
+
+    /**
      * subscriberStatus 订阅用户状态
      * Presence status of subscribed users.
      * routePath=/user/subscribe_users_status

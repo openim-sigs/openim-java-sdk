@@ -3,24 +3,26 @@ package org.ccs.openim;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
+import org.ccs.openim.admin.OpenImAdminClientConfigRest;
+import org.ccs.openim.admin.OpenImAdminDefaultUserRest;
 import org.ccs.openim.admin.OpenImAdminRest;
-import org.ccs.openim.admin.req.DelClientConfigReq;
+import org.ccs.openim.admin.clientconfig.req.DelClientConfigReq;
+import org.ccs.openim.admin.clientconfig.req.SetClientConfigReq;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
+import org.ccs.openim.admin.defaultUser.req.AddDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.DelDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.FindDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.SearchDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
+import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.admin.req.GetAdminInfoReq;
 import org.ccs.openim.admin.req.LoginReq;
-import org.ccs.openim.admin.req.SetClientConfigReq;
-import org.ccs.openim.admin.req.defaultUser.AddDefaultFriendReq;
-import org.ccs.openim.admin.req.defaultUser.DelDefaultFriendReq;
-import org.ccs.openim.admin.req.defaultUser.FindDefaultFriendReq;
-import org.ccs.openim.admin.req.defaultUser.SearchDefaultFriendReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
-import org.ccs.openim.admin.resp.defaultUser.FindDefaultFriendResp;
-import org.ccs.openim.admin.resp.defaultUser.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.req.UpdateUserInfoReq;
-import org.ccs.openim.chat.resp.GetClientConfigResp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +43,11 @@ public class OpenImAdminRestTest {
 
     @Resource
     private OpenImAdminRest openImAdminRest;
+
+    @Resource
+    private OpenImAdminClientConfigRest openImAdminClientConfigRest;
+    @Resource
+    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest;
 
     private static OpenImToken openImToken;
 
@@ -88,7 +95,7 @@ public class OpenImAdminRestTest {
 
     @Test
     public void getClientConfig() {
-        OpenImResult<GetClientConfigResp> result = openImAdminRest.getClientConfig(openImToken);
+        OpenImResult<GetClientConfigResp> result = openImAdminClientConfigRest.getClientConfig(openImToken);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -99,7 +106,7 @@ public class OpenImAdminRestTest {
         paramMap.put("aaa", "aaa");
         SetClientConfigReq req = new SetClientConfigReq();
         req.setConfig(paramMap);
-        OpenImResult result = openImAdminRest.setClientConfig(openImToken, req);
+        OpenImResult result = openImAdminClientConfigRest.setClientConfig(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -110,44 +117,44 @@ public class OpenImAdminRestTest {
         List<String> keys = Arrays.asList("aaa");
         DelClientConfigReq req = new DelClientConfigReq();
         req.setKeys(keys);
-        OpenImResult result = openImAdminRest.delClientConfig(openImToken, req);
+        OpenImResult result = openImAdminClientConfigRest.delClientConfig(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
 
     @Test
-    public void defaultUserDel() {
+    public void delDefaultFriend() {
         DelDefaultFriendReq req = new DelDefaultFriendReq();
         req.setUserIDs(Arrays.asList("1234"));
-        OpenImResult result = openImAdminRest.defaultUserDel(openImToken, req);
+        OpenImResult result = openImAdminDefaultUserRest.delDefaultFriend(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
-    public void defaultUserAdd() {
+    public void addDefaultFriend() {
         AddDefaultFriendReq req = new AddDefaultFriendReq();
         req.setUserIDs(Arrays.asList("1234"));
-        OpenImResult result = openImAdminRest.defaultUserAdd(openImToken, req);
+        OpenImResult result = openImAdminDefaultUserRest.addDefaultFriend(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
-    public void defaultUserFind() {
+    public void findDefaultFriend() {
         FindDefaultFriendReq req = new FindDefaultFriendReq();
-        OpenImResult<FindDefaultFriendResp> result = openImAdminRest.defaultUserFind(openImToken, req);
+        OpenImResult<FindDefaultFriendResp> result = openImAdminDefaultUserRest.findDefaultFriend(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
-    public void defaultUserSearch() {
+    public void searchDefaultFriend() {
         SearchDefaultFriendReq req = new SearchDefaultFriendReq();
         req.setKeyword("test");
         req.setPagination(new RequestPagination(1, 10));
-        OpenImResult<SearchDefaultFriendResp> result = openImAdminRest.defaultUserSearch(openImToken, req);
+        OpenImResult<SearchDefaultFriendResp> result = openImAdminDefaultUserRest.searchDefaultFriend(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

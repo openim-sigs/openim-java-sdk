@@ -319,6 +319,35 @@ public class OpenImApiUserRest {
     }
 
     /**
+     * Get user online token details.
+     * routePath=/user/get_users_online_token_detail
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<List<SingleDetail>> getUsersOnlineTokenDetail(OpenImToken openImToken, GetUsersOnlineStatusReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/get_users_online_token_detail");
+
+        HttpHeaders httpHeaders = initPostHeader(openImToken);
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<List<SingleDetail>>
+                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<List<SingleDetail>>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getUsersOnlineTokenDetail--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
+    /**
      * subscriberStatus 订阅用户状态
      * Presence status of subscribed users.
      * routePath=/user/subscribe_users_status

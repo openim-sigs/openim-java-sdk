@@ -1,6 +1,7 @@
 package org.ccs.openim.service;
 
 
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.chat.OpenImChatRest;

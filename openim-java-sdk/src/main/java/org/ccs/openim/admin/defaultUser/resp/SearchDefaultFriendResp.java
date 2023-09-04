@@ -1,4 +1,4 @@
-package org.ccs.openim.admin.resp.defaultUser;
+package org.ccs.openim.admin.defaultUser.resp;
 
 import lombok.Data;
 

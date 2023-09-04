@@ -3,6 +3,7 @@ package org.ccs.openim;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;

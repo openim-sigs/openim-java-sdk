@@ -3,11 +3,12 @@ package org.ccs.openim.admin;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.ccs.openim.admin.applet.req.AddAppletReq;
-import org.ccs.openim.admin.applet.req.DelAppletReq;
-import org.ccs.openim.admin.applet.req.SearchAppletReq;
-import org.ccs.openim.admin.applet.req.UpdateAppletReq;
-import org.ccs.openim.admin.applet.resp.SearchAppletResp;
+import org.ccs.openim.admin.defaultUser.req.AddDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.DelDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.FindDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.req.SearchDefaultFriendReq;
+import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
+import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
@@ -29,7 +30,7 @@ import javax.annotation.PostConstruct;
  */
 @Service
 @Slf4j
-public class OpenImAdminAppletRest {
+public class OpenImAdminDefaultUserRest {
     @Autowired
     private RestTemplate restTemplate;
 
@@ -53,16 +54,16 @@ public class OpenImAdminAppletRest {
     }
 
     /**
-     * 添加小程序
-     * routePath=/applet/add
+     * 添加注册时默认好友
+     * routePath=/default/user/add
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> appletAdd(OpenImToken openImToken, AddAppletReq req) {
+    public OpenImResult<String> addDefaultFriend(OpenImToken openImToken, AddDefaultFriendReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/add");
+        String url = CommUtils.appendUrl(apiUrl, "/default/user/add");
 
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
@@ -73,23 +74,23 @@ public class OpenImAdminAppletRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----appletAdd--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
 
     /**
-     * 删除小程序
-     * routePath=/applet/del
+     * 删除注册时默认好友
+     * routePath=/default/user/del
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> appletDel(OpenImToken openImToken, DelAppletReq req) {
+    public OpenImResult<String> delDefaultFriend(OpenImToken openImToken, DelDefaultFriendReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/del");
+        String url = CommUtils.appendUrl(apiUrl, "/default/user/del");
 
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
@@ -100,61 +101,61 @@ public class OpenImAdminAppletRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----appletDel--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----delDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
 
     /**
-     * 修改小程序
-     * routePath=/applet/update
+     * 默认好友列表
+     * routePath=/default/user/find
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> appletUpdate(OpenImToken openImToken, UpdateAppletReq req) {
+    public OpenImResult<FindDefaultFriendResp> findDefaultFriend(OpenImToken openImToken, FindDefaultFriendReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/update");
+        String url = CommUtils.appendUrl(apiUrl, "/default/user/find");
 
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<FindDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<FindDefaultFriendResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----appletUpdate--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----findDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
 
     /**
-     * 搜索小程序
-     * routePath=/applet/search
+     * 搜索注册时默认好友列表
+     * routePath=/default/user/search
      *
      * @param req
      * @return
      */
-    public OpenImResult<SearchAppletResp> appletSearch(OpenImToken openImToken, SearchAppletReq req) {
+    public OpenImResult<SearchDefaultFriendResp> searchDefaultFriend(OpenImToken openImToken, SearchDefaultFriendReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/applet/search");
+        String url = CommUtils.appendUrl(apiUrl, "/default/user/search");
 
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<SearchAppletResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchAppletResp>>() {
+        OpenImResult<SearchDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchDefaultFriendResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----appletSearch--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----searchDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;

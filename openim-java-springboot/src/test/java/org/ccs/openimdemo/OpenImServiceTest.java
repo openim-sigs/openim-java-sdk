@@ -11,13 +11,19 @@ import org.ccs.openim.admin.resp.NewUserCountResp;
 import org.ccs.openim.admin.resp.UserLoginCountResp;
 import org.ccs.openim.api.conversation.req.GetAllConversationsReq;
 import org.ccs.openim.api.conversation.resp.GetAllConversationsResp;
+import org.ccs.openim.api.friend.req.GetPaginationFriendsReq;
+import org.ccs.openim.api.friend.resp.GetPaginationFriendsResp;
 import org.ccs.openim.api.msg.req.GetServerTimeReq;
 import org.ccs.openim.api.msg.resp.GetServerTimeResp;
 import org.ccs.openim.api.statistics.resp.UserRegisterCountResp;
+import org.ccs.openim.api.user.req.GetUsersOnlineStatusReq;
+import org.ccs.openim.api.user.resp.GetUsersOnlineStatusResp_SuccessResult;
+import org.ccs.openim.api.user.resp.SingleDetail;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.req.SendVerifyCodeReq;
-import org.ccs.openim.chat.resp.GetClientConfigResp;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.chat.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
 import org.ccs.openim.service.OpenImService;
@@ -29,6 +35,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = OpenimDemoApplication.class)
@@ -96,8 +104,26 @@ public class OpenImServiceTest {
     }
 
     @Test
+    public void getUsersOnlineStatus() {
+        GetUsersOnlineStatusReq req = new GetUsersOnlineStatusReq();
+        req.setUserIDs(Arrays.asList(openImToken.getUserId()));
+        OpenImResult<List<GetUsersOnlineStatusResp_SuccessResult>> result = openImService.api().user().getUsersOnlineStatus(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void getUsersOnlineTokenDetail() {
+        GetUsersOnlineStatusReq req = new GetUsersOnlineStatusReq();
+        req.setUserIDs(Arrays.asList(openImToken.getUserId()));
+        OpenImResult<List<SingleDetail>> result = openImService.api().user().getUsersOnlineTokenDetail(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
     public void getClientConfig() {
-        OpenImResult<GetClientConfigResp> result = openImService.admin().user().getClientConfig(openImToken);
+        OpenImResult<GetClientConfigResp> result = openImService.admin().clientConfig().getClientConfig(openImToken);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -142,6 +168,16 @@ public class OpenImServiceTest {
         GetAllConversationsReq req = new GetAllConversationsReq();
         req.setOwnerUserID(openImToken.getUserId());
         OpenImResult<GetAllConversationsResp> result = openImService.api().conversation().getAllConversations(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void getFriendList() {
+        GetPaginationFriendsReq req = new GetPaginationFriendsReq();
+        req.setUserID(openImToken.getUserId());
+        req.setPagination(new RequestPagination(1, 10));
+        OpenImResult<GetPaginationFriendsResp> result = openImService.api().friend().getFriendList(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

@@ -1,10 +1,10 @@
-package org.ccs.openim.admin.req;
+package org.ccs.openim.admin.clientconfig.resp;
 
 import lombok.Data;
 
 import java.util.Map;
 
 @Data
-public class SetClientConfigReq {
+public class GetClientConfigResp {
     private Map<String, String> config;
 }
