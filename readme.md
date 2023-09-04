@@ -42,8 +42,7 @@ openim:
 
 * 3 调用示例
 ```java
-@Resource
-private OpenImService openImService;
+private OpenImService openImService = new OpenImService();
 public void login(){
     String operationId = IdUtil.fastUUID();
     LoginReq loginReq = new LoginReq();
