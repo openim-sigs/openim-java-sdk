@@ -22,9 +22,9 @@ import org.ccs.openim.api.user.resp.SingleDetail;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
-import org.ccs.openim.chat.req.SendVerifyCodeReq;
+import org.ccs.openim.chat.account.req.SendVerifyCodeReq;
 import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
-import org.ccs.openim.chat.resp.LoginResp;
+import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
 import org.ccs.openim.service.OpenImService;
 import org.junit.Before;
@@ -57,12 +57,12 @@ public class OpenImServiceTest {
 
     private void loginChat() {
         String operationId = IdUtil.fastUUID();
-        org.ccs.openim.chat.req.LoginReq loginReq = new org.ccs.openim.chat.req.LoginReq();
+        org.ccs.openim.chat.account.req.LoginReq loginReq = new org.ccs.openim.chat.account.req.LoginReq();
         loginReq.setPlatform(5);
         loginReq.setAreaCode("+86");
         loginReq.setPhoneNumber("17607559255");
         loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
-        OpenImResult<LoginResp> result = openImService.chat().login(loginReq, operationId);
+        OpenImResult<LoginResp> result = openImService.chat().account().login(loginReq, operationId);
         if (result.isOk()) {
             LoginResp loginResp = result.getData();
             openImToken = new OpenImToken(operationId, loginResp.getImToken(), loginResp.getChatToken(), null, loginResp.getUserID());
@@ -87,7 +87,7 @@ public class OpenImServiceTest {
         req.setPlatform(IMPlatform.WEB.getType());
         req.setInvitationCode("+86");
         req.setPhoneNumber("13430701035");
-        OpenImResult result = openImService.chat().codeSend(req);
+        OpenImResult result = openImService.chat().account().codeSend(req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

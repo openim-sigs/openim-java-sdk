@@ -1,15 +1,15 @@
-package org.ccs.openim.admin;
+package org.ccs.openim.chat;
 
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.ccs.openim.admin.req.*;
-import org.ccs.openim.admin.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
-import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
+import org.ccs.openim.chat.account.req.*;
+import org.ccs.openim.chat.account.resp.LoginResp;
+import org.ccs.openim.chat.account.resp.UserRegisterResp;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.OpenimUtils;
@@ -21,24 +21,24 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.PostConstruct;
 
 /**
- * openIm-chat.admin服务接口
+ * openIm-chat服务接口
  *
  * @author chenjh
  */
 @Service
 @Slf4j
-public class OpenImAdminRest {
+public class OpenImChatAccountRest {
     @Autowired
     private RestTemplate restTemplate;
 
-    public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
+    public static final ApiServerType SERVER_TYPE = ApiServerType.CHAT;
 
 
     private HttpHeaders initPostHeader(OpenImToken openImToken) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("authKey", openimConfig.getAuthKey());
         requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getAdminToken());
+        requestHeaders.add(OpenimParams.TOKEN, openImToken.getChatToken());
         requestHeaders.setContentType(MediaType.APPLICATION_JSON);
         return requestHeaders;
     }
@@ -51,24 +51,81 @@ public class OpenImAdminRest {
     }
 
     /**
+     * 发送验证码
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> codeSend(SendVerifyCodeReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/account/code/send");
+
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(OpenimParams.OPERATIONID, "test123");
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----codeSend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * 校验验证码
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> codeVerify(VerifyCodeReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/account/code/verify");
+
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(OpenimParams.OPERATIONID, "test123");
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----codeVerify--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
      * 登入
      *
      * @param loginReq
      * @return
      */
-    public OpenImResult<AdminLoginResp> login(LoginReq loginReq, String operationid) {
+    public OpenImResult<LoginResp> login(LoginReq loginReq, String operationId) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/login");
 
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, operationid);
+        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(loginReq);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<AdminLoginResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<AdminLoginResp>>() {
+        OpenImResult<LoginResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<LoginResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
@@ -79,45 +136,48 @@ public class OpenImAdminRest {
     }
 
     /**
-     * 获取管理员信息
+     * 注册
      *
-     * @param req
+     * @param userReq
      * @return
      */
-    public OpenImResult<GetAdminInfoResp> info(OpenImToken openImToken, GetAdminInfoReq req) {
+    public OpenImResult<UserRegisterResp> register(RegisterUserReq userReq) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/account/info");
+        String url = CommUtils.appendUrl(apiUrl, "/account/register");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(OpenimParams.OPERATIONID, "");
+        String body = JSONUtil.toJsonStr(userReq);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<GetAdminInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetAdminInfoResp>>() {
+        OpenImResult<UserRegisterResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserRegisterResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----info--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
 
     /**
-     * 修改信息
+     * 忘记密码
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> update(OpenImToken openImToken, UpdateUserInfoReq req) {
+    public OpenImResult<String> passwordReset(ResetPasswordReq req) {
+//        ValidateUtils.notNull(loginVo.getPhoneNumber(), "phoneNumber is null");
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/account/update");
+        String url = CommUtils.appendUrl(apiUrl, "/account/password/reset");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
@@ -126,90 +186,37 @@ public class OpenImAdminRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----update--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
-
-
-    /**
-     * newUserCount
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<NewUserCountResp> newUserCount(OpenImToken openImToken, UserRegisterCountReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/statistic/new_user_count");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<NewUserCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<NewUserCountResp>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----newUserCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
 
     /**
-     * loginUserCount
+     * 修改密码
      *
      * @param req
      * @return
      */
-    public OpenImResult<UserLoginCountResp> loginUserCount(OpenImToken openImToken, UserLoginCountReq req) {
+    public OpenImResult<String> passwordChange(OpenImToken openImToken, ChangePasswordReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/statistic/login_user_count");
+        String url = CommUtils.appendUrl(apiUrl, "/account/password/change");
+
 
         HttpHeaders httpHeaders = initPostHeader(openImToken);
+        httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<UserLoginCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserLoginCountResp>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----loginUserCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
     }
-
-
-    /**
-     * searchLogs
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<SearchLogsResp> searchLogs(OpenImToken openImToken, SearchLogsReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/logs/search");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
-
-        OpenImResult<SearchLogsResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchLogsResp>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----newUserCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
-        }
-
-        return openImResult;
-    }
-
 }

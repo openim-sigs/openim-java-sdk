@@ -2,6 +2,7 @@ package org.ccs.openim.service;
 
 import org.ccs.openim.service.admin.OpenImAdminService;
 import org.ccs.openim.service.api.OpenImApiService;
+import org.ccs.openim.service.chat.OpenImChatService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,6 @@ public class OpenImService {
     private OpenImApiService openImApiService;
     @Resource
     private OpenImAdminService openImAdminService;
-
     @Resource
     private OpenImChatService openImChatService;
 

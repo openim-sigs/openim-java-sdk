@@ -5,7 +5,7 @@ import org.ccs.openim.admin.req.*;
 import org.ccs.openim.admin.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.ccs.openim.chat.req.UpdateUserInfoReq;
+import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -1,14 +1,13 @@
-package org.ccs.openim.chat.req;
+package org.ccs.openim.chat.user.req;
 
 import lombok.Data;
 
 import java.util.List;
 
-
 /**
  * @author chenjh
  */
 @Data
-public class FindUserPublicInfoReq {
+public class FindUserFullInfoReq {
     private List<String> userIDs;
 }

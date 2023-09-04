@@ -7,9 +7,18 @@ import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
-import org.ccs.openim.chat.OpenImChatRest;
+import org.ccs.openim.chat.OpenImChatAccountRest;
+import org.ccs.openim.chat.OpenImChatOtherRest;
+import org.ccs.openim.chat.OpenImChatUserRest;
+import org.ccs.openim.chat.account.req.LoginReq;
+import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.chat.req.*;
 import org.ccs.openim.chat.resp.*;
+import org.ccs.openim.chat.user.req.*;
+import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
+import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
+import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
+import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
 import org.ccs.openim.constants.IMPlatform;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +34,14 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = OpenimApplication.class)
 @ActiveProfiles(value = {"openim", "dev"})
-public class OpenImChatRestTest {
+public class OpenImChatOtherRestTest {
 
     @Resource
-    private OpenImChatRest openImChatRest;
+    private OpenImChatOtherRest openImChatOtherRest;
+    @Resource
+    private OpenImChatUserRest openImChatUserRest;
+    @Resource
+    private OpenImChatAccountRest openImChatAccountRest;
 
 
     private static OpenImToken openImToken;
@@ -42,7 +55,7 @@ public class OpenImChatRestTest {
             loginReq.setAreaCode("+86");
             loginReq.setPhoneNumber("17607559255");
             loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
-            OpenImResult<LoginResp> result = openImChatRest.login(loginReq, operationId);
+            OpenImResult<LoginResp> result = openImChatAccountRest.login(loginReq, operationId);
             if (result.isOk()) {
                 LoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), loginResp.getChatToken(), null, loginResp.getUserID());
@@ -66,28 +79,28 @@ public class OpenImChatRestTest {
         loginReq.setAreaCode("+86");
         loginReq.setPhoneNumber("17607559255");
         loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
-        OpenImResult result = openImChatRest.login(loginReq, operationId);
+        OpenImResult result = openImChatAccountRest.login(loginReq, operationId);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
 
     }
 
     @Test
-    public void update() {
+    public void updateUserInfo() {
         UpdateUserInfoReq update = new UpdateUserInfoReq();
         update.setEmail("test@baidu.com");
         update.setNickname("justin");
-        OpenImResult<String> result = openImChatRest.update(openImToken, update);
+        OpenImResult<String> result = openImChatUserRest.updateUserInfo(openImToken, update);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
-    public void findUserFull() {
+    public void findUserFullInfo() {
         FindUserFullInfoReq req = new FindUserFullInfoReq();
         List<String> userIds = Arrays.asList("2837113445", "123");
         req.setUserIDs(userIds);
-        OpenImResult<FindUserFullInfoResp> result = openImChatRest.findUserFull(openImToken, req);
+        OpenImResult<FindUserFullInfoResp> result = openImChatUserRest.findUserFullInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -97,7 +110,7 @@ public class OpenImChatRestTest {
         FindUserPublicInfoReq req = new FindUserPublicInfoReq();
         List<String> userIds = Arrays.asList("2837113445", "123");
         req.setUserIDs(userIds);
-        OpenImResult<FindUserPublicInfoResp> result = openImChatRest.findUserPublic(openImToken, req);
+        OpenImResult<FindUserPublicInfoResp> result = openImChatUserRest.findUserPublicInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -107,7 +120,7 @@ public class OpenImChatRestTest {
         SearchUserPublicInfoReq req = new SearchUserPublicInfoReq();
         req.setKeyword("test");
         req.setPagination(new RequestPagination());
-        OpenImResult<SearchUserPubliclInfoResp> result = openImChatRest.searchUserPublic(openImToken, req);
+        OpenImResult<SearchUserPubliclInfoResp> result = openImChatUserRest.searchUserPublicInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -117,7 +130,7 @@ public class OpenImChatRestTest {
         SearchUserFullInfoReq req = new SearchUserFullInfoReq();
         req.setKeyword("test");
         req.setPagination(new RequestPagination());
-        OpenImResult<SearchUserFullInfoResp> result = openImChatRest.searchUserFull(openImToken, req);
+        OpenImResult<SearchUserFullInfoResp> result = openImChatUserRest.searchUserFullInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -125,7 +138,7 @@ public class OpenImChatRestTest {
     @Test
     public void appletFind() {
         FindAppletReq req = new FindAppletReq();
-        OpenImResult<FindAppletResp> result = openImChatRest.appletFind(openImToken, req);
+        OpenImResult<FindAppletResp> result = openImChatOtherRest.appletFind(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -133,7 +146,7 @@ public class OpenImChatRestTest {
     @Test
     public void getClientConfig() {
         GetClientConfigReq req = new GetClientConfigReq();
-        OpenImResult<GetClientConfigResp> result = openImChatRest.getClientConfig(openImToken, req);
+        OpenImResult<GetClientConfigResp> result = openImChatOtherRest.getClientConfig(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

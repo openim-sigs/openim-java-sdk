@@ -19,9 +19,10 @@ import org.ccs.openim.api.vo.UserInfo;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
-import org.ccs.openim.chat.OpenImChatRest;
-import org.ccs.openim.chat.req.LoginReq;
-import org.ccs.openim.chat.resp.LoginResp;
+import org.ccs.openim.chat.OpenImChatAccountRest;
+import org.ccs.openim.chat.OpenImChatOtherRest;
+import org.ccs.openim.chat.account.req.LoginReq;
+import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +40,9 @@ import java.util.List;
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImApiUserRestTest {
     @Resource
-    private OpenImChatRest openImChatRest;
+    private OpenImChatOtherRest openImChatOtherRest;
+    @Resource
+    private OpenImChatAccountRest openImChatAccountRest;
     @Resource
     private OpenImApiUserRest openImApiUserRest;
     @Resource
@@ -56,7 +59,7 @@ public class OpenImApiUserRestTest {
             loginReq.setAreaCode("+86");
             loginReq.setPhoneNumber("17607559255");
             loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
-            OpenImResult<LoginResp> result = openImChatRest.login(loginReq, operationId);
+            OpenImResult<LoginResp> result = openImChatAccountRest.login(loginReq, operationId);
             if (result.isOk()) {
                 LoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), loginResp.getChatToken(), null, loginResp.getUserID());

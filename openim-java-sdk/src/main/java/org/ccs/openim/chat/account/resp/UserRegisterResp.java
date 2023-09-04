@@ -1,4 +1,4 @@
-package org.ccs.openim.chat.resp;
+package org.ccs.openim.chat.account.resp;
 
 import lombok.Data;
 

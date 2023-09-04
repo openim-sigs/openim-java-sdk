@@ -22,7 +22,7 @@ import org.ccs.openim.admin.resp.GetAdminInfoResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
-import org.ccs.openim.chat.req.UpdateUserInfoReq;
+import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
