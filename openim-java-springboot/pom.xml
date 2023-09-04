@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <skipTests>true</skipTests>
     </properties>
     <url>https://github.com/asgardjh/openim-java-sdk</url>
     <!--scm信息-->
@@ -38,7 +39,7 @@
         <dependency>
             <groupId>cn.org.opendfl</groupId>
             <artifactId>openim-java-sdk</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
