@@ -7,14 +7,11 @@ import org.ccs.openim.api.superGroup.req.GetJoinedSuperGroupListReq;
 import org.ccs.openim.api.superGroup.resp.GetJoinedSuperGroupListResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiSuperGroupService {
-    @Resource
-    private OpenImApiSuperGroupRest openImApiSuperGroupRest;
+
+    private OpenImApiSuperGroupRest openImApiSuperGroupRest = new OpenImApiSuperGroupRest();
 
     /**
      * 获取某个用户加入的超级群

@@ -11,24 +11,21 @@ import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Open-IM-Server服务接口
  *
  * @author chenjh
  */
-@Service
+
 @Slf4j
 public class OpenImApiGroupRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImApiGroupRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
@@ -44,7 +41,7 @@ public class OpenImApiGroupRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -64,7 +61,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<CreateGroupResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<CreateGroupResp>>() {
@@ -92,7 +89,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -120,7 +117,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupsInfoResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupsInfoResp>>() {
@@ -148,7 +145,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupApplicationListResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupApplicationListResp>>() {
@@ -176,7 +173,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetUserReqApplicationListResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetUserReqApplicationListResp>>() {
@@ -204,7 +201,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupUsersReqApplicationListResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupUsersReqApplicationListResp>>() {
@@ -233,7 +230,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -261,7 +258,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupAbstractInfoResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupAbstractInfoResp>>() {
@@ -289,7 +286,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -317,7 +314,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -345,7 +342,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -373,7 +370,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -401,7 +398,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -429,7 +426,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -457,7 +454,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -485,7 +482,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -514,7 +511,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -542,7 +539,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupMemberListResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMemberListResp>>() {
@@ -570,7 +567,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupMembersInfoResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMembersInfoResp>>() {
@@ -598,7 +595,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
@@ -626,7 +623,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupsResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupsResp>>() {
@@ -654,7 +651,7 @@ public class OpenImApiGroupRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetGroupMemberUserIDsResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMemberUserIDsResp>>() {

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service
+
 public class OpenImApiThirdService {
-    @Resource
-    private OpenImApiThirdRest openImApiThirdRest;
+
+    private OpenImApiThirdRest openImApiThirdRest = new OpenImApiThirdRest();
 
     /**
      * fcmUpdateToken

@@ -21,8 +21,10 @@ import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
+import org.ccs.openim.utils.OpenimUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,19 +43,24 @@ import java.util.Map;
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImAdminRestTest {
 
-    @Resource
-    private OpenImAdminRest openImAdminRest;
 
-    @Resource
-    private OpenImAdminClientConfigRest openImAdminClientConfigRest;
-    @Resource
-    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest;
+    private OpenImAdminRest openImAdminRest = new OpenImAdminRest();
+
+
+    private OpenImAdminClientConfigRest openImAdminClientConfigRest = new OpenImAdminClientConfigRest();
+
+    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest = new OpenImAdminDefaultUserRest();
 
     private static OpenImToken openImToken;
+
+    @Resource
+    private OpenimConfig openimConfig;
+
 
     @Before
     public void initToken() {
         if (openImToken == null) {
+            OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             LoginReq loginReq = new LoginReq();
             loginReq.setAccount("openIMAdmin");

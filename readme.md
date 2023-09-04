@@ -1,6 +1,6 @@
 # openim-sdk
 
-openim api java调用sdk
+openim api java调用sdk 无spring版
 
 
 # 目的：

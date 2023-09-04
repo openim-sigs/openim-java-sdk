@@ -8,14 +8,11 @@ import org.ccs.openim.admin.forbidden.req.SearchIPForbiddenReq;
 import org.ccs.openim.admin.forbidden.resp.SearchIPForbiddenResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminForbiddenService {
-    @Resource
-    private OpenImAdminForbiddenRest openImAdminForbiddenRest;
+
+    private OpenImAdminForbiddenRest openImAdminForbiddenRest = new OpenImAdminForbiddenRest();
 
 
     /**

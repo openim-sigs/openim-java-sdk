@@ -10,14 +10,11 @@ import org.ccs.openim.api.conversation.resp.GetConversationResp;
 import org.ccs.openim.api.conversation.resp.GetConversationsResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiConversationService {
-    @Resource
-    private OpenImApiConversationRest openImApiConversationRest;
+
+    private OpenImApiConversationRest openImApiConversationRest = new OpenImApiConversationRest();
 
     /**
      * getAllConversations

@@ -5,14 +5,11 @@ import org.ccs.openim.api.friend.req.*;
 import org.ccs.openim.api.friend.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiFriendService {
-    @Resource
-    private OpenImApiFriendRest openImApiFriendRest;
+
+    private OpenImApiFriendRest openImApiFriendRest = new OpenImApiFriendRest();
 
     /**
      * 删除好友

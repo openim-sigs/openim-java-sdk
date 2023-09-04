@@ -8,14 +8,11 @@ import org.ccs.openim.api.auth.resp.ParseTokenResp;
 import org.ccs.openim.api.auth.resp.UserTokenResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiAuthService {
-    @Resource
-    private OpenImApiAuthRest openImApiAuthRest;
+
+    private OpenImApiAuthRest openImApiAuthRest = new OpenImApiAuthRest();
 
     /**
      * 获取用户token

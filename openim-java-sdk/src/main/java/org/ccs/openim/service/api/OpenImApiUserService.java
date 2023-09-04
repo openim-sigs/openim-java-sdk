@@ -5,15 +5,13 @@ import org.ccs.openim.api.user.req.*;
 import org.ccs.openim.api.user.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+
 public class OpenImApiUserService {
-    @Resource
-    private OpenImApiUserRest openImApiUserRest;
+
+    private OpenImApiUserRest openImApiUserRest = new OpenImApiUserRest();
 
 
     /**

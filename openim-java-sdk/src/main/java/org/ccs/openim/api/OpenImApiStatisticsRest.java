@@ -17,24 +17,20 @@ import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Open-IM-Server服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImApiStatisticsRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImApiStatisticsRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
@@ -50,7 +46,7 @@ public class OpenImApiStatisticsRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -73,7 +69,7 @@ public class OpenImApiStatisticsRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<UserRegisterCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserRegisterCountResp>>() {
         }, false);
@@ -102,7 +98,7 @@ public class OpenImApiStatisticsRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetActiveUserResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetActiveUserResp>>() {
         }, false);
@@ -131,7 +127,7 @@ public class OpenImApiStatisticsRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GroupCreateCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GroupCreateCountResp>>() {
         }, false);
@@ -160,7 +156,7 @@ public class OpenImApiStatisticsRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetActiveGroupResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetActiveGroupResp>>() {
         }, false);

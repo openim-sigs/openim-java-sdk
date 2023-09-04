@@ -6,14 +6,11 @@ import org.ccs.openim.chat.OpenImChatAccountRest;
 import org.ccs.openim.chat.account.req.*;
 import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.chat.account.resp.UserRegisterResp;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenimChatAccountService {
-    @Resource
-    private OpenImChatAccountRest openImChatAccountRest;
+
+    private OpenImChatAccountRest openImChatAccountRest = new OpenImChatAccountRest();
 
     /**
      * 发送验证码

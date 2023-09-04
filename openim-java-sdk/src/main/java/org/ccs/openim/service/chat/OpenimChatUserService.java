@@ -8,15 +8,10 @@ import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenimChatUserService {
-
-    @Resource
-    private OpenImChatUserRest openImChatUserRest;
+    private OpenImChatUserRest openImChatUserRest = new OpenImChatUserRest();
 
 
     /**

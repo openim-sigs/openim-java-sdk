@@ -5,14 +5,11 @@ import org.ccs.openim.api.msg.req.*;
 import org.ccs.openim.api.msg.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiMsgService {
-    @Resource
-    private OpenImApiMsgRest openImApiMsgRest;
+
+    private OpenImApiMsgRest openImApiMsgRest = new OpenImApiMsgRest();
 
     /**
      * 获取最小最大seq（包括用户的，以及指定群组的）

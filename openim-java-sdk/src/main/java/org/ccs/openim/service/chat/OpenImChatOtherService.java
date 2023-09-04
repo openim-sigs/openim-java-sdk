@@ -9,14 +9,10 @@ import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
 import org.ccs.openim.chat.req.OpenIMCallbackReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImChatOtherService {
-    @Resource
-    private OpenImChatOtherRest openImChatOtherRest;
+    private OpenImChatOtherRest openImChatOtherRest = new OpenImChatOtherRest();
 
 
     /**

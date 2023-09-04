@@ -9,14 +9,11 @@ import org.ccs.openim.api.statistics.resp.GroupCreateCountResp;
 import org.ccs.openim.api.statistics.resp.UserRegisterCountResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiStatisticsService {
-    @Resource
-    private OpenImApiStatisticsRest openImApiStatisticsRest;
+
+    private OpenImApiStatisticsRest openImApiStatisticsRest = new OpenImApiStatisticsRest();
 
     /**
      * Get the total number of users and the user increment within a specified time period

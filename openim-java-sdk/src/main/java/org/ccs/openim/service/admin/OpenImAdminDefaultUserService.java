@@ -9,14 +9,11 @@ import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminDefaultUserService {
-    @Resource
-    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest;
+
+    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest = new OpenImAdminDefaultUserRest();
 
 
     /**

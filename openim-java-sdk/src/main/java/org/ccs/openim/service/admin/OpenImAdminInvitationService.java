@@ -8,14 +8,11 @@ import org.ccs.openim.admin.invitationCode.req.SearchInvitationCodeReq;
 import org.ccs.openim.admin.invitationCode.resp.SearchInvitationCodeResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminInvitationService {
-    @Resource
-    private OpenImAdminInvitationCodeRest openImAdminInvitationCodeRest;
+
+    private OpenImAdminInvitationCodeRest openImAdminInvitationCodeRest = new OpenImAdminInvitationCodeRest();
 
 
     /**

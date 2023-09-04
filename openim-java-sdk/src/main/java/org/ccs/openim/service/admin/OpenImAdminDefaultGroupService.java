@@ -9,14 +9,11 @@ import org.ccs.openim.admin.defaultGroup.resp.FindDefaultGroupResp;
 import org.ccs.openim.admin.defaultGroup.resp.SearchDefaultGroupResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminDefaultGroupService {
-    @Resource
-    private OpenImAdminDefaultGroupRest openImAdminDefaultGroupRest;
+
+    private OpenImAdminDefaultGroupRest openImAdminDefaultGroupRest = new OpenImAdminDefaultGroupRest();
 
 
     /**

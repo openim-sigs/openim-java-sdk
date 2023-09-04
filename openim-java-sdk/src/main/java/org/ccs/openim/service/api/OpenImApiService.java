@@ -1,27 +1,22 @@
 package org.ccs.openim.service.api;
 
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-
-@Service
 public class OpenImApiService {
-    @Resource
-    private OpenImApiUserService openImApiUserService;
-    @Resource
-    private OpenImApiAuthService openImApiAuthService;
-    @Resource
-    private OpenImApiGroupService openImApiGroupService;
-    @Resource
-    private OpenImApiFriendService openImApiFriendService;
-    @Resource
-    private OpenImApiMsgService openImApiMsgService;
-    @Resource
-    private OpenImApiStatisticsService openImApiStatisticsService;
-    @Resource
-    private OpenImApiConversationService openImApiConversationService;
-    @Resource
-    private OpenImApiThirdService openImApiThirdService;
+
+    private OpenImApiUserService openImApiUserService = new OpenImApiUserService();
+
+    private OpenImApiAuthService openImApiAuthService = new OpenImApiAuthService();
+
+    private OpenImApiGroupService openImApiGroupService = new OpenImApiGroupService();
+
+    private OpenImApiFriendService openImApiFriendService = new OpenImApiFriendService();
+
+    private OpenImApiMsgService openImApiMsgService = new OpenImApiMsgService();
+
+    private OpenImApiStatisticsService openImApiStatisticsService = new OpenImApiStatisticsService();
+
+    private OpenImApiConversationService openImApiConversationService = new OpenImApiConversationService();
+
+    private OpenImApiThirdService openImApiThirdService = new OpenImApiThirdService();
 
     /**
      * 用户

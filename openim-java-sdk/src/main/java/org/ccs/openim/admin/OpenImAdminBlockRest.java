@@ -13,24 +13,20 @@ import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * openIm-chat.admin服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImAdminBlockRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImAdminBlockRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
 
@@ -46,7 +42,7 @@ public class OpenImAdminBlockRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -66,7 +62,7 @@ public class OpenImAdminBlockRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -93,7 +89,7 @@ public class OpenImAdminBlockRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -121,7 +117,7 @@ public class OpenImAdminBlockRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<SearchBlockUserResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchBlockUserResp>>() {
         }, false);

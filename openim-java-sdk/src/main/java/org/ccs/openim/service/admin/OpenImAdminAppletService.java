@@ -8,14 +8,11 @@ import org.ccs.openim.admin.applet.req.UpdateAppletReq;
 import org.ccs.openim.admin.applet.resp.SearchAppletResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminAppletService {
-    @Resource
-    private OpenImAdminAppletRest openImAdminAppletRest;
+
+    private OpenImAdminAppletRest openImAdminAppletRest = new OpenImAdminAppletRest();
 
 
     /**

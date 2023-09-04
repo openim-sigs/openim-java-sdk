@@ -6,14 +6,11 @@ import org.ccs.openim.admin.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminUserService {
-    @Resource
-    private OpenImAdminRest openImAdminRest;
+
+    private OpenImAdminRest openImAdminRest = new OpenImAdminRest();
 
     /**
      * 登入
@@ -47,7 +44,6 @@ public class OpenImAdminUserService {
     public OpenImResult<String> update(OpenImToken openImToken, UpdateUserInfoReq req) {
         return openImAdminRest.update(openImToken, req);
     }
-
 
 
     /**

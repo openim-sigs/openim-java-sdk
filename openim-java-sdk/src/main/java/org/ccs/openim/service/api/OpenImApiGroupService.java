@@ -5,14 +5,11 @@ import org.ccs.openim.api.group.req.*;
 import org.ccs.openim.api.group.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiGroupService {
-    @Resource
-    private OpenImApiGroupRest openImApiGroupRest;
+
+    private OpenImApiGroupRest openImApiGroupRest = new OpenImApiGroupRest();
 
     /**
      * 创建群

@@ -3,6 +3,7 @@ package org.ccs.openimdemo;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.admin.req.LoginReq;
 import org.ccs.openim.admin.req.UserLoginCountReq;
 import org.ccs.openim.admin.req.UserRegisterCountReq;
@@ -23,10 +24,11 @@ import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.account.req.SendVerifyCodeReq;
-import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
 import org.ccs.openim.service.OpenImService;
+import org.ccs.openim.utils.OpenimUtils;
+import org.ccs.openimdemo.config.OpenimConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,14 +44,18 @@ import java.util.List;
 @SpringBootTest(classes = OpenimDemoApplication.class)
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImServiceTest {
-    @Resource
-    private OpenImService openImService;
+
+    private OpenImService openImService = new OpenImService();
 
     private static OpenImToken openImToken;
+
+    @Resource
+    private OpenimConfiguration openimConfiguration;
 
     @Before
     public void initToken() {
         if (openImToken == null) {
+            OpenimUtils.setOpenimConfig(openimConfiguration);
 //            loginChat();
             loginAdmin();
         }
