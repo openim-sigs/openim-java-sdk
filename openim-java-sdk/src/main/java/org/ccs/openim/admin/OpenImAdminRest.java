@@ -154,7 +154,7 @@ public class OpenImAdminRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----adminUpdateInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----resetUserPassword--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
