@@ -6,20 +6,25 @@ import junit.framework.TestCase;
 import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.OpenImChatAccountRest;
 import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.OpenImChatUserRest;
 import org.ccs.openim.chat.account.req.LoginReq;
 import org.ccs.openim.chat.account.resp.LoginResp;
-import org.ccs.openim.chat.req.*;
-import org.ccs.openim.chat.resp.*;
+import org.ccs.openim.chat.req.CallbackBeforeAddFriendReq;
+import org.ccs.openim.chat.req.FindAppletReq;
+import org.ccs.openim.chat.req.GetClientConfigReq;
+import org.ccs.openim.chat.req.OpenIMCallbackReq;
+import org.ccs.openim.chat.resp.FindAppletResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
 import org.ccs.openim.constants.IMPlatform;
+import org.ccs.openim.utils.OpenimUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,10 +50,14 @@ public class OpenImChatOtherRestTest {
 
 
     private static OpenImToken openImToken;
+    @Resource
+    private OpenimConfig openimConfig;
+
 
     @Before
     public void initToken() {
         if (openImToken == null) {
+            OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             LoginReq loginReq = new LoginReq();
             loginReq.setPlatform(IMPlatform.WINDOWS.getType());
@@ -128,7 +137,7 @@ public class OpenImChatOtherRestTest {
     @Test
     public void searchUserFull() {
         SearchUserFullInfoReq req = new SearchUserFullInfoReq();
-        req.setKeyword("test");
+//        req.setKeyword("test");
         req.setPagination(new RequestPagination());
         OpenImResult<SearchUserFullInfoResp> result = openImChatUserRest.searchUserFullInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
@@ -147,6 +156,20 @@ public class OpenImChatOtherRestTest {
     public void getClientConfig() {
         GetClientConfigReq req = new GetClientConfigReq();
         OpenImResult<GetClientConfigResp> result = openImChatOtherRest.getClientConfig(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void callbackOpenIm() {
+        CallbackBeforeAddFriendReq reqCallback = new CallbackBeforeAddFriendReq();
+        reqCallback.setReqMsg("test");
+        reqCallback.setFromUserID(openImToken.getUserId());
+        reqCallback.setReqoperationIDMsg(openImToken.getOperationId());
+        OpenIMCallbackReq req = new OpenIMCallbackReq();
+        req.setCommand("callbackBeforeAddFriendCommand");
+        req.setBody(JSONUtil.toJsonStr(reqCallback));
+        OpenImResult<String> result = openImChatOtherRest.callbackOpenIm(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

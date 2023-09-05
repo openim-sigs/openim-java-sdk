@@ -56,14 +56,14 @@ public class OpenImChatAccountRest {
      * @param req
      * @return
      */
-    public OpenImResult<String> codeSend(SendVerifyCodeReq req) {
+    public OpenImResult<String> codeSend(SendVerifyCodeReq req, String operationId) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/code/send");
 
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, "test123");
+        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
@@ -84,14 +84,14 @@ public class OpenImChatAccountRest {
      * @param req
      * @return
      */
-    public OpenImResult<String> codeVerify(VerifyCodeReq req) {
+    public OpenImResult<String> codeVerify(VerifyCodeReq req, String operationId) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/code/verify");
 
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, "test123");
+        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);

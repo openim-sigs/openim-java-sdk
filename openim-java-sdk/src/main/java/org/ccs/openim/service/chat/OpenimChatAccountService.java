@@ -17,24 +17,24 @@ public class OpenimChatAccountService {
 
     /**
      * 发送验证码
-     * routePath=/code/send
+     * routePath=/account/code/send
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> codeSend(SendVerifyCodeReq req) {
-        return openImChatAccountRest.codeSend(req);
+    public OpenImResult<String> codeSend(SendVerifyCodeReq req, String operationId) {
+        return openImChatAccountRest.codeSend(req, operationId);
     }
 
     /**
      * 校验验证码
-     * routePath=/code/verify
+     * routePath=/account/code/verify
      *
      * @param req
      * @return
      */
-    public OpenImResult<String> codeVerify(VerifyCodeReq req) {
-        return openImChatAccountRest.codeVerify(req);
+    public OpenImResult<String> codeVerify(VerifyCodeReq req, String operationId) {
+        return openImChatAccountRest.codeVerify(req, operationId);
     }
 
 
@@ -62,7 +62,7 @@ public class OpenimChatAccountService {
 
     /**
      * 忘记密码
-     * routePath=/password/reset
+     * routePath=/account/password/reset
      *
      * @param req
      * @return
@@ -73,7 +73,7 @@ public class OpenimChatAccountService {
 
     /**
      * 修改密码
-     * routePath=/password/change
+     * routePath=/account/password/change
      *
      * @param req
      * @return

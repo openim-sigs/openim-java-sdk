@@ -16,7 +16,7 @@ import org.ccs.openim.admin.defaultUser.req.SearchDefaultFriendReq;
 import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.admin.req.GetAdminInfoReq;
-import org.ccs.openim.admin.req.LoginReq;
+import org.ccs.openim.admin.req.AdminLoginReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
 import org.ccs.openim.base.OpenImResult;
@@ -55,10 +55,10 @@ public class OpenImAdminRestTest {
     public void initToken() {
         if (openImToken == null) {
             String operationId = IdUtil.fastUUID();
-            LoginReq loginReq = new LoginReq();
-            loginReq.setAccount("openIMAdmin");
-            loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-            OpenImResult<AdminLoginResp> result = openImAdminRest.login(loginReq, operationId);
+            AdminLoginReq adminLoginReq = new AdminLoginReq();
+            adminLoginReq.setAccount("openIMAdmin");
+            adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+            OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
@@ -75,20 +75,20 @@ public class OpenImAdminRestTest {
     }
 
     @Test
-    public void info() {
+    public void adminInfo() {
         GetAdminInfoReq req = new GetAdminInfoReq();
-        OpenImResult<GetAdminInfoResp> result = openImAdminRest.info(openImToken, req);
+        OpenImResult<GetAdminInfoResp> result = openImAdminRest.adminInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
 
     }
 
     @Test
-    public void update() {
+    public void adminUpdateInfo() {
         UpdateUserInfoReq getAdminInfoResp = new UpdateUserInfoReq();
         getAdminInfoResp.setAccount("openIMAdmin");
         getAdminInfoResp.setNickname("system30");
-        OpenImResult result = openImAdminRest.update(openImToken, getAdminInfoResp);
+        OpenImResult result = openImAdminRest.adminUpdateInfo(openImToken, getAdminInfoResp);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
