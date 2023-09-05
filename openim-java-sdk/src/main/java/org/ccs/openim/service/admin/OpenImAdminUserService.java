@@ -88,4 +88,15 @@ public class OpenImAdminUserService {
     public OpenImResult<SearchLogsResp> searchLogs(OpenImToken openImToken, SearchLogsReq req) {
         return openImAdminRest.searchLogs(openImToken, req);
     }
+
+    /**
+     * deleteLogs
+     * routePath=/logs/delete
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> deleteLogs(OpenImToken openImToken, DeleteLogsReq req){
+        return openImAdminRest.deleteLogs(openImToken, req);
+    }
 }

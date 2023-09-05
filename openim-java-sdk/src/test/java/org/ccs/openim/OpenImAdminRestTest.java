@@ -17,8 +17,10 @@ import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.admin.req.GetAdminInfoReq;
 import org.ccs.openim.admin.req.AdminLoginReq;
+import org.ccs.openim.admin.req.SearchLogsReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
+import org.ccs.openim.admin.resp.SearchLogsResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
@@ -162,6 +164,19 @@ public class OpenImAdminRestTest {
         req.setKeyword("test");
         req.setPagination(new RequestPagination(1, 10));
         OpenImResult<SearchDefaultFriendResp> result = openImAdminDefaultUserRest.searchDefaultFriend(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void searchLogs(){
+        SearchLogsReq req = new SearchLogsReq();
+        req.setKeyword("test");
+        Long curTime = System.currentTimeMillis();
+        req.setStartTime(curTime);
+        req.setEndTime(curTime-864000*1000*3);
+        req.setPagination(new RequestPagination(1, 10));
+        OpenImResult<SearchLogsResp> result = openImAdminRest.searchLogs(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
