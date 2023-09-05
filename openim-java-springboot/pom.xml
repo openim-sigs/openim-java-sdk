@@ -39,7 +39,7 @@
         <dependency>
             <groupId>cn.org.opendfl</groupId>
             <artifactId>openim-java-sdk</artifactId>
-            <version>0.3-nospring</version>
+            <version>0.4-nospring</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
