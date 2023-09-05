@@ -4,7 +4,11 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
 import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
-import org.ccs.openim.admin.req.LoginReq;
+import org.ccs.openim.admin.forbidden.req.AddIPForbiddenReq;
+import org.ccs.openim.admin.forbidden.req.IPForbiddenAdd;
+import org.ccs.openim.admin.forbidden.req.SearchIPForbiddenReq;
+import org.ccs.openim.admin.forbidden.resp.SearchIPForbiddenResp;
+import org.ccs.openim.admin.req.AdminLoginReq;
 import org.ccs.openim.admin.req.UserLoginCountReq;
 import org.ccs.openim.admin.req.UserRegisterCountReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
@@ -23,9 +27,13 @@ import org.ccs.openim.api.user.resp.SingleDetail;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.RequestPagination;
+import org.ccs.openim.chat.account.req.LoginReq;
 import org.ccs.openim.chat.account.req.SendVerifyCodeReq;
+import org.ccs.openim.chat.account.req.VerifyCodeReq;
 import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
+import org.ccs.openim.constants.LimitIpType;
+import org.ccs.openim.constants.VerificationCodeType;
 import org.ccs.openim.service.OpenImService;
 import org.ccs.openim.utils.OpenimUtils;
 import org.ccs.openimdemo.config.OpenimConfiguration;
@@ -57,13 +65,13 @@ public class OpenImServiceTest {
         if (openImToken == null) {
             OpenimUtils.setOpenimConfig(openimConfiguration);
 //            loginChat();
-            loginAdmin();
+            adminLoginInit();
         }
     }
 
     private void loginChat() {
         String operationId = IdUtil.fastUUID();
-        org.ccs.openim.chat.account.req.LoginReq loginReq = new org.ccs.openim.chat.account.req.LoginReq();
+        LoginReq loginReq = new LoginReq();
         loginReq.setPlatform(5);
         loginReq.setAreaCode("+86");
         loginReq.setPhoneNumber("17607559255");
@@ -75,12 +83,12 @@ public class OpenImServiceTest {
         }
     }
 
-    private void loginAdmin() {
+    private void adminLoginInit() {
         String operationId = IdUtil.fastUUID();
-        LoginReq loginReq = new LoginReq();
-        loginReq.setAccount("openIMAdmin");
-        loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-        OpenImResult<AdminLoginResp> result = openImService.admin().user().login(loginReq, operationId);
+        AdminLoginReq adminLoginReq = new AdminLoginReq();
+        adminLoginReq.setAccount("openIMAdmin");
+        adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+        OpenImResult<AdminLoginResp> result = openImService.admin().user().adminLogin(adminLoginReq, operationId);
         if (result.isOk()) {
             AdminLoginResp loginResp = result.getData();
             openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
@@ -91,20 +99,34 @@ public class OpenImServiceTest {
     public void codeSend() {
         SendVerifyCodeReq req = new SendVerifyCodeReq();
         req.setPlatform(IMPlatform.WEB.getType());
-        req.setInvitationCode("+86");
-        req.setPhoneNumber("13430701035");
-        OpenImResult result = openImService.chat().account().codeSend(req);
+//        req.setInvitationCode("+86");
+        req.setAreaCode("+86");
+        req.setPhoneNumber("17607559255");
+        req.setUsedFor(VerificationCodeType.Login.getType());
+        OpenImResult result = openImService.chat().account().codeSend(req, openImToken.getOperationId());
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
     @Test
-    public void login() {
+    public void codeVerify() {
+        VerifyCodeReq req = new VerifyCodeReq();
+        req.setVerifyCode("666666");
+        req.setAreaCode("+86");
+        req.setPhoneNumber("17607559255");
+        OpenImResult result = openImService.chat().account().codeVerify(req, openImToken.getOperationId());
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+
+    @Test
+    public void adminLogin() {
         String operationId = IdUtil.fastUUID();
-        LoginReq loginReq = new LoginReq();
-        loginReq.setAccount("openIMAdmin");
-        loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-        OpenImResult<AdminLoginResp> result = openImService.admin().user().login(loginReq, operationId);
+        AdminLoginReq adminLoginReq = new AdminLoginReq();
+        adminLoginReq.setAccount("openIMAdmin");
+        adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+        OpenImResult<AdminLoginResp> result = openImService.admin().user().adminLogin(adminLoginReq, operationId);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
@@ -184,6 +206,26 @@ public class OpenImServiceTest {
         req.setUserID(openImToken.getUserId());
         req.setPagination(new RequestPagination(1, 10));
         OpenImResult<GetPaginationFriendsResp> result = openImService.api().friend().getFriendList(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void addIPForbidden() {
+        AddIPForbiddenReq req = new AddIPForbiddenReq();
+        req.setForbiddens(Arrays.asList(new IPForbiddenAdd("192.168.0.200", true, true)));
+        OpenImResult<String> result = openImService.admin().forbidden().addIPForbidden(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void searchIPForbidden() {
+        SearchIPForbiddenReq req = new SearchIPForbiddenReq();
+        req.setPagination(new RequestPagination(1, 10));
+        req.setKeyword("192.168");
+        req.setStatus(LimitIpType.NIL.getType());
+        OpenImResult<SearchIPForbiddenResp> result = openImService.admin().forbidden().searchIPForbidden(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

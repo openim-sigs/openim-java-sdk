@@ -16,11 +16,11 @@ public class OpenImAdminUserService {
      * 登入
      * routePath=/account/login
      *
-     * @param loginReq
+     * @param adminLoginReq
      * @return
      */
-    public OpenImResult<AdminLoginResp> login(LoginReq loginReq, String operationid) {
-        return openImAdminRest.login(loginReq, operationid);
+    public OpenImResult<AdminLoginResp> adminLogin(AdminLoginReq adminLoginReq, String operationid) {
+        return openImAdminRest.adminLogin(adminLoginReq, operationid);
     }
 
     /**
@@ -30,8 +30,8 @@ public class OpenImAdminUserService {
      * @param req
      * @return
      */
-    public OpenImResult<GetAdminInfoResp> info(OpenImToken openImToken, GetAdminInfoReq req) {
-        return openImAdminRest.info(openImToken, req);
+    public OpenImResult<GetAdminInfoResp> adminInfo(OpenImToken openImToken, GetAdminInfoReq req) {
+        return openImAdminRest.adminInfo(openImToken, req);
     }
 
     /**
@@ -41,8 +41,8 @@ public class OpenImAdminUserService {
      * @param req
      * @return
      */
-    public OpenImResult<String> update(OpenImToken openImToken, UpdateUserInfoReq req) {
-        return openImAdminRest.update(openImToken, req);
+    public OpenImResult<String> adminUpdateInfo(OpenImToken openImToken, UpdateUserInfoReq req) {
+        return openImAdminRest.adminUpdateInfo(openImToken, req);
     }
 
 

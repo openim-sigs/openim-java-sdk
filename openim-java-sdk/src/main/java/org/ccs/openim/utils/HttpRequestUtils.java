@@ -1,13 +1,16 @@
 package org.ccs.openim.utils;
 
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 
 
 /**
  * 支持更换接口调用方式
  */
+@Slf4j
 public class HttpRequestUtils {
     public static final boolean HTTP_GET_TYPE_HUTTOL = true;
 
@@ -33,6 +36,10 @@ public class HttpRequestUtils {
     public static ResponseEntity<String> exchange(String url, HttpMethod httpMethod, HttpEntity<String> formEntity, Class<?> classType) {
         HttpResponse exchanges = HttpRequest.post(url).header(formEntity.getHeaders()).body(formEntity.getBody()).execute();
         HttpStatus httpStatus = HttpStatus.valueOf(exchanges.getStatus());
+        if(httpStatus!=HttpStatus.OK){
+            log.error("----exchange--url={} statusCode={} error={}", url, httpStatus, exchanges.body());
+            throw new HttpException(httpStatus+","+exchanges.body());
+        }
         return new ResponseEntity<>(exchanges.body(), httpStatus);
 
     }

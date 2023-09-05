@@ -13,8 +13,10 @@ import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.OpenImChatUserRest;
 import org.ccs.openim.chat.account.req.LoginReq;
 import org.ccs.openim.chat.account.resp.LoginResp;
+import org.ccs.openim.chat.req.CallbackBeforeAddFriendReq;
 import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
+import org.ccs.openim.chat.req.OpenIMCallbackReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
@@ -134,7 +136,7 @@ public class OpenImChatOtherRestTest {
     @Test
     public void searchUserFull() {
         SearchUserFullInfoReq req = new SearchUserFullInfoReq();
-        req.setKeyword("test");
+//        req.setKeyword("test");
         req.setPagination(new RequestPagination());
         OpenImResult<SearchUserFullInfoResp> result = openImChatUserRest.searchUserFullInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
@@ -153,6 +155,19 @@ public class OpenImChatOtherRestTest {
     public void getClientConfig() {
         GetClientConfigReq req = new GetClientConfigReq();
         OpenImResult<GetClientConfigResp> result = openImChatOtherRest.getClientConfig(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+    @Test
+    public void callbackOpenIm() {
+        CallbackBeforeAddFriendReq reqCallback = new CallbackBeforeAddFriendReq();
+        reqCallback.setReqMsg("test");
+        reqCallback.setFromUserID(openImToken.getUserId());
+        reqCallback.setReqoperationIDMsg(openImToken.getOperationId());
+        OpenIMCallbackReq req = new OpenIMCallbackReq();
+        req.setCommand("callbackBeforeAddFriendCommand");
+        req.setBody(JSONUtil.toJsonStr(reqCallback));
+        OpenImResult<String> result = openImChatOtherRest.callbackOpenIm(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

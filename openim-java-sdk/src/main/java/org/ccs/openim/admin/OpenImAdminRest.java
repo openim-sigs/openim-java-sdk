@@ -49,10 +49,10 @@ public class OpenImAdminRest {
     /**
      * 登入
      *
-     * @param loginReq
+     * @param adminLoginReq
      * @return
      */
-    public OpenImResult<AdminLoginResp> login(LoginReq loginReq, String operationid) {
+    public OpenImResult<AdminLoginResp> adminLogin(AdminLoginReq adminLoginReq, String operationid) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/login");
@@ -60,7 +60,7 @@ public class OpenImAdminRest {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(OpenimParams.OPERATIONID, operationid);
-        String body = JSONUtil.toJsonStr(loginReq);
+        String body = JSONUtil.toJsonStr(adminLoginReq);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
@@ -68,7 +68,7 @@ public class OpenImAdminRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----login--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----adminLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
@@ -80,7 +80,7 @@ public class OpenImAdminRest {
      * @param req
      * @return
      */
-    public OpenImResult<GetAdminInfoResp> info(OpenImToken openImToken, GetAdminInfoReq req) {
+    public OpenImResult<GetAdminInfoResp> adminInfo(OpenImToken openImToken, GetAdminInfoReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/info");
@@ -95,7 +95,7 @@ public class OpenImAdminRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----info--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----adminInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
@@ -107,7 +107,7 @@ public class OpenImAdminRest {
      * @param req
      * @return
      */
-    public OpenImResult<String> update(OpenImToken openImToken, UpdateUserInfoReq req) {
+    public OpenImResult<String> adminUpdateInfo(OpenImToken openImToken, UpdateUserInfoReq req) {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/update");
@@ -122,7 +122,7 @@ public class OpenImAdminRest {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----update--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----adminUpdateInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;

@@ -19,8 +19,8 @@ public class OpenimChatAccountService {
      * @param req
      * @return
      */
-    public OpenImResult<String> codeSend(SendVerifyCodeReq req) {
-        return openImChatAccountRest.codeSend(req);
+    public OpenImResult<String> codeSend(SendVerifyCodeReq req, String operationId) {
+        return openImChatAccountRest.codeSend(req, operationId);
     }
 
     /**
@@ -30,8 +30,8 @@ public class OpenimChatAccountService {
      * @param req
      * @return
      */
-    public OpenImResult<String> codeVerify(VerifyCodeReq req) {
-        return openImChatAccountRest.codeVerify(req);
+    public OpenImResult<String> codeVerify(VerifyCodeReq req, String operationId) {
+        return openImChatAccountRest.codeVerify(req, operationId);
     }
 
 

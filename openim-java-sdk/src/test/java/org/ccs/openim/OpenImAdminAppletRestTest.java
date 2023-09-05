@@ -9,7 +9,7 @@ import org.ccs.openim.admin.applet.req.AddAppletReq;
 import org.ccs.openim.admin.applet.req.DelAppletReq;
 import org.ccs.openim.admin.applet.req.SearchAppletReq;
 import org.ccs.openim.admin.applet.req.UpdateAppletReq;
-import org.ccs.openim.admin.req.LoginReq;
+import org.ccs.openim.admin.req.AdminLoginReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
@@ -47,10 +47,10 @@ public class OpenImAdminAppletRestTest {
         if (openImToken == null) {
             OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
-            LoginReq loginReq = new LoginReq();
-            loginReq.setAccount("openIMAdmin");
-            loginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
-            OpenImResult<AdminLoginResp> result = openImAdminRest.login(loginReq, operationId);
+            AdminLoginReq adminLoginReq = new AdminLoginReq();
+            adminLoginReq.setAccount("openIMAdmin");
+            adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+            OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
