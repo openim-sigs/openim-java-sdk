@@ -191,4 +191,14 @@ public class OpenImApiFriendService {
         return openImApiFriendRest.getFriendIDs(openImToken, req);
     }
 
+    /**
+     * 获取指定好友信息
+     * routePath=/friend/get_specified_friends_info
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSpecifiedFriendsInfoResp> getSpecifiedFriendsInfo(OpenImToken openImToken, GetSpecifiedFriendsInfoReq req){
+        return openImApiFriendRest.getSpecifiedFriendsInfo(openImToken, req);
+    }
 }

@@ -518,5 +518,34 @@ public class OpenImApiFriendRest {
         return openImResult;
     }
 
+    /**
+     * 获取指定好友信息
+     * routePath=/friend/get_specified_friends_info
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSpecifiedFriendsInfoResp> getSpecifiedFriendsInfo(OpenImToken openImToken, GetSpecifiedFriendsInfoReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/friend/get_specified_friends_info");
+
+
+        HttpHeaders httpHeaders = initPostHeader(openImToken);
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<GetSpecifiedFriendsInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetSpecifiedFriendsInfoResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getSpecifiedFriendsInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
 
 }
