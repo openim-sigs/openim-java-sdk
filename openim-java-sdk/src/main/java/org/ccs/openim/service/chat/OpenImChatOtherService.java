@@ -8,6 +8,7 @@ import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
 import org.ccs.openim.chat.req.OpenIMCallbackReq;
+import org.ccs.openim.chat.req.UploadLogsReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
 
 
@@ -45,5 +46,16 @@ public class OpenImChatOtherService {
      */
     public OpenImResult<String> callbackOpenIm(OpenImToken openImToken, OpenIMCallbackReq req) {
         return openImChatOtherRest.callbackOpenIm(openImToken, req);
+    }
+
+    /**
+     * 上传日志
+     * routePath = /logs/upload
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> uploadLogs(OpenImToken openImToken, UploadLogsReq req){
+        return openImChatOtherRest.uploadLogs(openImToken, req);
     }
 }
