@@ -9,6 +9,7 @@ import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
+import org.ccs.openim.chat.account.req.ChangePasswordReq;
 import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
@@ -117,6 +118,33 @@ public class OpenImAdminRest {
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
         ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----adminUpdateInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> resetUserPassword(OpenImToken openImToken, ChangePasswordReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/password/reset");
+
+
+        HttpHeaders httpHeaders = initPostHeader(openImToken);
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
