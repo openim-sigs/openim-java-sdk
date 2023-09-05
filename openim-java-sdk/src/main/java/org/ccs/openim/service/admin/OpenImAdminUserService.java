@@ -5,6 +5,7 @@ import org.ccs.openim.admin.req.*;
 import org.ccs.openim.admin.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.chat.account.req.ChangePasswordReq;
 import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,15 @@ public class OpenImAdminUserService {
         return openImAdminRest.adminUpdateInfo(openImToken, req);
     }
 
+    /**
+     * 修改密码
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> resetUserPassword(OpenImToken openImToken, ChangePasswordReq req){
+        return openImAdminRest.resetUserPassword(openImToken, req);
+    }
 
 
     /**
