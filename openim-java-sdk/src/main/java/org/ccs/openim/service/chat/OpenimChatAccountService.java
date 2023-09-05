@@ -14,7 +14,7 @@ public class OpenimChatAccountService {
 
     /**
      * 发送验证码
-     * routePath=/code/send
+     * routePath=/account/code/send
      *
      * @param req
      * @return
@@ -25,7 +25,7 @@ public class OpenimChatAccountService {
 
     /**
      * 校验验证码
-     * routePath=/code/verify
+     * routePath=/account/code/verify
      *
      * @param req
      * @return
