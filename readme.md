@@ -21,7 +21,7 @@ openim api java调用sdk
 <dependency>
     <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-sdk</artifactId>
-    <version>0.2</version>
+    <version>0.4</version>
 </dependency>
 ```
 
