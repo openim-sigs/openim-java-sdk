@@ -6,6 +6,7 @@ import org.ccs.openim.chat.OpenImChatAccountRest;
 import org.ccs.openim.chat.account.req.*;
 import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.chat.account.resp.UserRegisterResp;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenimChatAccountService {
@@ -20,6 +21,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<String> codeSend(SendVerifyCodeReq req, String operationId) {
+        ValidatorUtils.validate(req);
         return openImChatAccountRest.codeSend(req, operationId);
     }
 
@@ -31,6 +33,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<String> codeVerify(VerifyCodeReq req, String operationId) {
+        ValidatorUtils.validate(req);
         return openImChatAccountRest.codeVerify(req, operationId);
     }
 
@@ -43,6 +46,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<LoginResp> login(LoginReq loginReq, String operationId) {
+        ValidatorUtils.validate(loginReq);
         return openImChatAccountRest.login(loginReq, operationId);
     }
 
@@ -54,6 +58,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<UserRegisterResp> register(RegisterUserReq userReq) {
+        ValidatorUtils.validate(userReq);
         return openImChatAccountRest.register(userReq);
     }
 
@@ -65,6 +70,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<String> passwordReset(ResetPasswordReq req) {
+        ValidatorUtils.validate(req);
         return openImChatAccountRest.passwordReset(req);
     }
 
@@ -76,6 +82,7 @@ public class OpenimChatAccountService {
      * @return
      */
     public OpenImResult<String> passwordChange(OpenImToken openImToken, ChangePasswordReq req) {
+        ValidatorUtils.validate(req);
         return openImChatAccountRest.passwordChange(openImToken, req);
     }
 }

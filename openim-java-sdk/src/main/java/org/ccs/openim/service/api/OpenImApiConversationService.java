@@ -10,6 +10,7 @@ import org.ccs.openim.api.conversation.resp.GetConversationResp;
 import org.ccs.openim.api.conversation.resp.GetConversationsResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImApiConversationService {
@@ -24,6 +25,7 @@ public class OpenImApiConversationService {
      * @return
      */
     public OpenImResult<GetAllConversationsResp> getAllConversations(OpenImToken openImToken, GetAllConversationsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiConversationRest.getAllConversations(openImToken, req);
     }
 
@@ -35,6 +37,7 @@ public class OpenImApiConversationService {
      * @return
      */
     public OpenImResult<GetConversationResp> getConversation(OpenImToken openImToken, GetConversationReq req) {
+        ValidatorUtils.validate(req);
         return openImApiConversationRest.getConversation(openImToken, req);
     }
 
@@ -46,6 +49,7 @@ public class OpenImApiConversationService {
      * @return
      */
     public OpenImResult<GetConversationsResp> getConversations(OpenImToken openImToken, GetConversationsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiConversationRest.getConversations(openImToken, req);
     }
 
@@ -57,6 +61,7 @@ public class OpenImApiConversationService {
      * @return
      */
     public OpenImResult<String> setConversations(OpenImToken openImToken, SetConversationsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiConversationRest.setConversations(openImToken, req);
     }
 

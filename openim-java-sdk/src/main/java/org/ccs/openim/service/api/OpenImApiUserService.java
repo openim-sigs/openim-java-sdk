@@ -5,6 +5,7 @@ import org.ccs.openim.api.user.req.*;
 import org.ccs.openim.api.user.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<String> userRegister(UserRegisterReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.userRegister(req);
     }
 
@@ -29,11 +31,12 @@ public class OpenImApiUserService {
      * 更新用户在IM中的资料，主要是头像、昵称
      * routePath=/user/update_user_info
      *
-     * @param userInfo
+     * @param req
      * @return
      */
-    public OpenImResult<String> updateUserInfo(OpenImToken openImToken, UpdateUserInfoReq userInfo) {
-        return openImApiUserRest.updateUserInfo(openImToken, userInfo);
+    public OpenImResult<String> updateUserInfo(OpenImToken openImToken, UpdateUserInfoReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.updateUserInfo(openImToken, req);
     }
 
     /**
@@ -44,6 +47,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<GetDesignateUsersResp> getUsersPublicInfo(OpenImToken openImToken, GetDesignateUsersReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getUsersPublicInfo(openImToken, req);
     }
 
@@ -55,6 +59,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<GetPaginationUsersResp> getUsers(OpenImToken openImToken, GetPaginationUsersReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getUsers(openImToken, req);
     }
 
@@ -66,6 +71,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<GetAllUserIDResp> getAllUsersID(OpenImToken openImToken, GetAllUserIDReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getAllUsersID(openImToken, req);
     }
 
@@ -77,6 +83,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<GetUserStatusResp> getUsersStatus(OpenImToken openImToken, GetUserStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getUsersStatus(openImToken, req);
     }
 
@@ -88,6 +95,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<List<GetUsersOnlineStatusResp_SuccessResult>> getUsersOnlineStatus(OpenImToken openImToken, GetUsersOnlineStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getUsersOnlineStatus(openImToken, req);
     }
 
@@ -99,6 +107,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<List<SingleDetail>> getUsersOnlineTokenDetail(OpenImToken openImToken, GetUsersOnlineStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.getUsersOnlineTokenDetail(openImToken, req);
     }
 
@@ -111,6 +120,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<SubscribeOrCancelUsersStatusResp> subscriberStatus(OpenImToken openImToken, SubscribeOrCancelUsersStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.subscriberStatus(openImToken, req);
     }
 
@@ -123,6 +133,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<SubscribeOrCancelUsersStatusResp> unsubscriberStatus(OpenImToken openImToken, SubscribeOrCancelUsersStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.unsubscriberStatus(openImToken, req);
     }
 
@@ -135,6 +146,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<String> globalRecvMsgOpt(OpenImToken openImToken, SetGlobalRecvMessageOptReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.globalRecvMsgOpt(openImToken, req);
     }
 
@@ -146,6 +158,7 @@ public class OpenImApiUserService {
      * @return
      */
     public OpenImResult<AccountCheckResp> accountCheck(OpenImToken openImToken, AccountCheckReq req) {
+        ValidatorUtils.validate(req);
         return openImApiUserRest.accountCheck(openImToken, req);
     }
 }

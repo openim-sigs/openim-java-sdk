@@ -3,6 +3,8 @@ package org.ccs.openim.api.msg.req;
 import lombok.Data;
 import org.ccs.openim.base.RequestPagination;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 public class SearchMessageReq {
     /**
@@ -16,5 +18,6 @@ public class SearchMessageReq {
     private Integer msgType;
     private String sendTime;
     private Integer sessionType;
+    @NotNull
     private RequestPagination pagination;
 }

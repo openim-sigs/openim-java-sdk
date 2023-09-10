@@ -2,12 +2,15 @@ package org.ccs.openim.chat.vo;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author chenjh
  */
 @Data
 public class AppletInfo {
     private String id;
+    @NotNull
     private String name;
     private String appID;
     private String icon;

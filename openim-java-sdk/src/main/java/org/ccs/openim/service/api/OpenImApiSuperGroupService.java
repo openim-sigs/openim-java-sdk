@@ -7,6 +7,7 @@ import org.ccs.openim.api.superGroup.req.GetJoinedSuperGroupListReq;
 import org.ccs.openim.api.superGroup.resp.GetJoinedSuperGroupListResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImApiSuperGroupService {
@@ -21,6 +22,7 @@ public class OpenImApiSuperGroupService {
      * @return
      */
     public OpenImResult<GetJoinedSuperGroupListResp> getJoinedSuperGroupList(OpenImToken openImToken, GetJoinedSuperGroupListReq req) {
+        ValidatorUtils.validate(req);
         return openImApiSuperGroupRest.getJoinedSuperGroupList(openImToken, req);
     }
 
@@ -32,6 +34,7 @@ public class OpenImApiSuperGroupService {
      * @return
      */
     public OpenImResult<GetGroupAbstractInfoResp> getGroupAbstractInfo(OpenImToken openImToken, GetGroupAbstractInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImApiSuperGroupRest.getGroupAbstractInfo(openImToken, req);
     }
 

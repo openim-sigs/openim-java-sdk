@@ -5,6 +5,7 @@ import org.ccs.openim.api.third.req.*;
 import org.ccs.openim.api.third.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<String> fcmUpdateToken(OpenImToken openImToken, FcmUpdateTokenReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.fcmUpdateToken(openImToken, req);
     }
 
@@ -33,6 +35,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<String> setAppBadge(OpenImToken openImToken, SetAppBadgeReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.setAppBadge(openImToken, req);
     }
 
@@ -43,6 +46,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<PartLimitResp> partLimit(OpenImToken openImToken, PartLimitReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.partLimit(openImToken, req);
     }
 
@@ -53,6 +57,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<PartSizeResp> partSize(OpenImToken openImToken, PartSizeReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.partSize(openImToken, req);
     }
 
@@ -64,6 +69,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<InitiateMultipartUploadResp> initiateMultipartUpload(OpenImToken openImToken, InitiateMultipartUploadReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.initiateMultipartUpload(openImToken, req);
     }
 
@@ -75,6 +81,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<CompleteMultipartUploadResp> completeMultipartUpload(OpenImToken openImToken, CompleteMultipartUploadReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.completeMultipartUpload(openImToken, req);
     }
 
@@ -86,6 +93,7 @@ public class OpenImApiThirdService {
      * @return
      */
     public OpenImResult<AccessURLResp> accessURL(OpenImToken openImToken, AccessURLReq req) {
+        ValidatorUtils.validate(req);
         return openImApiThirdRest.accessURL(openImToken, req);
     }
 }

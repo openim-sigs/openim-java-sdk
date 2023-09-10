@@ -8,6 +8,7 @@ import org.ccs.openim.admin.invitationCode.req.SearchInvitationCodeReq;
 import org.ccs.openim.admin.invitationCode.resp.SearchInvitationCodeResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImAdminInvitationService {
@@ -24,6 +25,7 @@ public class OpenImAdminInvitationService {
      * @return
      */
     public OpenImResult<String> addInvitationCode(OpenImToken openImToken, AddInvitationCodeReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminInvitationCodeRest.addInvitationCode(openImToken, req);
     }
 
@@ -36,6 +38,7 @@ public class OpenImAdminInvitationService {
      * @return
      */
     public OpenImResult<String> genInvitationCode(OpenImToken openImToken, GenInvitationCodeReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminInvitationCodeRest.genInvitationCode(openImToken, req);
     }
 
@@ -48,6 +51,7 @@ public class OpenImAdminInvitationService {
      * @return
      */
     public OpenImResult<String> delInvitationCode(OpenImToken openImToken, DelInvitationCodeReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminInvitationCodeRest.delInvitationCode(openImToken, req);
     }
 
@@ -60,6 +64,7 @@ public class OpenImAdminInvitationService {
      * @return
      */
     public OpenImResult<SearchInvitationCodeResp> searchInvitationCode(OpenImToken openImToken, SearchInvitationCodeReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminInvitationCodeRest.searchInvitationCode(openImToken, req);
     }
 

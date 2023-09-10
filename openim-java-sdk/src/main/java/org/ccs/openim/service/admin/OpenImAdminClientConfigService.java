@@ -6,6 +6,7 @@ import org.ccs.openim.admin.clientconfig.req.SetClientConfigReq;
 import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImAdminClientConfigService {
@@ -30,6 +31,7 @@ public class OpenImAdminClientConfigService {
      * @return
      */
     public OpenImResult<String> setClientConfig(OpenImToken openImToken, SetClientConfigReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminClientConfigRest.setClientConfig(openImToken, req);
     }
 
@@ -41,6 +43,7 @@ public class OpenImAdminClientConfigService {
      * @return
      */
     public OpenImResult<String> delClientConfig(OpenImToken openImToken, DelClientConfigReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminClientConfigRest.delClientConfig(openImToken, req);
     }
 

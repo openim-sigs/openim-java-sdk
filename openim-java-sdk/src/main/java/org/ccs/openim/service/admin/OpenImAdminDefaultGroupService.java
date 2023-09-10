@@ -9,6 +9,7 @@ import org.ccs.openim.admin.defaultGroup.resp.FindDefaultGroupResp;
 import org.ccs.openim.admin.defaultGroup.resp.SearchDefaultGroupResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImAdminDefaultGroupService {
@@ -24,6 +25,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<String> addDefaultGroup(OpenImToken openImToken, AddDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.addDefaultGroup(openImToken, req);
     }
 
@@ -35,6 +37,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<String> delDefaultGroup(OpenImToken openImToken, DelDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.delDefaultGroup(openImToken, req);
     }
 
@@ -46,6 +49,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<FindDefaultGroupResp> findDefaultGroup(OpenImToken openImToken, FindDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.findDefaultGroup(openImToken, req);
     }
 
@@ -57,6 +61,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<SearchDefaultGroupResp> searchDefaultGroup(OpenImToken openImToken, SearchDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.searchDefaultGroup(openImToken, req);
     }
 

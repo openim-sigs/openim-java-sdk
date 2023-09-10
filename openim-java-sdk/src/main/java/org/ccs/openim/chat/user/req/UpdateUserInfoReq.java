@@ -3,9 +3,11 @@ package org.ccs.openim.chat.user.req;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class UpdateUserInfoReq {
+    @NotNull
 
     private String userID;
     private String account;

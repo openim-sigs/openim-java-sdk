@@ -9,6 +9,7 @@ import org.ccs.openim.api.statistics.resp.GroupCreateCountResp;
 import org.ccs.openim.api.statistics.resp.UserRegisterCountResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImApiStatisticsService {
@@ -23,6 +24,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<UserRegisterCountResp> userRegisterCount(OpenImToken openImToken, UserRegisterCountReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.userRegisterCount(openImToken, req);
     }
 
@@ -34,6 +36,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<GetActiveUserResp> getActiveUser(OpenImToken openImToken, GetActiveUserReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.getActiveUser(openImToken, req);
     }
 
@@ -45,6 +48,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<GroupCreateCountResp> groupCreateCount(OpenImToken openImToken, GroupCreateCountReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.groupCreateCount(openImToken, req);
     }
 }
