@@ -38,6 +38,8 @@ openim:
   adminPwd: openIMAdmin
   #预留功能，支持每个请求，自动带个header authKey参数
   authKey: authKey
+  #是否校验请求参数
+  requestParamValid: true
 ```
 
 * 3 调用示例
