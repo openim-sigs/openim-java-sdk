@@ -12,24 +12,20 @@ import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.chat.account.resp.UserRegisterResp;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * openIm-chat服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImChatAccountRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImChatAccountRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.CHAT;
 
@@ -45,7 +41,7 @@ public class OpenImChatAccountRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -66,7 +62,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -94,7 +90,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -123,7 +119,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(loginReq);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<LoginResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<LoginResp>>() {
         }, false);
@@ -151,7 +147,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(userReq);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<UserRegisterResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserRegisterResp>>() {
         }, false);
@@ -180,7 +176,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -208,7 +204,7 @@ public class OpenImChatAccountRest {
         httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);

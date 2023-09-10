@@ -5,31 +5,27 @@ import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.admin.clientconfig.req.DelClientConfigReq;
 import org.ccs.openim.admin.clientconfig.req.SetClientConfigReq;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
-import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * openIm-chat.admin服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImAdminClientConfigRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImAdminClientConfigRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
 
@@ -45,7 +41,7 @@ public class OpenImAdminClientConfigRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -63,7 +59,7 @@ public class OpenImAdminClientConfigRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = "{}";
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetClientConfigResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetClientConfigResp>>() {
         }, false);
@@ -89,7 +85,7 @@ public class OpenImAdminClientConfigRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -115,7 +111,7 @@ public class OpenImAdminClientConfigRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);

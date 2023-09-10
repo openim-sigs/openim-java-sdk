@@ -9,14 +9,12 @@ import org.ccs.openim.admin.defaultGroup.resp.FindDefaultGroupResp;
 import org.ccs.openim.admin.defaultGroup.resp.SearchDefaultGroupResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminDefaultGroupService {
-    @Resource
-    private OpenImAdminDefaultGroupRest openImAdminDefaultGroupRest;
+
+    private OpenImAdminDefaultGroupRest openImAdminDefaultGroupRest = new OpenImAdminDefaultGroupRest();
 
 
     /**
@@ -27,6 +25,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<String> addDefaultGroup(OpenImToken openImToken, AddDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.addDefaultGroup(openImToken, req);
     }
 
@@ -38,6 +37,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<String> delDefaultGroup(OpenImToken openImToken, DelDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.delDefaultGroup(openImToken, req);
     }
 
@@ -49,6 +49,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<FindDefaultGroupResp> findDefaultGroup(OpenImToken openImToken, FindDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.findDefaultGroup(openImToken, req);
     }
 
@@ -60,6 +61,7 @@ public class OpenImAdminDefaultGroupService {
      * @return
      */
     public OpenImResult<SearchDefaultGroupResp> searchDefaultGroup(OpenImToken openImToken, SearchDefaultGroupReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultGroupRest.searchDefaultGroup(openImToken, req);
     }
 

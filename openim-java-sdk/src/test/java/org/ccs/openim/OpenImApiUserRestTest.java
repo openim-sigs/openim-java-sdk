@@ -18,12 +18,14 @@ import org.ccs.openim.api.user.resp.GetUsersOnlineStatusResp_SuccessResult;
 import org.ccs.openim.api.vo.UserInfo;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.RequestPagination;
 import org.ccs.openim.chat.OpenImChatAccountRest;
 import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.account.req.LoginReq;
 import org.ccs.openim.chat.account.resp.LoginResp;
 import org.ccs.openim.constants.IMPlatform;
+import org.ccs.openim.utils.OpenimUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,20 +41,25 @@ import java.util.List;
 @SpringBootTest(classes = OpenimApplication.class)
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImApiUserRestTest {
-    @Resource
-    private OpenImChatOtherRest openImChatOtherRest;
-    @Resource
-    private OpenImChatAccountRest openImChatAccountRest;
-    @Resource
-    private OpenImApiUserRest openImApiUserRest;
-    @Resource
-    private OpenImApiAuthRest openImApiAuthRest;
+
+    private OpenImChatOtherRest openImChatOtherRest = new OpenImChatOtherRest();
+
+    private OpenImChatAccountRest openImChatAccountRest = new OpenImChatAccountRest();
+
+    private OpenImApiUserRest openImApiUserRest = new OpenImApiUserRest();
+
+    private OpenImApiAuthRest openImApiAuthRest = new OpenImApiAuthRest();
 
     private static OpenImToken openImToken;
+
+    @Resource
+    private OpenimConfig openimConfig;
+
 
     @Before
     public void initToken() {
         if (openImToken == null) {
+            OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             LoginReq loginReq = new LoginReq();
             loginReq.setPlatform(IMPlatform.WINDOWS.getType());

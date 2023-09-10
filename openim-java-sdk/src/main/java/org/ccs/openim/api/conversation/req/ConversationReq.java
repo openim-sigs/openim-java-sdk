@@ -2,10 +2,13 @@ package org.ccs.openim.api.conversation.req;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 public class ConversationReq {
     private String conversationID;
     private Integer conversationType;
+    @NotNull
     private String userID;
     private String groupID;
     private Integer recvMsgOpt;

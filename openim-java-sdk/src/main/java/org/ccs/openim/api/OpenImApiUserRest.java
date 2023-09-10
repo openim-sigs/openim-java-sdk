@@ -12,13 +12,10 @@ import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -26,11 +23,13 @@ import java.util.List;
  *
  * @author chenjh
  */
-@Service
+
 @Slf4j
 public class OpenImApiUserRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImApiUserRest() {
+        this.init();
+    }
+
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
@@ -46,7 +45,7 @@ public class OpenImApiUserRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -75,7 +74,7 @@ public class OpenImApiUserRest {
         String body = JSONUtil.toJsonStr(req);
 
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -104,7 +103,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<AccountCheckResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<AccountCheckResp>>() {
         }, false);
@@ -133,7 +132,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(userInfo);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -162,7 +161,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetDesignateUsersResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetDesignateUsersResp>>() {
         }, false);
@@ -192,7 +191,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -221,7 +220,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetPaginationUsersResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetPaginationUsersResp>>() {
         }, false);
@@ -249,7 +248,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetAllUserIDResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetAllUserIDResp>>() {
         }, false);
@@ -277,7 +276,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetUserStatusResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetUserStatusResp>>() {
         }, false);
@@ -305,7 +304,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<List<GetUsersOnlineStatusResp_SuccessResult>>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<List<GetUsersOnlineStatusResp_SuccessResult>>>() {
@@ -334,7 +333,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<List<SingleDetail>>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<List<SingleDetail>>>() {
@@ -364,7 +363,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<SubscribeOrCancelUsersStatusResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SubscribeOrCancelUsersStatusResp>>() {
@@ -394,7 +393,7 @@ public class OpenImApiUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<SubscribeOrCancelUsersStatusResp>
                 openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SubscribeOrCancelUsersStatusResp>>() {

@@ -8,14 +8,12 @@ import org.ccs.openim.admin.applet.req.UpdateAppletReq;
 import org.ccs.openim.admin.applet.resp.SearchAppletResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminAppletService {
-    @Resource
-    private OpenImAdminAppletRest openImAdminAppletRest;
+
+    private OpenImAdminAppletRest openImAdminAppletRest = new OpenImAdminAppletRest();
 
 
     /**
@@ -26,6 +24,7 @@ public class OpenImAdminAppletService {
      * @return
      */
     public OpenImResult<String> appletAdd(OpenImToken openImToken, AddAppletReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminAppletRest.appletAdd(openImToken, req);
     }
 
@@ -37,6 +36,7 @@ public class OpenImAdminAppletService {
      * @return
      */
     public OpenImResult<String> appletDel(OpenImToken openImToken, DelAppletReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminAppletRest.appletDel(openImToken, req);
     }
 
@@ -48,6 +48,7 @@ public class OpenImAdminAppletService {
      * @return
      */
     public OpenImResult<String> appletUpdate(OpenImToken openImToken, UpdateAppletReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminAppletRest.appletUpdate(openImToken, req);
     }
 
@@ -59,6 +60,7 @@ public class OpenImAdminAppletService {
      * @return
      */
     public OpenImResult<SearchAppletResp> appletSearch(OpenImToken openImToken, SearchAppletReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminAppletRest.appletSearch(openImToken, req);
     }
 

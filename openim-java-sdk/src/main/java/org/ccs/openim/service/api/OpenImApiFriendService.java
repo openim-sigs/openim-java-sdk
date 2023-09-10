@@ -5,14 +5,12 @@ import org.ccs.openim.api.friend.req.*;
 import org.ccs.openim.api.friend.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiFriendService {
-    @Resource
-    private OpenImApiFriendRest openImApiFriendRest;
+
+    private OpenImApiFriendRest openImApiFriendRest = new OpenImApiFriendRest();
 
     /**
      * 删除好友
@@ -22,6 +20,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> deleteFriend(OpenImToken openImToken, DeleteFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.deleteFriend(openImToken, req);
     }
 
@@ -33,6 +32,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> addFriend(OpenImToken openImToken, ApplyToAddFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.addFriend(openImToken, req);
     }
 
@@ -44,6 +44,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> importFriends(OpenImToken openImToken, ImportFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.importFriends(openImToken, req);
     }
 
@@ -55,6 +56,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> respondFriendApply(OpenImToken openImToken, RespondFriendApplyReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.respondFriendApply(openImToken, req);
     }
 
@@ -66,6 +68,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> setFriendRemark(OpenImToken openImToken, SetFriendRemarkReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.setFriendRemark(openImToken, req);
     }
 
@@ -77,6 +80,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetPaginationFriendsApplyToResp> getFriendApplyList(OpenImToken openImToken, GetPaginationFriendsApplyToReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getFriendApplyList(openImToken, req);
     }
 
@@ -88,6 +92,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetDesignatedFriendsApplyResp> getDesignatedFriendsApply(OpenImToken openImToken, GetDesignatedFriendsApplyReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getDesignatedFriendsApply(openImToken, req);
     }
 
@@ -99,6 +104,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetPaginationFriendsApplyFromResp> getSelfApplyList(OpenImToken openImToken, GetPaginationFriendsApplyFromReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getSelfApplyList(openImToken, req);
     }
 
@@ -110,6 +116,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetPaginationFriendsResp> getFriendList(OpenImToken openImToken, GetPaginationFriendsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getFriendList(openImToken, req);
     }
 
@@ -121,6 +128,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetDesignatedFriendsResp> getDesignatedFriends(OpenImToken openImToken, GetDesignatedFriendsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getDesignatedFriends(openImToken, req);
     }
 
@@ -132,6 +140,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> addBlack(OpenImToken openImToken, AddBlackReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.addBlack(openImToken, req);
     }
 
@@ -143,6 +152,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetPaginationBlacksResp> getPaginationBlacks(OpenImToken openImToken, GetPaginationBlacksReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getPaginationBlacks(openImToken, req);
     }
 
@@ -154,6 +164,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<String> removeBlack(OpenImToken openImToken, RemoveBlackReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.removeBlack(openImToken, req);
     }
 
@@ -165,6 +176,7 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<IsFriendResp> isFriend(OpenImToken openImToken, IsFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.isFriend(openImToken, req);
     }
 
@@ -177,6 +189,7 @@ public class OpenImApiFriendService {
      * @deprecated
      */
     public OpenImResult<IsBlackResp> isBlack(OpenImToken openImToken, IsBlackReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.isBlack(openImToken, req);
     }
 
@@ -188,7 +201,19 @@ public class OpenImApiFriendService {
      * @return
      */
     public OpenImResult<GetFriendIDsResp> getFriendIDs(OpenImToken openImToken, GetFriendIDsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiFriendRest.getFriendIDs(openImToken, req);
     }
 
+    /**
+     * 获取指定好友信息
+     * routePath=/friend/get_specified_friends_info
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSpecifiedFriendsInfoResp> getSpecifiedFriendsInfo(OpenImToken openImToken, GetSpecifiedFriendsInfoReq req){
+        ValidatorUtils.validate(req);
+        return openImApiFriendRest.getSpecifiedFriendsInfo(openImToken, req);
+    }
 }

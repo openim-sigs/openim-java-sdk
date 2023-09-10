@@ -8,15 +8,13 @@ import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
 import org.ccs.openim.chat.req.OpenIMCallbackReq;
+import org.ccs.openim.chat.req.UploadLogsReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImChatOtherService {
-    @Resource
-    private OpenImChatOtherRest openImChatOtherRest;
+    private OpenImChatOtherRest openImChatOtherRest = new OpenImChatOtherRest();
 
 
     /**
@@ -27,6 +25,7 @@ public class OpenImChatOtherService {
      * @return
      */
     public OpenImResult<FindAppletResp> appletFind(OpenImToken openImToken, FindAppletReq req) {
+        ValidatorUtils.validate(req);
         return openImChatOtherRest.appletFind(openImToken, req);
     }
 
@@ -38,6 +37,7 @@ public class OpenImChatOtherService {
      * @return
      */
     public OpenImResult<GetClientConfigResp> getClientConfig(OpenImToken openImToken, GetClientConfigReq req) {
+        ValidatorUtils.validate(req);
         return openImChatOtherRest.getClientConfig(openImToken, req);
     }
 
@@ -48,6 +48,19 @@ public class OpenImChatOtherService {
      * @return
      */
     public OpenImResult<String> callbackOpenIm(OpenImToken openImToken, OpenIMCallbackReq req) {
+        ValidatorUtils.validate(req);
         return openImChatOtherRest.callbackOpenIm(openImToken, req);
+    }
+
+    /**
+     * 上传日志
+     * routePath = /logs/upload
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> uploadLogs(OpenImToken openImToken, UploadLogsReq req){
+        ValidatorUtils.validate(req);
+        return openImChatOtherRest.uploadLogs(openImToken, req);
     }
 }

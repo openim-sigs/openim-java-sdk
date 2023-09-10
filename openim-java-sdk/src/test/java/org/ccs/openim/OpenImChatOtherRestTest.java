@@ -41,12 +41,11 @@ import java.util.List;
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImChatOtherRestTest {
 
-    @Resource
-    private OpenImChatOtherRest openImChatOtherRest;
-    @Resource
-    private OpenImChatUserRest openImChatUserRest;
-    @Resource
-    private OpenImChatAccountRest openImChatAccountRest;
+    private OpenImChatOtherRest openImChatOtherRest = new OpenImChatOtherRest();
+
+    private OpenImChatUserRest openImChatUserRest = new OpenImChatUserRest();
+
+    private OpenImChatAccountRest openImChatAccountRest = new OpenImChatAccountRest();
 
 
     private static OpenImToken openImToken;
@@ -159,7 +158,6 @@ public class OpenImChatOtherRestTest {
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
-
     @Test
     public void callbackOpenIm() {
         CallbackBeforeAddFriendReq reqCallback = new CallbackBeforeAddFriendReq();

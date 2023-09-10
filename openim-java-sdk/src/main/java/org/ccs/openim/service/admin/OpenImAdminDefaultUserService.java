@@ -9,14 +9,12 @@ import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminDefaultUserService {
-    @Resource
-    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest;
+
+    private OpenImAdminDefaultUserRest openImAdminDefaultUserRest = new OpenImAdminDefaultUserRest();
 
 
     /**
@@ -27,6 +25,7 @@ public class OpenImAdminDefaultUserService {
      * @return
      */
     public OpenImResult<String> addDefaultFriend(OpenImToken openImToken, AddDefaultFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultUserRest.addDefaultFriend(openImToken, req);
     }
 
@@ -38,6 +37,7 @@ public class OpenImAdminDefaultUserService {
      * @return
      */
     public OpenImResult<String> delDefaultFriend(OpenImToken openImToken, DelDefaultFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultUserRest.delDefaultFriend(openImToken, req);
     }
 
@@ -49,6 +49,7 @@ public class OpenImAdminDefaultUserService {
      * @return
      */
     public OpenImResult<FindDefaultFriendResp> findDefaultFriend(OpenImToken openImToken, FindDefaultFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultUserRest.findDefaultFriend(openImToken, req);
     }
 
@@ -60,6 +61,7 @@ public class OpenImAdminDefaultUserService {
      * @return
      */
     public OpenImResult<SearchDefaultFriendResp> searchDefaultFriend(OpenImToken openImToken, SearchDefaultFriendReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminDefaultUserRest.searchDefaultFriend(openImToken, req);
     }
 

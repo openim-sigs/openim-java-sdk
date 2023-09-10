@@ -5,14 +5,12 @@ import org.ccs.openim.api.msg.req.*;
 import org.ccs.openim.api.msg.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiMsgService {
-    @Resource
-    private OpenImApiMsgRest openImApiMsgRest;
+
+    private OpenImApiMsgRest openImApiMsgRest = new OpenImApiMsgRest();
 
     /**
      * 获取最小最大seq（包括用户的，以及指定群组的）
@@ -22,6 +20,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<GetMaxSeqResp> getSeq(OpenImToken openImToken, GetMaxSeqReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.getSeq(openImToken, req);
     }
 
@@ -33,6 +32,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<SearchMessageResp> searchMsg(OpenImToken openImToken, SearchMessageReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.searchMsg(openImToken, req);
     }
 
@@ -44,6 +44,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<SendMsgResp> sendMessage(OpenImToken openImToken, SendMsgReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.sendMessage(openImToken, req);
     }
 
@@ -55,6 +56,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<BatchSendMsgResp> batchSendMsg(OpenImToken openImToken, BatchSendMsgReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.batchSendMsg(openImToken, req);
     }
 
@@ -66,6 +68,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<SendMsgResp> sendBusinessNotification(OpenImToken openImToken, SendBusinessNotificationReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.sendBusinessNotification(openImToken, req);
     }
 
@@ -77,6 +80,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<PullMessageBySeqsResp> pullMsgBySeqs(OpenImToken openImToken, PullMessageBySeqsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.pullMsgBySeqs(openImToken, req);
     }
 
@@ -88,6 +92,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> revokeMsg(OpenImToken openImToken, RevokeMsgReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.revokeMsg(openImToken, req);
     }
 
@@ -99,6 +104,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> markMsgsAsRead(OpenImToken openImToken, MarkMsgsAsReadReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.markMsgsAsRead(openImToken, req);
     }
 
@@ -110,6 +116,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> markConversationAsRead(OpenImToken openImToken, MarkConversationAsReadReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.markConversationAsRead(openImToken, req);
     }
 
@@ -121,6 +128,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> getConversationsHasReadAndMaxSeq(OpenImToken openImToken, GetConversationsHasReadAndMaxSeqReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.getConversationsHasReadAndMaxSeq(openImToken, req);
     }
 
@@ -132,6 +140,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> setConversationHasReadSeq(OpenImToken openImToken, SetConversationHasReadSeqReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.setConversationHasReadSeq(openImToken, req);
     }
 
@@ -143,6 +152,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> clearConversationsMsg(OpenImToken openImToken, ClearConversationsMsgReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.clearConversationsMsg(openImToken, req);
     }
 
@@ -154,6 +164,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> userClearAllMsg(OpenImToken openImToken, UserClearAllMsgReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.userClearAllMsg(openImToken, req);
     }
 
@@ -165,6 +176,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> deleteMsgs(OpenImToken openImToken, DeleteMsgsReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.deleteMsgs(openImToken, req);
     }
 
@@ -176,6 +188,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> deleteMsgPhysicalBySeq(OpenImToken openImToken, DeleteMsgPhysicalBySeqReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.deleteMsgPhysicalBySeq(openImToken, req);
     }
 
@@ -187,6 +200,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<String> deleteMsgPhysical(OpenImToken openImToken, DeleteMsgPhysicalReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.deleteMsgPhysical(openImToken, req);
     }
 
@@ -198,6 +212,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<GetSendMsgStatusResp> checkMsgIsSendSuccess(OpenImToken openImToken, GetSendMsgStatusReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.checkMsgIsSendSuccess(openImToken, req);
     }
 
@@ -209,6 +224,7 @@ public class OpenImApiMsgService {
      * @return
      */
     public OpenImResult<GetServerTimeResp> getServerTime(OpenImToken openImToken, GetServerTimeReq req) {
+        ValidatorUtils.validate(req);
         return openImApiMsgRest.getServerTime(openImToken, req);
     }
 }

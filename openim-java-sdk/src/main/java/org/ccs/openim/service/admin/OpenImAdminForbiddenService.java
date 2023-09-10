@@ -8,14 +8,12 @@ import org.ccs.openim.admin.forbidden.req.SearchIPForbiddenReq;
 import org.ccs.openim.admin.forbidden.resp.SearchIPForbiddenResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminForbiddenService {
-    @Resource
-    private OpenImAdminForbiddenRest openImAdminForbiddenRest;
+
+    private OpenImAdminForbiddenRest openImAdminForbiddenRest = new OpenImAdminForbiddenRest();
 
 
     /**
@@ -27,6 +25,7 @@ public class OpenImAdminForbiddenService {
      * @return
      */
     public OpenImResult<String> addIPForbidden(OpenImToken openImToken, AddIPForbiddenReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminForbiddenRest.addIPForbidden(openImToken, req);
     }
 
@@ -39,6 +38,7 @@ public class OpenImAdminForbiddenService {
      * @return
      */
     public OpenImResult<String> delIPForbidden(OpenImToken openImToken, DelIPForbiddenReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminForbiddenRest.delIPForbidden(openImToken, req);
     }
 
@@ -51,6 +51,7 @@ public class OpenImAdminForbiddenService {
      * @return
      */
     public OpenImResult<SearchIPForbiddenResp> searchIPForbidden(OpenImToken openImToken, SearchIPForbiddenReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminForbiddenRest.searchIPForbidden(openImToken, req);
     }
 
@@ -63,6 +64,7 @@ public class OpenImAdminForbiddenService {
      * @return
      */
     public OpenImResult<String> addUserIPLimitLogin(OpenImToken openImToken, AddUserIPLimitLoginReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminForbiddenRest.addUserIPLimitLogin(openImToken, req);
     }
 

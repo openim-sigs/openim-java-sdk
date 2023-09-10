@@ -3,17 +3,15 @@ package org.ccs.openim.service.admin;
 import org.ccs.openim.admin.OpenImAdminClientConfigRest;
 import org.ccs.openim.admin.clientconfig.req.DelClientConfigReq;
 import org.ccs.openim.admin.clientconfig.req.SetClientConfigReq;
+import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImAdminClientConfigService {
-    @Resource
-    private OpenImAdminClientConfigRest openImAdminClientConfigRest;
+
+    private OpenImAdminClientConfigRest openImAdminClientConfigRest = new OpenImAdminClientConfigRest();
 
     /**
      * 获取客户端初始化配置
@@ -33,6 +31,7 @@ public class OpenImAdminClientConfigService {
      * @return
      */
     public OpenImResult<String> setClientConfig(OpenImToken openImToken, SetClientConfigReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminClientConfigRest.setClientConfig(openImToken, req);
     }
 
@@ -44,6 +43,7 @@ public class OpenImAdminClientConfigService {
      * @return
      */
     public OpenImResult<String> delClientConfig(OpenImToken openImToken, DelClientConfigReq req) {
+        ValidatorUtils.validate(req);
         return openImAdminClientConfigRest.delClientConfig(openImToken, req);
     }
 

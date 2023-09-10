@@ -1,18 +1,12 @@
 package org.ccs.openim.service.chat;
 
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-
-@Service
 public class OpenImChatService {
 
-    @Resource
-    private OpenimChatUserService openimChatUserService;
-    @Resource
-    private OpenimChatAccountService openimChatAccountService;
-    @Resource
-    private OpenImChatOtherService openImChatOtherService;
+    private OpenimChatUserService openimChatUserService = new OpenimChatUserService();
+
+    private OpenimChatAccountService openimChatAccountService = new OpenimChatAccountService();
+
+    private OpenImChatOtherService openImChatOtherService = new OpenImChatOtherService();
 
     public OpenimChatUserService user() {
         return openimChatUserService;

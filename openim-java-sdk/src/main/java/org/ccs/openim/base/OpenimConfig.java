@@ -13,6 +13,10 @@ public class OpenimConfig {
     private String apiAdmin;
     private String secret;
     private Integer platformId;
+    /**
+     * 是否验证请求参数
+     */
+    private boolean requestParamValid=false;
 
     private String adminAccount;
     private String adminPwd;

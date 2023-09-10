@@ -8,14 +8,12 @@ import org.ccs.openim.api.auth.resp.ParseTokenResp;
 import org.ccs.openim.api.auth.resp.UserTokenResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiAuthService {
-    @Resource
-    private OpenImApiAuthRest openImApiAuthRest;
+
+    private OpenImApiAuthRest openImApiAuthRest = new OpenImApiAuthRest();
 
     /**
      * 获取用户token
@@ -25,6 +23,7 @@ public class OpenImApiAuthService {
      * @return
      */
     public OpenImResult<UserTokenResp> userToken(OpenImToken openImToken, UserTokenReq req) {
+        ValidatorUtils.validate(req);
         return openImApiAuthRest.userToken(openImToken, req);
     }
 
@@ -36,6 +35,7 @@ public class OpenImApiAuthService {
      * @return
      */
     public OpenImResult<ParseTokenResp> parseToken(OpenImToken openImToken, ParseTokenReq req) {
+        ValidatorUtils.validate(req);
         return openImApiAuthRest.parseToken(openImToken, req);
     }
 
@@ -47,6 +47,7 @@ public class OpenImApiAuthService {
      * @return
      */
     public OpenImResult<String> forceLogout(OpenImToken openImToken, ForceLogoutReq req) {
+        ValidatorUtils.validate(req);
         return openImApiAuthRest.forceLogout(openImToken, req);
     }
 }

@@ -8,15 +8,11 @@ import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenimChatUserService {
-
-    @Resource
-    private OpenImChatUserRest openImChatUserRest;
+    private OpenImChatUserRest openImChatUserRest = new OpenImChatUserRest();
 
 
     /**
@@ -28,6 +24,7 @@ public class OpenimChatUserService {
      * @return
      */
     public OpenImResult<String> updateUserInfo(OpenImToken openImToken, UpdateUserInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImChatUserRest.updateUserInfo(openImToken, req);
     }
 
@@ -39,6 +36,7 @@ public class OpenimChatUserService {
      * @return
      */
     public OpenImResult<FindUserFullInfoResp> findUserFullInfo(OpenImToken openImToken, FindUserFullInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImChatUserRest.findUserFullInfo(openImToken, req);
     }
 
@@ -50,6 +48,7 @@ public class OpenimChatUserService {
      * @return
      */
     public OpenImResult<FindUserPublicInfoResp> findUserPublicInfo(OpenImToken openImToken, FindUserPublicInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImChatUserRest.findUserPublicInfo(openImToken, req);
     }
 
@@ -61,6 +60,7 @@ public class OpenimChatUserService {
      * @return
      */
     public OpenImResult<SearchUserFullInfoResp> searchUserFullInfo(OpenImToken openImToken, SearchUserFullInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImChatUserRest.searchUserFullInfo(openImToken, req);
     }
 
@@ -72,6 +72,7 @@ public class OpenimChatUserService {
      * @return
      */
     public OpenImResult<SearchUserPubliclInfoResp> searchUserPublicInfo(OpenImToken openImToken, SearchUserPublicInfoReq req) {
+        ValidatorUtils.validate(req);
         return openImChatUserRest.searchUserPublicInfo(openImToken, req);
     }
 }

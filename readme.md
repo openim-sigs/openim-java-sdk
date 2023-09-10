@@ -1,6 +1,6 @@
 # openim-sdk
 
-openim api java调用sdk
+openim api java调用sdk 无spring版
 
 
 # 目的：
@@ -21,7 +21,7 @@ openim api java调用sdk
 <dependency>
     <groupId>cn.org.opendfl</groupId>
     <artifactId>openim-java-sdk</artifactId>
-    <version>0.4</version>
+    <version>0.5-nospring</version>
 </dependency>
 ```
 
@@ -42,8 +42,7 @@ openim:
 
 * 3 调用示例
 ```java
-@Resource
-private OpenImService openImService;
+private OpenImService openImService = new OpenImService();
 public void login(){
     String operationId = IdUtil.fastUUID();
     LoginReq loginReq = new LoginReq();

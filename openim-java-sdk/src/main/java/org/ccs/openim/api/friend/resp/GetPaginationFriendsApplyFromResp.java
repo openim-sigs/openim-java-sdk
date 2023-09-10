@@ -1,4 +1,4 @@
-package org.ccs.openim.api.friend.req;
+package org.ccs.openim.api.friend.resp;
 
 import lombok.Data;
 import org.ccs.openim.api.friend.resp.FriendRequest;

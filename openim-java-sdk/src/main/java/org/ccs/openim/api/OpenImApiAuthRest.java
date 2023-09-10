@@ -15,24 +15,21 @@ import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Open-IM-Server服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImApiAuthRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImApiAuthRest() {
+        this.init();
+    }
+
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
@@ -48,7 +45,6 @@ public class OpenImApiAuthRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -76,7 +72,7 @@ public class OpenImApiAuthRest {
         }
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<UserTokenResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserTokenResp>>() {
         }, false);
@@ -106,7 +102,7 @@ public class OpenImApiAuthRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<ParseTokenResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<ParseTokenResp>>() {
         }, false);
@@ -137,7 +133,7 @@ public class OpenImApiAuthRest {
         }
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);

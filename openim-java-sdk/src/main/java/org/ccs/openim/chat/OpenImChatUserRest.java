@@ -7,31 +7,27 @@ import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.OpenimParams;
+import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
-import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import javax.annotation.PostConstruct;
 
 /**
  * openIm-chat服务接口
  *
  * @author chenjh
  */
-@Service
 @Slf4j
 public class OpenImChatUserRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImChatUserRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.CHAT;
 
@@ -47,7 +43,6 @@ public class OpenImChatUserRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -68,7 +63,7 @@ public class OpenImChatUserRest {
         HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
@@ -95,7 +90,7 @@ public class OpenImChatUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<FindUserFullInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<FindUserFullInfoResp>>() {
         }, false);
@@ -123,7 +118,7 @@ public class OpenImChatUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<FindUserPublicInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<FindUserPublicInfoResp>>() {
         }, false);
@@ -151,7 +146,7 @@ public class OpenImChatUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<SearchUserFullInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchUserFullInfoResp>>() {
         }, false);
@@ -179,7 +174,7 @@ public class OpenImChatUserRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<SearchUserPubliclInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchUserPubliclInfoResp>>() {
         }, false);

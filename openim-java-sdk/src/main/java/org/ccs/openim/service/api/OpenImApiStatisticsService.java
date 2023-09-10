@@ -9,14 +9,12 @@ import org.ccs.openim.api.statistics.resp.GroupCreateCountResp;
 import org.ccs.openim.api.statistics.resp.UserRegisterCountResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
-import org.springframework.stereotype.Service;
+import org.ccs.openim.utils.ValidatorUtils;
 
-import javax.annotation.Resource;
 
-@Service
 public class OpenImApiStatisticsService {
-    @Resource
-    private OpenImApiStatisticsRest openImApiStatisticsRest;
+
+    private OpenImApiStatisticsRest openImApiStatisticsRest = new OpenImApiStatisticsRest();
 
     /**
      * Get the total number of users and the user increment within a specified time period
@@ -26,6 +24,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<UserRegisterCountResp> userRegisterCount(OpenImToken openImToken, UserRegisterCountReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.userRegisterCount(openImToken, req);
     }
 
@@ -37,6 +36,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<GetActiveUserResp> getActiveUser(OpenImToken openImToken, GetActiveUserReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.getActiveUser(openImToken, req);
     }
 
@@ -48,6 +48,7 @@ public class OpenImApiStatisticsService {
      * @return
      */
     public OpenImResult<GroupCreateCountResp> groupCreateCount(OpenImToken openImToken, GroupCreateCountReq req) {
+        ValidatorUtils.validate(req);
         return openImApiStatisticsRest.groupCreateCount(openImToken, req);
     }
 }

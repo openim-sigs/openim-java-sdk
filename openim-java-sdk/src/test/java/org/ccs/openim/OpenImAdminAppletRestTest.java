@@ -13,7 +13,9 @@ import org.ccs.openim.admin.req.AdminLoginReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.base.OpenimConfig;
 import org.ccs.openim.base.RequestPagination;
+import org.ccs.openim.utils.OpenimUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,16 +31,21 @@ import java.util.Arrays;
 @ActiveProfiles(value = {"openim", "dev"})
 public class OpenImAdminAppletRestTest {
 
-    @Resource
-    private OpenImAdminAppletRest openImAdminAppletRest;
-    @Resource
-    private OpenImAdminRest openImAdminRest;
+
+    private OpenImAdminAppletRest openImAdminAppletRest = new OpenImAdminAppletRest();
+
+    private OpenImAdminRest openImAdminRest = new OpenImAdminRest();
 
     private static OpenImToken openImToken;
+
+    @Resource
+    private OpenimConfig openimConfig;
+
 
     @Before
     public void initToken() {
         if (openImToken == null) {
+            OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             AdminLoginReq adminLoginReq = new AdminLoginReq();
             adminLoginReq.setAccount("openIMAdmin");

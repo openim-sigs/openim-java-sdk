@@ -11,27 +11,26 @@ import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
 import org.ccs.openim.chat.req.OpenIMCallbackReq;
+import org.ccs.openim.chat.req.UploadLogsReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
+import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 
 /**
  * openIm-chat服务接口
  *
  * @author chenjh
  */
-@Service
+
 @Slf4j
 public class OpenImChatOtherRest {
-    @Autowired
-    private RestTemplate restTemplate;
+    public OpenImChatOtherRest() {
+        this.init();
+    }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.CHAT;
 
@@ -47,7 +46,7 @@ public class OpenImChatOtherRest {
 
     private OpenimConfig openimConfig;
 
-    @PostConstruct
+
     public void init() {
         this.openimConfig = OpenimUtils.getOpenimConfig();
     }
@@ -61,7 +60,7 @@ public class OpenImChatOtherRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<FindAppletResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<FindAppletResp>>() {
         }, false);
@@ -82,7 +81,7 @@ public class OpenImChatOtherRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<GetClientConfigResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetClientConfigResp>>() {
         }, false);
@@ -103,13 +102,41 @@ public class OpenImChatOtherRest {
 
         String body = JSONUtil.toJsonStr(req);
         HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
         OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
             log.warn("----callbackOpenIm--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * 上传日志
+     * routePath = /logs/upload
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> uploadLogs(OpenImToken openImToken, UploadLogsReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/logs/upload");
+
+        HttpHeaders httpHeaders = initPostHeader(openImToken);
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
+        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----uploadLogs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
         }
 
         return openImResult;
