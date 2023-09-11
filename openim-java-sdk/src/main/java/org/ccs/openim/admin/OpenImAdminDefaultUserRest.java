@@ -1,6 +1,7 @@
 package org.ccs.openim.admin;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.admin.defaultUser.req.AddDefaultFriendReq;
@@ -12,12 +13,10 @@ import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * openIm-chat.admin服务接口
@@ -31,16 +30,6 @@ public class OpenImAdminDefaultUserRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getAdminToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
 
     private OpenimConfig openimConfig;
 
@@ -61,16 +50,14 @@ public class OpenImAdminDefaultUserRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/default/user/add");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -88,16 +75,14 @@ public class OpenImAdminDefaultUserRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/default/user/del");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----delDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----delDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -115,16 +100,14 @@ public class OpenImAdminDefaultUserRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/default/user/find");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<FindDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<FindDefaultFriendResp>>() {
+        OpenImResult<FindDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<FindDefaultFriendResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----findDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----findDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -142,16 +125,14 @@ public class OpenImAdminDefaultUserRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/default/user/search");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<SearchDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchDefaultFriendResp>>() {
+        OpenImResult<SearchDefaultFriendResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchDefaultFriendResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----searchDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----searchDefaultFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

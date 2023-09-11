@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.msg.req.*;
@@ -8,12 +9,10 @@ import org.ccs.openim.api.msg.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,16 +29,7 @@ public class OpenImApiMsgRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
+    
 
     private OpenimConfig openimConfig;
 
@@ -62,17 +52,14 @@ public class OpenImApiMsgRest {
         String url = CommUtils.appendUrl(apiUrl, "/msg/newest_seq");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetMaxSeqResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetMaxSeqResp>>() {
+        OpenImResult<GetMaxSeqResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetMaxSeqResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -91,17 +78,14 @@ public class OpenImApiMsgRest {
         String url = CommUtils.appendUrl(apiUrl, "/msg/search_msg");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<SearchMessageResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchMessageResp>>() {
+        OpenImResult<SearchMessageResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchMessageResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----SearchMessageResp--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----SearchMessageResp--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -119,17 +103,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/send_msg");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<SendMsgResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SendMsgResp>>() {
+        OpenImResult<SendMsgResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SendMsgResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----sendMessage--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----sendMessage--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -147,17 +128,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/batch_send_msg");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<BatchSendMsgResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<BatchSendMsgResp>>() {
+        OpenImResult<BatchSendMsgResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<BatchSendMsgResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----batchSendMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----batchSendMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -175,17 +153,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/send_business_notification");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<SendMsgResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SendMsgResp>>() {
+        OpenImResult<SendMsgResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SendMsgResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----sendBusinessNotification--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----sendBusinessNotification--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -203,17 +178,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/pull_msg_by_seq");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<PullMessageBySeqsResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<PullMessageBySeqsResp>>() {
+        OpenImResult<PullMessageBySeqsResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<PullMessageBySeqsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----pullMsgBySeqs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----pullMsgBySeqs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -231,17 +203,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/revoke_msg");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----revokeMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----revokeMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -259,17 +228,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/mark_msgs_as_read");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----markMsgsAsRead--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----markMsgsAsRead--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -287,17 +253,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/mark_conversation_as_read");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----markConversationAsRead--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----markConversationAsRead--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -315,17 +278,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/get_conversations_has_read_and_max_seq");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getConversationsHasReadAndMaxSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getConversationsHasReadAndMaxSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -343,17 +303,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/set_conversation_has_read_seq");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setConversationHasReadSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setConversationHasReadSeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -371,17 +328,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/clear_conversation_msg");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----clearConversationsMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----clearConversationsMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -399,17 +353,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/user_clear_all_msg");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----userClearAllMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----userClearAllMsg--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -427,17 +378,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/delete_msgs");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----deleteMsgs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----deleteMsgs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -455,17 +403,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/delete_msg_phsical_by_seq");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----deleteMsgPhysicalBySeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----deleteMsgPhysicalBySeq--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -483,17 +428,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/delete_msg_physical");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----deleteMsgPhysical--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----deleteMsgPhysical--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -511,17 +453,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/check_msg_is_send_success");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetSendMsgStatusResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetSendMsgStatusResp>>() {
+        OpenImResult<GetSendMsgStatusResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetSendMsgStatusResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----checkMsgIsSendSuccess--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----checkMsgIsSendSuccess--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -539,17 +478,14 @@ public class OpenImApiMsgRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/msg/get_server_time");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetServerTimeResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetServerTimeResp>>() {
+        OpenImResult<GetServerTimeResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetServerTimeResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getServerTime--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getServerTime--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

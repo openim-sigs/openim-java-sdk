@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.group.req.*;
@@ -8,12 +9,10 @@ import org.ccs.openim.api.group.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * Open-IM-Server服务接口
@@ -28,16 +27,7 @@ public class OpenImApiGroupRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
+    
 
     private OpenimConfig openimConfig;
 
@@ -57,18 +47,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/create_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<CreateGroupResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<CreateGroupResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<CreateGroupResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----createGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----createGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -85,18 +72,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/set_group_info");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setGroupInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setGroupInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -113,18 +97,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_groups_info");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupsInfoResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupsInfoResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupsInfoResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroupInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroupInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -141,18 +122,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_recv_group_applicationList");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupApplicationListResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupApplicationListResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupApplicationListResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getRecvGroupApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getRecvGroupApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -169,18 +147,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_user_req_group_applicationList");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetUserReqApplicationListResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetUserReqApplicationListResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetUserReqApplicationListResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getUserReqApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getUserReqApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -197,18 +172,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_group_users_req_application_list");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupUsersReqApplicationListResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupUsersReqApplicationListResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupUsersReqApplicationListResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroupUsersReqApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroupUsersReqApplicationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -226,18 +198,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/set_group_member_info");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setGroupMemberInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setGroupMemberInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -254,18 +223,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_group_abstract_info");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupAbstractInfoResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupAbstractInfoResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupAbstractInfoResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setGroupMemberInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setGroupMemberInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -282,18 +248,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/join_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----joinGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----joinGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -310,18 +273,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/quit_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -338,18 +298,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/kick_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -366,18 +323,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/dismiss_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----dismissGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----dismissGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -394,18 +348,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/mute_group_member");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----muteGroupMember--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----muteGroupMember--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -422,18 +373,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/cancel_mute_group_member");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----cancelMuteGroupMember--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----cancelMuteGroupMember--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -450,18 +398,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/mute_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----muteGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----muteGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -478,18 +423,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/cancel_mute_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----muteGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----muteGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -507,18 +449,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/group_application_response");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -535,18 +474,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_group_member_list");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupMemberListResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMemberListResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupMemberListResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----quitGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -563,18 +499,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_group_members_info");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupMembersInfoResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMembersInfoResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupMembersInfoResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroupMembersInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroupMembersInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -591,18 +524,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/transfer_group");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<String>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----transferGroupOwner--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----transferGroupOwner--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -619,18 +549,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_groups");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupsResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupsResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroups--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroups--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -647,18 +574,15 @@ public class OpenImApiGroupRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/group/get_groups");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
         OpenImResult<GetGroupMemberUserIDsResp>
-                openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupMemberUserIDsResp>>() {
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupMemberUserIDsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroupMemberUserIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroupMemberUserIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

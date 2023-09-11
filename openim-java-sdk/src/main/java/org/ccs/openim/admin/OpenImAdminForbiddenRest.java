@@ -1,6 +1,7 @@
 package org.ccs.openim.admin;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.admin.forbidden.req.*;
@@ -9,12 +10,10 @@ import org.ccs.openim.admin.forbidden.resp.SearchUserIPLimitLoginResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * openIm-chat.admin服务接口
@@ -28,16 +27,7 @@ public class OpenImAdminForbiddenRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getAdminToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
+    
 
     private OpenimConfig openimConfig;
 
@@ -60,16 +50,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/ip/add");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -89,16 +77,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/ip/del");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----delIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----delIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -118,16 +104,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/ip/search");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<SearchIPForbiddenResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchIPForbiddenResp>>() {
+        OpenImResult<SearchIPForbiddenResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchIPForbiddenResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----searchIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----searchIPForbidden--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -147,16 +131,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/user/add");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -176,16 +158,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/user/del");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----delUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----delUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -205,16 +185,14 @@ public class OpenImAdminForbiddenRest {
         String url = CommUtils.appendUrl(apiUrl, "/forbidden/user/search");
 
 
-        HttpHeaders httpHeaders = this.initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<SearchUserIPLimitLoginResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<SearchUserIPLimitLoginResp>>() {
+        OpenImResult<SearchUserIPLimitLoginResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchUserIPLimitLoginResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----searchUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----searchUserIPLimitLogin--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

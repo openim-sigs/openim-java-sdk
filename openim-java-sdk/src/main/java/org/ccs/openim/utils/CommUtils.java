@@ -1,6 +1,6 @@
 package org.ccs.openim.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.text.CharSequenceUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -42,7 +42,7 @@ public class CommUtils {
         while (it.hasNext()) {
             String key = it.next();
             String value = source.get(key);
-            if (StringUtils.isBlank(value)) {
+            if (CharSequenceUtil.isBlank(value)) {
                 continue;
             }
             try {

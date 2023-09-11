@@ -1,6 +1,7 @@
 package org.ccs.openim.admin;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.admin.clientconfig.req.DelClientConfigReq;
@@ -9,12 +10,10 @@ import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * openIm-chat.admin服务接口
@@ -28,16 +27,6 @@ public class OpenImAdminClientConfigRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.ADMIN;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getAdminToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
 
     private OpenimConfig openimConfig;
 
@@ -55,17 +44,15 @@ public class OpenImAdminClientConfigRest {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/client_config/get");
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
+        
         String body = "{}";
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<GetClientConfigResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetClientConfigResp>>() {
+        OpenImResult<GetClientConfigResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetClientConfigResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -82,16 +69,14 @@ public class OpenImAdminClientConfigRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/client_config/set");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -108,16 +93,14 @@ public class OpenImAdminClientConfigRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/client_config/del");
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.adminHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----delClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----delClientConfig--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

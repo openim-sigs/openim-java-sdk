@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.group.req.GetGroupAbstractInfoReq;
@@ -10,12 +11,10 @@ import org.ccs.openim.api.superGroup.resp.GetJoinedSuperGroupListResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * Open-IM-Server服务接口
@@ -30,17 +29,7 @@ public class OpenImApiSuperGroupRest {
 
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
-
+    
     private OpenimConfig openimConfig;
 
 
@@ -61,17 +50,14 @@ public class OpenImApiSuperGroupRest {
         String url = CommUtils.appendUrl(apiUrl, "/super_group/get_joined_group_list");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetJoinedSuperGroupListResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetJoinedSuperGroupListResp>>() {
+        OpenImResult<GetJoinedSuperGroupListResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetJoinedSuperGroupListResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getJoinedSuperGroupList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getJoinedSuperGroupList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -90,17 +76,14 @@ public class OpenImApiSuperGroupRest {
         String url = CommUtils.appendUrl(apiUrl, "/super_group/get_groups_info");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetGroupAbstractInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetGroupAbstractInfoResp>>() {
+        OpenImResult<GetGroupAbstractInfoResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetGroupAbstractInfoResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getGroupAbstractInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getGroupAbstractInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.admin.req.UserRegisterCountReq;
@@ -14,12 +15,10 @@ import org.ccs.openim.api.statistics.resp.UserRegisterCountResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * Open-IM-Server服务接口
@@ -34,15 +33,6 @@ public class OpenImApiStatisticsRest {
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
 
     private OpenimConfig openimConfig;
 
@@ -65,17 +55,14 @@ public class OpenImApiStatisticsRest {
         String url = CommUtils.appendUrl(apiUrl, "/statistics/user/register");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<UserRegisterCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserRegisterCountResp>>() {
+        OpenImResult<UserRegisterCountResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<UserRegisterCountResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----userRegisterCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----userRegisterCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -94,17 +81,14 @@ public class OpenImApiStatisticsRest {
         String url = CommUtils.appendUrl(apiUrl, "/statistics/user/active");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetActiveUserResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetActiveUserResp>>() {
+        OpenImResult<GetActiveUserResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetActiveUserResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getActiveUser--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getActiveUser--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -123,17 +107,14 @@ public class OpenImApiStatisticsRest {
         String url = CommUtils.appendUrl(apiUrl, "/statistics/group/create");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GroupCreateCountResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GroupCreateCountResp>>() {
+        OpenImResult<GroupCreateCountResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GroupCreateCountResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----groupCreateCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----groupCreateCount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -152,17 +133,14 @@ public class OpenImApiStatisticsRest {
         String url = CommUtils.appendUrl(apiUrl, "/statistics/group/active");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetActiveGroupResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetActiveGroupResp>>() {
+        OpenImResult<GetActiveGroupResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetActiveGroupResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getActiveGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getActiveGroup--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

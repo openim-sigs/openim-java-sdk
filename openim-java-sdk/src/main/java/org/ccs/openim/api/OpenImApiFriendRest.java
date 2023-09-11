@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.friend.req.*;
@@ -8,12 +9,10 @@ import org.ccs.openim.api.friend.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * Open-IM-Server服务接口
@@ -29,15 +28,6 @@ public class OpenImApiFriendRest {
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
 
     private OpenimConfig openimConfig;
 
@@ -60,17 +50,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/delete_friend");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----deleteFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----deleteFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -89,17 +76,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/add_friend");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -118,17 +102,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/import_friend");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -147,17 +128,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/add_friend_response");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----respondFriendApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----respondFriendApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -177,17 +155,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/set_friend_remark");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----respondFriendApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----respondFriendApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -206,17 +181,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_friend_apply_list");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetPaginationFriendsApplyToResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetPaginationFriendsApplyToResp>>() {
+        OpenImResult<GetPaginationFriendsApplyToResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetPaginationFriendsApplyToResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getFriendApplyList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getFriendApplyList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -235,17 +207,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_designated_friend_apply");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetDesignatedFriendsApplyResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetDesignatedFriendsApplyResp>>() {
+        OpenImResult<GetDesignatedFriendsApplyResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetDesignatedFriendsApplyResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getDesignatedFriendsApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getDesignatedFriendsApply--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -264,17 +233,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_self_friend_apply_list");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetPaginationFriendsApplyFromResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetPaginationFriendsApplyFromResp>>() {
+        OpenImResult<GetPaginationFriendsApplyFromResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetPaginationFriendsApplyFromResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getSelfApplyList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getSelfApplyList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -293,17 +259,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_friend_list");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetPaginationFriendsResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetPaginationFriendsResp>>() {
+        OpenImResult<GetPaginationFriendsResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetPaginationFriendsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getFriendList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getFriendList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -322,17 +285,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_designated_friends");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetDesignatedFriendsResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetDesignatedFriendsResp>>() {
+        OpenImResult<GetDesignatedFriendsResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetDesignatedFriendsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getFriendList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getFriendList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -351,17 +311,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/add_black");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----addBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----addBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -380,18 +337,14 @@ public class OpenImApiFriendRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_black_list");
 
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetPaginationBlacksResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetPaginationBlacksResp>>() {
+        OpenImResult<GetPaginationBlacksResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetPaginationBlacksResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getPaginationBlacks--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getPaginationBlacks--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -411,17 +364,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/remove_black");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----removeBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----removeBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -440,17 +390,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/is_friend");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<IsFriendResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<IsFriendResp>>() {
+        OpenImResult<IsFriendResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<IsFriendResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----isFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----isFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -470,17 +417,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/is_black");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<IsBlackResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<IsBlackResp>>() {
+        OpenImResult<IsBlackResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<IsBlackResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----isBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----isBlack--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -499,17 +443,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_friend_id");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetFriendIDsResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetFriendIDsResp>>() {
+        OpenImResult<GetFriendIDsResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetFriendIDsResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getFriendIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getFriendIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -528,17 +469,14 @@ public class OpenImApiFriendRest {
         String url = CommUtils.appendUrl(apiUrl, "/friend/get_specified_friends_info");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<GetSpecifiedFriendsInfoResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<GetSpecifiedFriendsInfoResp>>() {
+        OpenImResult<GetSpecifiedFriendsInfoResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetSpecifiedFriendsInfoResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----getSpecifiedFriendsInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----getSpecifiedFriendsInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

@@ -1,6 +1,7 @@
 package org.ccs.openim.chat;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.base.OpenImResult;
@@ -14,7 +15,9 @@ import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * openIm-chat服务接口
@@ -28,17 +31,7 @@ public class OpenImChatAccountRest {
     }
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.CHAT;
-
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getChatToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
-
+    
     private OpenimConfig openimConfig;
 
 
@@ -58,17 +51,17 @@ public class OpenImChatAccountRest {
         String url = CommUtils.appendUrl(apiUrl, "/account/code/send");
 
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----codeSend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----codeSend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -86,17 +79,17 @@ public class OpenImChatAccountRest {
         String url = CommUtils.appendUrl(apiUrl, "/account/code/verify");
 
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----codeVerify--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----codeVerify--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -113,19 +106,19 @@ public class OpenImChatAccountRest {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/login");
+        
 
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, operationId);
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put(OpenimParams.OPERATIONID, operationId);
         String body = JSONUtil.toJsonStr(loginReq);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<LoginResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<LoginResp>>() {
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);
+
+        OpenImResult<LoginResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<LoginResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----login--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----login--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -142,18 +135,17 @@ public class OpenImChatAccountRest {
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/register");
 
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, "");
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(userReq);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
 
-        OpenImResult<UserRegisterResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<UserRegisterResp>>() {
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);
+
+        OpenImResult<UserRegisterResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<UserRegisterResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -172,17 +164,17 @@ public class OpenImChatAccountRest {
         String url = CommUtils.appendUrl(apiUrl, "/account/password/reset");
 
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(OpenimParams.OPERATIONID, "");
+        Map<String, String> httpHeaders = new HashMap<>();
+        httpHeaders.put(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -198,19 +190,16 @@ public class OpenImChatAccountRest {
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/account/password/change");
+        
 
-
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-        httpHeaders.add(OpenimParams.OPERATIONID, "");
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.chatHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----register--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

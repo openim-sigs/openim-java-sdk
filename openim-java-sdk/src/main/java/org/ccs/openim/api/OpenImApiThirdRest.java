@@ -1,6 +1,7 @@
 package org.ccs.openim.api;
 
 import cn.hutool.core.lang.TypeReference;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.third.req.*;
@@ -8,12 +9,10 @@ import org.ccs.openim.api.third.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.base.OpenimParams;
 import org.ccs.openim.constants.ApiServerType;
 import org.ccs.openim.utils.CommUtils;
 import org.ccs.openim.utils.HttpRequestUtils;
 import org.ccs.openim.utils.OpenimUtils;
-import org.springframework.http.*;
 
 /**
  * Open-IM-Server服务接口
@@ -29,15 +28,6 @@ public class OpenImApiThirdRest {
 
     public static final ApiServerType SERVER_TYPE = ApiServerType.API;
 
-
-    private HttpHeaders initPostHeader(OpenImToken openImToken) {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("authKey", openimConfig.getAuthKey());
-        requestHeaders.add(OpenimParams.OPERATIONID, openImToken.getOperationId());
-        requestHeaders.add(OpenimParams.TOKEN, openImToken.getImToken());
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        return requestHeaders;
-    }
 
     private OpenimConfig openimConfig;
 
@@ -59,18 +49,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/fcm_update_token");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----fcmUpdateToken--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----fcmUpdateToken--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -89,18 +75,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/set_app_badge");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<String>>() {
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----setAppBadge--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----setAppBadge--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -118,18 +100,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/part_limit");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<PartLimitResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<PartLimitResp>>() {
+        OpenImResult<PartLimitResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<PartLimitResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----partLimit--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----partLimit--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -147,18 +125,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/part_size");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<PartSizeResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<PartSizeResp>>() {
+        OpenImResult<PartSizeResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<PartSizeResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----partSize--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----partSize--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -177,18 +151,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/initiate_multipart_upload");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<InitiateMultipartUploadResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<InitiateMultipartUploadResp>>() {
+        OpenImResult<InitiateMultipartUploadResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<InitiateMultipartUploadResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----initiateMultipartUpload--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----initiateMultipartUpload--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -207,18 +177,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/auth_sign");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<AuthSignResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<AuthSignResp>>() {
+        OpenImResult<AuthSignResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<AuthSignResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----authSign--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----authSign--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -237,18 +203,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/complete_multipart_upload");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<CompleteMultipartUploadResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<CompleteMultipartUploadResp>>() {
+        OpenImResult<CompleteMultipartUploadResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<CompleteMultipartUploadResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----completeMultipartUpload--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----completeMultipartUpload--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
@@ -267,18 +229,14 @@ public class OpenImApiThirdRest {
         String url = CommUtils.appendUrl(apiUrl, "/third/object/access_url");
 
 
-        HttpHeaders httpHeaders = initPostHeader(openImToken);
-
-
         String body = JSONUtil.toJsonStr(req);
-        HttpEntity<String> formEntity = new HttpEntity<>(body, httpHeaders);
-        ResponseEntity<String> exchanges = HttpRequestUtils.exchange(url, HttpMethod.POST, formEntity, String.class);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
 
-        OpenImResult<AccessURLResp> openImResult = JSONUtil.toBean(exchanges.getBody(), new TypeReference<OpenImResult<AccessURLResp>>() {
+        OpenImResult<AccessURLResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<AccessURLResp>>() {
         }, false);
 
         if (!openImResult.isOk()) {
-            log.warn("----accessURL--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.getBody());
+            log.warn("----accessURL--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
