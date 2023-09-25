@@ -22,9 +22,9 @@ public class OpenImApiUserService {
      * @param req
      * @return
      */
-    public OpenImResult<String> userRegister(UserRegisterReq req) {
+    public OpenImResult<String> userRegister(OpenImToken openImToken, UserRegisterReq req) {
         ValidatorUtils.validate(req);
-        return openImApiUserRest.userRegister(req);
+        return openImApiUserRest.userRegister(openImToken, req);
     }
 
     /**

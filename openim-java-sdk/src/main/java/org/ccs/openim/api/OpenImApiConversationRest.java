@@ -4,11 +4,9 @@ import cn.hutool.core.lang.TypeReference;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.ccs.openim.api.conversation.req.GetAllConversationsReq;
-import org.ccs.openim.api.conversation.req.GetConversationReq;
-import org.ccs.openim.api.conversation.req.GetConversationsReq;
-import org.ccs.openim.api.conversation.req.SetConversationsReq;
+import org.ccs.openim.api.conversation.req.*;
 import org.ccs.openim.api.conversation.resp.GetAllConversationsResp;
+import org.ccs.openim.api.conversation.resp.GetConversationOfflinePushUserIDsResp;
 import org.ccs.openim.api.conversation.resp.GetConversationResp;
 import org.ccs.openim.api.conversation.resp.GetConversationsResp;
 import org.ccs.openim.base.OpenImResult;
@@ -144,6 +142,34 @@ public class OpenImApiConversationRest {
 
         if (!openImResult.isOk()) {
             log.warn("----setConversations--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
+     * getConversationOfflinePushUserIDs
+     * /conversation/get_conversation_offline_push_user_ids
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetConversationOfflinePushUserIDsResp> getConversationOfflinePushUserIDs(OpenImToken openImToken, GetConversationOfflinePushUserIDsReq req) {
+//        ValidateUtils.notNull(token, "token is null");
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/conversation/get_conversation_offline_push_user_ids");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<GetConversationOfflinePushUserIDsResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetConversationOfflinePushUserIDsResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getConversationOfflinePushUserIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

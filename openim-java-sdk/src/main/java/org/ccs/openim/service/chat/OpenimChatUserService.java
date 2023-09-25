@@ -3,6 +3,8 @@ package org.ccs.openim.service.chat;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.chat.OpenImChatUserRest;
+import org.ccs.openim.chat.req.SearchUserInfoReq;
+import org.ccs.openim.chat.resp.SearchUserInfoResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
@@ -74,5 +76,15 @@ public class OpenimChatUserService {
     public OpenImResult<SearchUserPubliclInfoResp> searchUserPublicInfo(OpenImToken openImToken, SearchUserPublicInfoReq req) {
         ValidatorUtils.validate(req);
         return openImChatUserRest.searchUserPublicInfo(openImToken, req);
+    }
+
+    /**
+     * 搜索好友
+     * routePath=/friend/search
+     * @param req
+     * @return
+     */
+    public OpenImResult<SearchUserInfoResp> searchFriend(OpenImToken openImToken, SearchUserInfoReq req){
+        return openImChatUserRest.searchFriend(openImToken, req);
     }
 }

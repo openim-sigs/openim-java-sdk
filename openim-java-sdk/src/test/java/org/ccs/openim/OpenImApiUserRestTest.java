@@ -34,6 +34,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -102,6 +103,22 @@ public class OpenImApiUserRestTest {
         ForceLogoutReq req = new ForceLogoutReq();
         req.setUserID("2837113445");
         OpenImResult<String> result = openImApiAuthRest.forceLogout(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+        TestCase.assertTrue(result.getErrMsg(), result.isOk());
+    }
+
+    @Test
+    public void userRegister(){
+        UserRegisterReq userRegisterReq = new UserRegisterReq();
+        List<UserInfo> users = new ArrayList<>();
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserID("test124");
+        userInfo.setNickname("test124");
+        userInfo.setCreateTime(System.currentTimeMillis());
+        users.add(userInfo);
+        userRegisterReq.setUsers(users);
+        userRegisterReq.setSecret("openIM123");
+        OpenImResult<String> result = openImApiUserRest.userRegister(openImToken, userRegisterReq);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

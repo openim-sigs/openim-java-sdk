@@ -1,11 +1,9 @@
 package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiConversationRest;
-import org.ccs.openim.api.conversation.req.GetAllConversationsReq;
-import org.ccs.openim.api.conversation.req.GetConversationReq;
-import org.ccs.openim.api.conversation.req.GetConversationsReq;
-import org.ccs.openim.api.conversation.req.SetConversationsReq;
+import org.ccs.openim.api.conversation.req.*;
 import org.ccs.openim.api.conversation.resp.GetAllConversationsResp;
+import org.ccs.openim.api.conversation.resp.GetConversationOfflinePushUserIDsResp;
 import org.ccs.openim.api.conversation.resp.GetConversationResp;
 import org.ccs.openim.api.conversation.resp.GetConversationsResp;
 import org.ccs.openim.base.OpenImResult;
@@ -63,6 +61,17 @@ public class OpenImApiConversationService {
     public OpenImResult<String> setConversations(OpenImToken openImToken, SetConversationsReq req) {
         ValidatorUtils.validate(req);
         return openImApiConversationRest.setConversations(openImToken, req);
+    }
+
+    /**
+     * getConversationOfflinePushUserIDs
+     * /conversation/get_conversation_offline_push_user_ids
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetConversationOfflinePushUserIDsResp> getConversationOfflinePushUserIDs(OpenImToken openImToken, GetConversationOfflinePushUserIDsReq req){
+        return openImApiConversationRest.getConversationOfflinePushUserIDs(openImToken, req);
     }
 
 

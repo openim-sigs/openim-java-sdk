@@ -50,14 +50,14 @@ public class OpenImApiUserRest {
      * @param req
      * @return
      */
-    public OpenImResult<String> userRegister(UserRegisterReq req) {
+    public OpenImResult<String> userRegister(OpenImToken openImToken, UserRegisterReq req) {
 //        ValidateUtils.notNull(users, "users is null");
         long time = System.currentTimeMillis();
         String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
         String url = CommUtils.appendUrl(apiUrl, "/user/user_register");
 
         Map<String, String> headerMap = new HashMap<>();
-        headerMap.put(OpenimParams.OPERATIONID, "");
+        headerMap.put(OpenimParams.OPERATIONID, openImToken.getOperationId());
 
         if (CharSequenceUtil.isBlank(req.getSecret())) {
             req.setSecret(openimConfig.getSecret());
