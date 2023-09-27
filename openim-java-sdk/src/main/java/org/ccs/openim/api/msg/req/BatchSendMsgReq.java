@@ -3,7 +3,7 @@ package org.ccs.openim.api.msg.req;
 import lombok.Data;
 import org.ccs.openim.api.msg.vo.SendMsg;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Data

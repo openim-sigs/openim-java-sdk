@@ -1,8 +1,9 @@
 package org.ccs.openim.chat.vo;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+
 
 /**
  * @author chenjh

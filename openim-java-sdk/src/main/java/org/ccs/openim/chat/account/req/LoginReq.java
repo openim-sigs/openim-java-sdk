@@ -2,7 +2,7 @@ package org.ccs.openim.chat.account.req;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**

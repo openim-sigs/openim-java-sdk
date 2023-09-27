@@ -3,7 +3,7 @@ package org.ccs.openim.admin.invitationCode.req;
 import lombok.Data;
 import org.ccs.openim.base.RequestPagination;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @Data

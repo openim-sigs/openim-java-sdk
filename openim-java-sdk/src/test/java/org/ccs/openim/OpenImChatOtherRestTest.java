@@ -2,6 +2,7 @@ package org.ccs.openim;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
+import jakarta.annotation.Resource;
 import junit.framework.TestCase;
 import org.ccs.openim.admin.clientconfig.resp.GetClientConfigResp;
 import org.ccs.openim.base.OpenImResult;
@@ -32,7 +33,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package org.ccs.openim.utils;
 
+import jakarta.validation.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.*;
+
 import java.util.Iterator;
 import java.util.Set;
 
