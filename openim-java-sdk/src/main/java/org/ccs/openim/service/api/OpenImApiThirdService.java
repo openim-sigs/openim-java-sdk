@@ -6,9 +6,6 @@ import org.ccs.openim.api.third.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.utils.ValidatorUtils;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 
 public class OpenImApiThirdService {
