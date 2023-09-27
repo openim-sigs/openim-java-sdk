@@ -108,6 +108,8 @@
                 <!--打包时排除哪些内容-->
                 <excludes>
                     <exclude>lib/*</exclude>
+                    <exclude>application*</exclude>
+                    <exclude>logback.yml</exclude>
                 </excludes>
                 <filtering>true</filtering>
             </resource>
