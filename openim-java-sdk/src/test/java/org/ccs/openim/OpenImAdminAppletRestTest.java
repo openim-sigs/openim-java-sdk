@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -48,8 +49,8 @@ public class OpenImAdminAppletRestTest {
             OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             AdminLoginReq adminLoginReq = new AdminLoginReq();
-            adminLoginReq.setAccount("openIMAdmin");
-            adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+            adminLoginReq.setAccount("admin1");
+            adminLoginReq.setPassword(DigestUtils.md5DigestAsHex("admin1".getBytes()));
             OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();

@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -62,7 +63,7 @@ public class OpenImChatOtherRestTest {
             loginReq.setPlatform(IMPlatform.WINDOWS.getType());
             loginReq.setAreaCode("+86");
             loginReq.setPhoneNumber("17607559255");
-            loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
+            loginReq.setPassword(DigestUtils.md5DigestAsHex("test".getBytes()));
             OpenImResult<LoginResp> result = openImChatAccountRest.login(loginReq, operationId);
             if (result.isOk()) {
                 LoginResp loginResp = result.getData();
