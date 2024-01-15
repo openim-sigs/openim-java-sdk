@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class OpenImApiUserRestTest {
             loginReq.setPlatform(IMPlatform.WINDOWS.getType());
             loginReq.setAreaCode("+86");
             loginReq.setPhoneNumber("17607559255");
-            loginReq.setPassword("16d7a4fca7442dda3ad93c9a726597e4");
+            loginReq.setPassword(DigestUtils.md5DigestAsHex("test".getBytes()));
             OpenImResult<LoginResp> result = openImChatAccountRest.login(loginReq, operationId);
             if (result.isOk()) {
                 LoginResp loginResp = result.getData();
@@ -78,7 +79,7 @@ public class OpenImApiUserRestTest {
     @Test
     public void userToken() {
         UserTokenReq req = new UserTokenReq();
-        req.setUserID("2837113445");
+        req.setUserID("2997204749");
         OpenImResult<UserTokenResp> result = openImApiAuthRest.userToken(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
@@ -101,7 +102,7 @@ public class OpenImApiUserRestTest {
     @Test
     public void authForceLogout() {
         ForceLogoutReq req = new ForceLogoutReq();
-        req.setUserID("2837113445");
+        req.setUserID("2997204749");
         OpenImResult<String> result = openImApiAuthRest.forceLogout(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());

@@ -86,6 +86,30 @@ public class OpenImApiThirdService {
     }
 
     /**
+     * initiateFormData
+     * routePath=/third/object/initiate_form_data
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<InitiateFormDataResp> initiateFormData(OpenImToken openImToken, InitiateFormDataReq req){
+        ValidatorUtils.validate(req);
+        return openImApiThirdRest.initiateFormData(openImToken, req);
+    }
+
+    /**
+     * completeFormData
+     * routePath=/third/object/complete_form_data
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<CompleteFormDataResp> completeFormData(OpenImToken openImToken, CompleteFormDataReq req){
+        ValidatorUtils.validate(req);
+        return openImApiThirdRest.completeFormData(openImToken, req);
+    }
+
+    /**
      * accessURL
      * routePath=/third/object/access_url
      *

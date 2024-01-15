@@ -15,8 +15,8 @@ import org.ccs.openim.admin.defaultUser.req.FindDefaultFriendReq;
 import org.ccs.openim.admin.defaultUser.req.SearchDefaultFriendReq;
 import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
-import org.ccs.openim.admin.req.GetAdminInfoReq;
 import org.ccs.openim.admin.req.AdminLoginReq;
+import org.ccs.openim.admin.req.GetAdminInfoReq;
 import org.ccs.openim.admin.req.SearchLogsReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -65,8 +66,8 @@ public class OpenImAdminRestTest {
             OpenimUtils.setOpenimConfig(openimConfig);
             String operationId = IdUtil.fastUUID();
             AdminLoginReq adminLoginReq = new AdminLoginReq();
-            adminLoginReq.setAccount("openIMAdmin");
-            adminLoginReq.setPassword("de84e3477e4fcddc54c9bfbeac4aca2d");
+            adminLoginReq.setAccount("admin1");
+            adminLoginReq.setPassword(DigestUtils.md5DigestAsHex("admin1".getBytes()));
             OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();

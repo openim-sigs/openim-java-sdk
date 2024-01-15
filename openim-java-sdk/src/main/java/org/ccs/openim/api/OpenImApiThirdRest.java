@@ -165,6 +165,60 @@ public class OpenImApiThirdRest {
     }
 
     /**
+     * initiateFormData
+     * routePath=/third/object/initiate_form_data
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<InitiateFormDataResp> initiateFormData(OpenImToken openImToken, InitiateFormDataReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/third/object/initiate_form_data");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<InitiateFormDataResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<InitiateFormDataResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----initiateFormData--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * completeFormData
+     * routePath=/third/object/complete_form_data
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<CompleteFormDataResp> completeFormData(OpenImToken openImToken, CompleteFormDataReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/third/object/complete_form_data");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<CompleteFormDataResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<CompleteFormDataResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----completeFormData--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+
+    /**
      * authSign
      * routePath=/third/object/auth_sign
      *

@@ -73,6 +73,18 @@ public class OpenImApiFriendService {
     }
 
     /**
+     * 星标好友
+     * routePath=/friend/update_friends
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> updateFriends(OpenImToken openImToken, UpdateFriendsReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiFriendRest.updateFriends(openImToken, req);
+    }
+
+    /**
      * 获取收到的好友申请列表
      * routePath=/friend/get_friend_apply_list
      *

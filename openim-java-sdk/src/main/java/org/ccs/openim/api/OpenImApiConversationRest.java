@@ -5,10 +5,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.conversation.req.*;
-import org.ccs.openim.api.conversation.resp.GetAllConversationsResp;
-import org.ccs.openim.api.conversation.resp.GetConversationOfflinePushUserIDsResp;
-import org.ccs.openim.api.conversation.resp.GetConversationResp;
-import org.ccs.openim.api.conversation.resp.GetConversationsResp;
+import org.ccs.openim.api.conversation.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
@@ -170,6 +167,34 @@ public class OpenImApiConversationRest {
 
         if (!openImResult.isOk()) {
             log.warn("----getConversationOfflinePushUserIDs--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
+     * getSortedConversationList
+     * routePath=/conversation/get_sorted_conversation_list
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSortedConversationListResp> getSortedConversationList(OpenImToken openImToken, GetSortedConversationListReq req) {
+//        ValidateUtils.notNull(token, "token is null");
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/conversation/get_sorted_conversation_list");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<GetSortedConversationListResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetSortedConversationListResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getSortedConversationList--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
