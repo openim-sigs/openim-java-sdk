@@ -2,10 +2,7 @@ package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiConversationRest;
 import org.ccs.openim.api.conversation.req.*;
-import org.ccs.openim.api.conversation.resp.GetAllConversationsResp;
-import org.ccs.openim.api.conversation.resp.GetConversationOfflinePushUserIDsResp;
-import org.ccs.openim.api.conversation.resp.GetConversationResp;
-import org.ccs.openim.api.conversation.resp.GetConversationsResp;
+import org.ccs.openim.api.conversation.resp.*;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.utils.ValidatorUtils;
@@ -25,6 +22,18 @@ public class OpenImApiConversationService {
     public OpenImResult<GetAllConversationsResp> getAllConversations(OpenImToken openImToken, GetAllConversationsReq req) {
         ValidatorUtils.validate(req);
         return openImApiConversationRest.getAllConversations(openImToken, req);
+    }
+
+    /**
+     * getSortedConversationList
+     * routePath=/conversation/get_sorted_conversation_list
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSortedConversationListResp> getSortedConversationList(OpenImToken openImToken, GetSortedConversationListReq req){
+        ValidatorUtils.validate(req);
+        return openImApiConversationRest.getSortedConversationList(openImToken, req);
     }
 
     /**

@@ -40,6 +40,18 @@ public class OpenImApiUserService {
     }
 
     /**
+     * 更新用户在IM中的资料，主要是头像、昵称
+     * routePath=/user/update_user_info_ex
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> updateUserInfoEx(OpenImToken openImToken, UpdateUserInfoExReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.updateUserInfoEx(openImToken, req);
+    }
+
+    /**
      * 用户信息查询
      * routePath=/user/get_users_info
      *
@@ -85,6 +97,18 @@ public class OpenImApiUserService {
     public OpenImResult<GetUserStatusResp> getUsersStatus(OpenImToken openImToken, GetUserStatusReq req) {
         ValidatorUtils.validate(req);
         return openImApiUserRest.getUsersStatus(openImToken, req);
+    }
+
+    /**
+     * getSubscribeUsersStatus
+     * routePath=/user/get_subscribe_users_status
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSubscribeUsersStatusResp> getSubscribeUsersStatus(OpenImToken openImToken, GetSubscribeUsersStatusReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.getSubscribeUsersStatus(openImToken, req);
     }
 
     /**
@@ -160,5 +184,109 @@ public class OpenImApiUserService {
     public OpenImResult<AccountCheckResp> accountCheck(OpenImToken openImToken, AccountCheckReq req) {
         ValidatorUtils.validate(req);
         return openImApiUserRest.accountCheck(openImToken, req);
+    }
+
+    /**
+     * add a general function for add
+     * <p>
+     * routePath=/user/process_user_command_add
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandAdd(OpenImToken openImToken, ProcessUserCommandAddReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.processUserCommandAdd(openImToken, req);
+    }
+
+    /**
+     * add a general function for update
+     * <p>
+     * routePath=/user/process_user_command_update
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandUpdate(OpenImToken openImToken, ProcessUserCommandUpdateReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.processUserCommandUpdate(openImToken, req);
+    }
+
+    /**
+     * add a general function for delete
+     * <p>
+     * routePath=/user/process_user_command_delete
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandDelete(OpenImToken openImToken, ProcessUserCommandDeleteReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.processUserCommandDelete(openImToken, req);
+    }
+
+    /**
+     * add a general function for get
+     * <p>
+     * routePath=/user/process_user_command_get
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<ProcessUserCommandGetResp> processUserCommandGet(OpenImToken openImToken, ProcessUserCommandGetReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.processUserCommandGet(openImToken, req);
+    }
+
+    /**
+     * add a general function for get
+     * <p>
+     * routePath=/user/process_user_command_get
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<ProcessUserCommandGetAllResp> processUserCommandGetAll(OpenImToken openImToken, ProcessUserCommandGetAllReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.processUserCommandGetAll(openImToken, req);
+    }
+
+    /**
+     * add a system notification account
+     * <p>
+     * routePath=/user/add_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<AddNotificationAccountResp> addNotificationAccount(OpenImToken openImToken, AddNotificationAccountReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.addNotificationAccount(openImToken, req);
+    }
+
+    /**
+     * update the system notification info
+     * <p>
+     * routePath=/user/update_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> updateNotificationAccountInfo(OpenImToken openImToken, UpdateNotificationAccountInfoReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.updateNotificationAccountInfo(openImToken, req);
+    }
+
+    /**
+     * update the system notification info
+     * <p>
+     * routePath=/user/search_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<SearchNotificationAccountResp> searchNotificationAccount(OpenImToken openImToken, SearchNotificationAccountReq req) {
+        ValidatorUtils.validate(req);
+        return openImApiUserRest.searchNotificationAccount(openImToken, req);
     }
 }

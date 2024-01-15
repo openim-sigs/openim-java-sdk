@@ -131,6 +131,33 @@ public class OpenImApiUserRest {
     }
 
     /**
+     * 更新用户在IM中的资料，主要是头像、昵称
+     * routePath=/user/update_user_info_ex
+     *
+     * @param userInfo
+     * @return
+     */
+    public OpenImResult<String> updateUserInfoEx(OpenImToken openImToken, UpdateUserInfoExReq userInfo) {
+//        ValidateUtils.notNullForCoding(userInfo, "userInfo is null");
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/update_user_info_ex");
+
+
+        String body = JSONUtil.toJsonStr(userInfo);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----updateUserInfoEx--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
      * 用户信息查询
      * routePath=/user/get_users_info
      *
@@ -262,6 +289,33 @@ public class OpenImApiUserRest {
     }
 
     /**
+     * Get the online status of subscribers
+     * routePath=/user/get_subscribe_users_status
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetSubscribeUsersStatusResp> getSubscribeUsersStatus(OpenImToken openImToken, GetSubscribeUsersStatusReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/get_subscribe_users_status");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<GetSubscribeUsersStatusResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetSubscribeUsersStatusResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getSubscribeUsersStatus--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
      * Get user online status.
      * routePath=/user/get_users_online_status
      *
@@ -362,6 +416,224 @@ public class OpenImApiUserRest {
 
         if (!openImResult.isOk()) {
             log.warn("----unsubscriberStatus--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
+     * add a general function for add
+     * <p>
+     * routePath=/user/process_user_command_add
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandAdd(OpenImToken openImToken, ProcessUserCommandAddReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/process_user_command_add");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----processUserCommandAdd--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * add a general function for update
+     * <p>
+     * routePath=/user/process_user_command_update
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandUpdate(OpenImToken openImToken, ProcessUserCommandUpdateReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/process_user_command_update");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----processUserCommandUpdate--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * add a general function for delete
+     * <p>
+     * routePath=/user/process_user_command_delete
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> processUserCommandDelete(OpenImToken openImToken, ProcessUserCommandDeleteReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/process_user_command_delete");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----processUserCommandDelete--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * add a general function for get
+     * <p>
+     * routePath=/user/process_user_command_get
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<ProcessUserCommandGetResp> processUserCommandGet(OpenImToken openImToken, ProcessUserCommandGetReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/process_user_command_get");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<ProcessUserCommandGetResp>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<ProcessUserCommandGetResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----processUserCommandGet--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * add a general function for get
+     * <p>
+     * routePath=/user/process_user_command_get
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<ProcessUserCommandGetAllResp> processUserCommandGetAll(OpenImToken openImToken, ProcessUserCommandGetAllReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/process_user_command_get_all");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<ProcessUserCommandGetAllResp>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<ProcessUserCommandGetAllResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----processUserCommandGetAll--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+
+    /**
+     * add a system notification account
+     * <p>
+     * routePath=/user/add_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<AddNotificationAccountResp> addNotificationAccount(OpenImToken openImToken, AddNotificationAccountReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/add_notification_account");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<AddNotificationAccountResp>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<AddNotificationAccountResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----addNotificationAccount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * update the system notification info
+     * <p>
+     * routePath=/user/update_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> updateNotificationAccountInfo(OpenImToken openImToken, UpdateNotificationAccountInfoReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/update_notification_account");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----updateNotificationAccountInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * update the system notification info
+     * <p>
+     * routePath=/user/search_notification_account
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<SearchNotificationAccountResp> searchNotificationAccount(OpenImToken openImToken, SearchNotificationAccountReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/user/search_notification_account");
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<SearchNotificationAccountResp>
+                openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchNotificationAccountResp>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----searchNotificationAccount--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

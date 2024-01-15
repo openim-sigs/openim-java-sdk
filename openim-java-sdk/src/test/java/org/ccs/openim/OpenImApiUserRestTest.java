@@ -79,7 +79,7 @@ public class OpenImApiUserRestTest {
     @Test
     public void userToken() {
         UserTokenReq req = new UserTokenReq();
-        req.setUserID("2837113445");
+        req.setUserID("2997204749");
         OpenImResult<UserTokenResp> result = openImApiAuthRest.userToken(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
@@ -102,7 +102,7 @@ public class OpenImApiUserRestTest {
     @Test
     public void authForceLogout() {
         ForceLogoutReq req = new ForceLogoutReq();
-        req.setUserID("2837113445");
+        req.setUserID("2997204749");
         OpenImResult<String> result = openImApiAuthRest.forceLogout(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());

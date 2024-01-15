@@ -169,6 +169,32 @@ public class OpenImApiFriendRest {
     }
 
     /**
+     * 星标好友
+     * routePath=/friend/update_friends
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<String> updateFriends(OpenImToken openImToken, UpdateFriendsReq req) {
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/friend/update_friends");
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<String> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<String>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----updateFriends--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
      * 获取收到的好友申请列表
      * routePath=/friend/get_friend_apply_list
      *
