@@ -2,8 +2,9 @@ package org.ccs.openim.service.chat;
 
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
+import org.ccs.openim.chat.OpenImChatFriendRest;
 import org.ccs.openim.chat.OpenImChatUserRest;
-import org.ccs.openim.chat.req.SearchUserInfoReq;
+import org.ccs.openim.chat.friend.req.SearchFriendReq;
 import org.ccs.openim.chat.resp.SearchUserInfoResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
@@ -15,6 +16,7 @@ import org.ccs.openim.utils.ValidatorUtils;
 
 public class OpenimChatUserService {
     private OpenImChatUserRest openImChatUserRest = new OpenImChatUserRest();
+    private OpenImChatFriendRest openImChatFriendRest = new OpenImChatFriendRest();
 
 
     /**
@@ -84,7 +86,7 @@ public class OpenimChatUserService {
      * @param req
      * @return
      */
-    public OpenImResult<SearchUserInfoResp> searchFriend(OpenImToken openImToken, SearchUserInfoReq req){
-        return openImChatUserRest.searchFriend(openImToken, req);
+    public OpenImResult<SearchUserInfoResp> searchFriend(OpenImToken openImToken, SearchFriendReq req){
+        return openImChatFriendRest.searchFriend(openImToken, req);
     }
 }

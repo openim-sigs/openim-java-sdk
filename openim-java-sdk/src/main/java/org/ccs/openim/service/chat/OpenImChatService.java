@@ -2,11 +2,13 @@ package org.ccs.openim.service.chat;
 
 public class OpenImChatService {
 
-    private OpenimChatUserService openimChatUserService = new OpenimChatUserService();
+    private final OpenimChatUserService openimChatUserService = new OpenimChatUserService();
 
-    private OpenimChatAccountService openimChatAccountService = new OpenimChatAccountService();
+    private final OpenimChatAccountService openimChatAccountService = new OpenimChatAccountService();
 
-    private OpenImChatOtherService openImChatOtherService = new OpenImChatOtherService();
+    private final OpenImChatOtherService openImChatOtherService = new OpenImChatOtherService();
+
+    private final OpenImChatFriendService openImChatFriendService = new OpenImChatFriendService();
 
     public OpenimChatUserService user() {
         return openimChatUserService;
@@ -20,5 +22,8 @@ public class OpenImChatService {
         return openImChatOtherService;
     }
 
+    public OpenImChatFriendService friend() {
+        return openImChatFriendService;
+    }
 
 }
