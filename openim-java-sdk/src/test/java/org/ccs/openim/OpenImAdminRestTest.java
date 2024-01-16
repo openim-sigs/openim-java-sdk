@@ -3,6 +3,7 @@ package org.ccs.openim;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
+import org.ccs.openim.admin.OpenImAdminAccountRest;
 import org.ccs.openim.admin.OpenImAdminClientConfigRest;
 import org.ccs.openim.admin.OpenImAdminDefaultUserRest;
 import org.ccs.openim.admin.OpenImAdminRest;
@@ -15,8 +16,8 @@ import org.ccs.openim.admin.defaultUser.req.FindDefaultFriendReq;
 import org.ccs.openim.admin.defaultUser.req.SearchDefaultFriendReq;
 import org.ccs.openim.admin.defaultUser.resp.FindDefaultFriendResp;
 import org.ccs.openim.admin.defaultUser.resp.SearchDefaultFriendResp;
-import org.ccs.openim.admin.req.AdminLoginReq;
-import org.ccs.openim.admin.req.GetAdminInfoReq;
+import org.ccs.openim.account.req.AdminLoginReq;
+import org.ccs.openim.account.req.GetAdminInfoReq;
 import org.ccs.openim.admin.req.SearchLogsReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.admin.resp.GetAdminInfoResp;
@@ -54,6 +55,8 @@ public class OpenImAdminRestTest {
 
     private OpenImAdminDefaultUserRest openImAdminDefaultUserRest = new OpenImAdminDefaultUserRest();
 
+    private OpenImAdminAccountRest openImAdminAccountRest = new OpenImAdminAccountRest();
+
     private static OpenImToken openImToken;
 
     @Resource
@@ -68,7 +71,7 @@ public class OpenImAdminRestTest {
             AdminLoginReq adminLoginReq = new AdminLoginReq();
             adminLoginReq.setAccount("admin1");
             adminLoginReq.setPassword(DigestUtils.md5DigestAsHex("admin1".getBytes()));
-            OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
+            OpenImResult<AdminLoginResp> result = openImAdminAccountRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
@@ -87,7 +90,7 @@ public class OpenImAdminRestTest {
     @Test
     public void adminInfo() {
         GetAdminInfoReq req = new GetAdminInfoReq();
-        OpenImResult<GetAdminInfoResp> result = openImAdminRest.adminInfo(openImToken, req);
+        OpenImResult<GetAdminInfoResp> result = openImAdminAccountRest.adminInfo(openImToken, req);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
 
@@ -98,7 +101,7 @@ public class OpenImAdminRestTest {
         UpdateUserInfoReq getAdminInfoResp = new UpdateUserInfoReq();
         getAdminInfoResp.setAccount("openIMAdmin");
         getAdminInfoResp.setNickname("system30");
-        OpenImResult result = openImAdminRest.adminUpdateInfo(openImToken, getAdminInfoResp);
+        OpenImResult result = openImAdminAccountRest.adminUpdateInfo(openImToken, getAdminInfoResp);
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }

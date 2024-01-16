@@ -1,4 +1,4 @@
-package org.ccs.openim.admin.req;
+package org.ccs.openim.account.req;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

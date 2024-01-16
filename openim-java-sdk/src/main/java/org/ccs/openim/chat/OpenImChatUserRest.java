@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.base.OpenimConfig;
-import org.ccs.openim.chat.req.SearchUserInfoReq;
-import org.ccs.openim.chat.resp.SearchUserInfoResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
@@ -159,31 +157,6 @@ public class OpenImChatUserRest {
 
         if (!openImResult.isOk()) {
             log.warn("----searchUserPublicInfo--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
-        }
-
-        return openImResult;
-    }
-
-    /**
-     * 搜索好友
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<SearchUserInfoResp> searchFriend(OpenImToken openImToken, SearchUserInfoReq req) {
-        long time = System.currentTimeMillis();
-        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
-        String url = CommUtils.appendUrl(apiUrl, "/friend/search");
-
-
-        String body = JSONUtil.toJsonStr(req);
-        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.chatHeaderMap(openImToken));
-
-        OpenImResult<SearchUserInfoResp> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<SearchUserInfoResp>>() {
-        }, false);
-
-        if (!openImResult.isOk()) {
-            log.warn("----searchFriend--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;

@@ -8,7 +8,7 @@ import org.ccs.openim.admin.forbidden.req.AddIPForbiddenReq;
 import org.ccs.openim.admin.forbidden.req.IPForbiddenAdd;
 import org.ccs.openim.admin.forbidden.req.SearchIPForbiddenReq;
 import org.ccs.openim.admin.forbidden.resp.SearchIPForbiddenResp;
-import org.ccs.openim.admin.req.AdminLoginReq;
+import org.ccs.openim.account.req.AdminLoginReq;
 import org.ccs.openim.admin.req.UserLoginCountReq;
 import org.ccs.openim.admin.req.UserRegisterCountReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;

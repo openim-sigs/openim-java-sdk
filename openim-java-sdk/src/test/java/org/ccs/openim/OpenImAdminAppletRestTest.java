@@ -3,13 +3,15 @@ package org.ccs.openim;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import junit.framework.TestCase;
+import org.ccs.openim.account.req.AdminLoginReq;
+import org.ccs.openim.account.req.ChangeAdminPasswordReq;
+import org.ccs.openim.admin.OpenImAdminAccountRest;
 import org.ccs.openim.admin.OpenImAdminAppletRest;
 import org.ccs.openim.admin.OpenImAdminRest;
 import org.ccs.openim.admin.applet.req.AddAppletReq;
 import org.ccs.openim.admin.applet.req.DelAppletReq;
 import org.ccs.openim.admin.applet.req.SearchAppletReq;
 import org.ccs.openim.admin.applet.req.UpdateAppletReq;
-import org.ccs.openim.admin.req.AdminLoginReq;
 import org.ccs.openim.admin.resp.AdminLoginResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
@@ -36,6 +38,7 @@ public class OpenImAdminAppletRestTest {
     private OpenImAdminAppletRest openImAdminAppletRest = new OpenImAdminAppletRest();
 
     private OpenImAdminRest openImAdminRest = new OpenImAdminRest();
+    private OpenImAdminAccountRest openImAdminAccountRest = new OpenImAdminAccountRest();
 
     private static OpenImToken openImToken;
 
@@ -51,7 +54,7 @@ public class OpenImAdminAppletRestTest {
             AdminLoginReq adminLoginReq = new AdminLoginReq();
             adminLoginReq.setAccount("admin1");
             adminLoginReq.setPassword(DigestUtils.md5DigestAsHex("admin1".getBytes()));
-            OpenImResult<AdminLoginResp> result = openImAdminRest.adminLogin(adminLoginReq, operationId);
+            OpenImResult<AdminLoginResp> result = openImAdminAccountRest.adminLogin(adminLoginReq, operationId);
             if (result.isOk()) {
                 AdminLoginResp loginResp = result.getData();
                 openImToken = new OpenImToken(operationId, loginResp.getImToken(), null, loginResp.getAdminToken(), loginResp.getImUserID());
@@ -67,6 +70,12 @@ public class OpenImAdminAppletRestTest {
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
     }
 
+    @Test
+    public void changeAdminPassword() {
+        ChangeAdminPasswordReq req = new ChangeAdminPasswordReq();
+        OpenImResult<String> result = openImAdminAccountRest.changeAdminPassword(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
+    }
 
     @Test
     public void appletAdd() {

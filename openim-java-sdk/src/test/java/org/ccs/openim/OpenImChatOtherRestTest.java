@@ -13,17 +13,20 @@ import org.ccs.openim.chat.OpenImChatOtherRest;
 import org.ccs.openim.chat.OpenImChatUserRest;
 import org.ccs.openim.chat.account.req.LoginReq;
 import org.ccs.openim.chat.account.resp.LoginResp;
+import org.ccs.openim.chat.friend.req.SearchFriendReq;
 import org.ccs.openim.chat.req.CallbackBeforeAddFriendReq;
 import org.ccs.openim.chat.req.FindAppletReq;
 import org.ccs.openim.chat.req.GetClientConfigReq;
 import org.ccs.openim.chat.req.OpenIMCallbackReq;
 import org.ccs.openim.chat.resp.FindAppletResp;
+import org.ccs.openim.chat.resp.SearchUserInfoResp;
 import org.ccs.openim.chat.user.req.*;
 import org.ccs.openim.chat.user.resp.FindUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.FindUserPublicInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserFullInfoResp;
 import org.ccs.openim.chat.user.resp.SearchUserPubliclInfoResp;
 import org.ccs.openim.constants.IMPlatform;
+import org.ccs.openim.service.chat.OpenImChatService;
 import org.ccs.openim.utils.OpenimUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +50,8 @@ public class OpenImChatOtherRestTest {
     private OpenImChatUserRest openImChatUserRest = new OpenImChatUserRest();
 
     private OpenImChatAccountRest openImChatAccountRest = new OpenImChatAccountRest();
+
+    private OpenImChatService openImChatService = new OpenImChatService();
 
 
     private static OpenImToken openImToken;
@@ -92,6 +97,14 @@ public class OpenImChatOtherRestTest {
         System.out.println(JSONUtil.toJsonStr(result));
         TestCase.assertTrue(result.getErrMsg(), result.isOk());
 
+    }
+
+    @Test
+    public void searchFriend(){
+        SearchFriendReq req = new SearchFriendReq();
+        req.setPagination(new RequestPagination(1, 10));
+        OpenImResult<SearchUserInfoResp> result = openImChatService.friend().searchFriend(openImToken, req);
+        System.out.println(JSONUtil.toJsonStr(result));
     }
 
     @Test
