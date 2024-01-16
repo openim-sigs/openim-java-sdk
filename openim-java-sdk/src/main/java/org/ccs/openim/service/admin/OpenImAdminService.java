@@ -2,23 +2,29 @@ package org.ccs.openim.service.admin;
 
 public class OpenImAdminService {
 
-    private OpenImAdminUserService openImAdminUserService = new OpenImAdminUserService();
+    private final OpenImAdminUserService openImAdminUserService = new OpenImAdminUserService();
 
-    private OpenImAdminAppletService openImAdminAppletService = new OpenImAdminAppletService();
+    private final OpenImAdminAppletService openImAdminAppletService = new OpenImAdminAppletService();
 
-    private OpenImAdminForbiddenService openImAdminForbiddenService = new OpenImAdminForbiddenService();
+    private final OpenImAdminForbiddenService openImAdminForbiddenService = new OpenImAdminForbiddenService();
 
-    private OpenImAdminInvitationService openImAdminInvitationService = new OpenImAdminInvitationService();
+    private final OpenImAdminInvitationService openImAdminInvitationService = new OpenImAdminInvitationService();
 
-    private OpenImAdminDefaultUserService openImAdminDefaultUserService = new OpenImAdminDefaultUserService();
+    private final OpenImAdminDefaultUserService openImAdminDefaultUserService = new OpenImAdminDefaultUserService();
 
-    private OpenImAdminDefaultGroupService openImAdminDefaultGroupService = new OpenImAdminDefaultGroupService();
+    private final OpenImAdminDefaultGroupService openImAdminDefaultGroupService = new OpenImAdminDefaultGroupService();
 
-    private OpenImAdminClientConfigService openImAdminClientConfigService = new OpenImAdminClientConfigService();
+    private final OpenImAdminClientConfigService openImAdminClientConfigService = new OpenImAdminClientConfigService();
+
+    private final OpenImAdminAccountService openImAdminAccountService = new OpenImAdminAccountService();
 
 
     public OpenImAdminUserService user() {
         return openImAdminUserService;
+    }
+
+    public OpenImAdminAccountService account(){
+        return openImAdminAccountService;
     }
 
     public OpenImAdminAppletService applet() {

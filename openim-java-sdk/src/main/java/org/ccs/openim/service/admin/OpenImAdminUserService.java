@@ -1,54 +1,22 @@
 package org.ccs.openim.service.admin;
 
 import org.ccs.openim.admin.OpenImAdminRest;
-import org.ccs.openim.admin.req.*;
-import org.ccs.openim.admin.resp.*;
+import org.ccs.openim.admin.req.DeleteLogsReq;
+import org.ccs.openim.admin.req.SearchLogsReq;
+import org.ccs.openim.admin.req.UserLoginCountReq;
+import org.ccs.openim.admin.req.UserRegisterCountReq;
+import org.ccs.openim.admin.resp.NewUserCountResp;
+import org.ccs.openim.admin.resp.SearchLogsResp;
+import org.ccs.openim.admin.resp.UserLoginCountResp;
 import org.ccs.openim.base.OpenImResult;
 import org.ccs.openim.base.OpenImToken;
 import org.ccs.openim.chat.account.req.ChangePasswordReq;
-import org.ccs.openim.chat.user.req.UpdateUserInfoReq;
 import org.ccs.openim.utils.ValidatorUtils;
 
 
 public class OpenImAdminUserService {
 
     private OpenImAdminRest openImAdminRest = new OpenImAdminRest();
-
-    /**
-     * 登入
-     * routePath=/account/login
-     *
-     * @param adminLoginReq
-     * @return
-     */
-    public OpenImResult<AdminLoginResp> adminLogin(AdminLoginReq adminLoginReq, String operationid) {
-        ValidatorUtils.validate(adminLoginReq);
-        return openImAdminRest.adminLogin(adminLoginReq, operationid);
-    }
-
-    /**
-     * 获取管理员信息
-     * routePath=/account/info
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<GetAdminInfoResp> adminInfo(OpenImToken openImToken, GetAdminInfoReq req) {
-        ValidatorUtils.validate(req);
-        return openImAdminRest.adminInfo(openImToken, req);
-    }
-
-    /**
-     * 修改信息
-     * routePath=/account/update
-     *
-     * @param req
-     * @return
-     */
-    public OpenImResult<String> adminUpdateInfo(OpenImToken openImToken, UpdateUserInfoReq req) {
-        ValidatorUtils.validate(req);
-        return openImAdminRest.adminUpdateInfo(openImToken, req);
-    }
 
     /**
      * 修改密码
