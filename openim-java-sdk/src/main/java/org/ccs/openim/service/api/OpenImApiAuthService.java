@@ -2,6 +2,7 @@ package org.ccs.openim.service.api;
 
 import org.ccs.openim.api.OpenImApiAuthRest;
 import org.ccs.openim.api.auth.req.ForceLogoutReq;
+import org.ccs.openim.api.auth.req.GetUserTokenReq;
 import org.ccs.openim.api.auth.req.ParseTokenReq;
 import org.ccs.openim.api.auth.req.UserTokenReq;
 import org.ccs.openim.api.auth.resp.ParseTokenResp;
@@ -16,7 +17,7 @@ public class OpenImApiAuthService {
     private OpenImApiAuthRest openImApiAuthRest = new OpenImApiAuthRest();
 
     /**
-     * 获取用户token
+     * 生成token
      * routePath=/auth/user_token
      *
      * @param req
@@ -25,6 +26,18 @@ public class OpenImApiAuthService {
     public OpenImResult<UserTokenResp> userToken(OpenImToken openImToken, UserTokenReq req) {
         ValidatorUtils.validate(req);
         return openImApiAuthRest.userToken(openImToken, req);
+    }
+
+    /**
+     * 管理员获取用户 token
+     * routePath=/auth/get_user_token
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetUserTokenReq> getUserToken(OpenImToken openImToken, GetUserTokenReq req){
+        ValidatorUtils.validate(req);
+        return openImApiAuthRest.getUserToken(openImToken, req);
     }
 
     /**

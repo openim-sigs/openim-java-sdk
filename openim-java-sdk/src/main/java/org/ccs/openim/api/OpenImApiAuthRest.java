@@ -6,6 +6,7 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.ccs.openim.api.auth.req.ForceLogoutReq;
+import org.ccs.openim.api.auth.req.GetUserTokenReq;
 import org.ccs.openim.api.auth.req.ParseTokenReq;
 import org.ccs.openim.api.auth.req.UserTokenReq;
 import org.ccs.openim.api.auth.resp.ParseTokenResp;
@@ -39,7 +40,7 @@ public class OpenImApiAuthRest {
     }
 
     /**
-     * 获取用户token
+     * 生成token
      * routePath=/auth/user_token
      *
      * @param req
@@ -93,6 +94,35 @@ public class OpenImApiAuthRest {
 
         if (!openImResult.isOk()) {
             log.warn("----parseToken--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
+        }
+
+        return openImResult;
+    }
+
+    /**
+     * 管理员获取用户 token
+     * routePath=/auth/get_user_token
+     *
+     * @param req
+     * @return
+     */
+    public OpenImResult<GetUserTokenReq> getUserToken(OpenImToken openImToken, GetUserTokenReq req) {
+//        ValidateUtils.notNull(token, "token is null");
+        long time = System.currentTimeMillis();
+        String apiUrl = openimConfig.getApiUrl(SERVER_TYPE);
+        String url = CommUtils.appendUrl(apiUrl, "/auth/get_user_token");
+
+
+
+
+        String body = JSONUtil.toJsonStr(req);
+        HttpResponse exchanges = HttpRequestUtils.exchange(url, body, OpenimUtils.apiHeaderMap(openImToken));
+
+        OpenImResult<GetUserTokenReq> openImResult = JSONUtil.toBean(exchanges.body(), new TypeReference<OpenImResult<GetUserTokenReq>>() {
+        }, false);
+
+        if (!openImResult.isOk()) {
+            log.warn("----getUserToken--body={} time={} result={}", body, System.currentTimeMillis() - time, exchanges.body());
         }
 
         return openImResult;
