@@ -136,7 +136,7 @@ public class OpenImChatAccountRest {
         String url = CommUtils.appendUrl(apiUrl, "/account/register");
 
         Map<String, String> httpHeaders = new HashMap<>();
-        httpHeaders.put(OpenimParams.OPERATIONID, "");
+        httpHeaders.put(OpenimParams.OPERATIONID, userReq.getOperationId());
         String body = JSONUtil.toJsonStr(userReq);
 
         HttpResponse exchanges = HttpRequestUtils.exchange(url, body, httpHeaders);

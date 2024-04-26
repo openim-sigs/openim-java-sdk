@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RegisterUserReq {
+    private String operationId;
     private String invitationCode;
     private String verifyCode;
     private String ip;
